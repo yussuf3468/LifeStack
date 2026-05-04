@@ -80,13 +80,13 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
         }}
       >
         <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">
-          Signal board
+          Your Progress
         </p>
         <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">
           Stats
         </h1>
         <p className="text-[#6db898] text-sm mt-1">
-          Sleep, mood, Quran, and faith signals without dashboard bloat.
+          Sleep, mood, prayers, and habit streaks over the last 14 days.
         </p>
         <div className="mt-4 flex justify-end">
           <Link

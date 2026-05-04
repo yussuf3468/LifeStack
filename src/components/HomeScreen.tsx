@@ -60,7 +60,6 @@ function findHabitByKeywords(habits: Habit[], keywords: string[]) {
 }
 
 export function HomeScreen({
-  profile,
   greeting,
   longDate,
   quote,
@@ -180,8 +179,8 @@ export function HomeScreen({
   const coachSteps = [
     {
       icon: "🕌",
-      title: "Faith anchor",
-      status: faithHabit ? (faithDone ? "Locked" : "Up next") : "Open",
+      title: "Ibadah",
+      status: faithHabit ? (faithDone ? "Done" : "Pending") : "None set",
       copy: faithHabit
         ? faithDone
           ? `${faithHabit.label} is already protected today.`
@@ -190,8 +189,8 @@ export function HomeScreen({
     },
     {
       icon: "💻",
-      title: "Build lane",
-      status: buildHabit ? (buildDone ? "Logged" : "Ready") : "Flexible",
+      title: "Work",
+      status: buildHabit ? (buildDone ? "Done" : "Pending") : "Flexible",
       copy: buildHabit
         ? buildDone
           ? `${buildHabit.label} is already on the board.`
@@ -202,12 +201,12 @@ export function HomeScreen({
     },
     {
       icon: "🌙",
-      title: "Recovery lane",
+      title: "Recovery",
       status: recoveryReady
-        ? "Readable"
+        ? "Logged"
         : todayEntry.sleep || todayEntry.mood
-          ? "Almost"
-          : "Missing",
+          ? "Partial"
+          : "Not logged",
       copy: recoveryReady
         ? `Sleep ${todayEntry.sleep?.hours}h and mood ${mood?.label ?? "logged"} give you a readable baseline.`
         : todayEntry.sleep
@@ -216,11 +215,9 @@ export function HomeScreen({
     },
   ];
   const coachChips = [
-    "Phase 2",
-    "16 Pro Max tuned",
     remainingActions === 0
-      ? "Daily loop closed"
-      : `${remainingActions} taps left`,
+      ? "All done for today"
+      : `${remainingActions} ${remainingActions === 1 ? "item" : "items"} left`,
     backendLabel,
   ];
 
@@ -234,7 +231,7 @@ export function HomeScreen({
         }}
       >
         <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">
-          Soul + Sprint OS
+          LifeStack
         </p>
         <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">
           {greeting}
@@ -304,7 +301,7 @@ export function HomeScreen({
           </div>
           <div className="mt-3 pt-3 border-t border-black/[0.05] flex items-start gap-2">
             <span className="text-[10px] font-black text-[#d3a74d] uppercase tracking-wider shrink-0 mt-0.5">
-              Barakah
+              Tip
             </span>
             <p className="text-[12px] text-[#5d6f65] leading-snug">
               {focusPrompt}
@@ -316,17 +313,17 @@ export function HomeScreen({
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-bold text-[#18231f] text-base tracking-tight">
-              Habit grid
+              Today's Habits
             </h2>
             <p className="text-[11px] text-[#657a71] mt-0.5">
-              Large taps. Under sixty seconds.
+              Tap each habit to mark it done.
             </p>
           </div>
           <Link
             className="text-[12px] font-semibold text-[#1f5a46] hover:text-[#17372c] transition-colors"
             to="/manager"
           >
-            Tune stack →
+            Edit habits →
           </Link>
         </div>
 
@@ -396,10 +393,10 @@ export function HomeScreen({
         <article className="bg-white border border-black/[0.06] rounded-2xl p-5">
           <div className="flex items-start justify-between mb-1">
             <p className="text-[11px] text-[#d3a74d] font-bold uppercase tracking-wider">
-              Life coach
+              Daily Summary
             </p>
             <span className="text-[10px] bg-[#faf5eb] text-[#5d6f65] font-semibold px-2 py-0.5 rounded-full">
-              Phone-first
+              Today at a glance
             </span>
           </div>
           <h2 className="font-black text-[#18231f] text-lg leading-tight">
@@ -448,10 +445,10 @@ export function HomeScreen({
           }}
         >
           <p className="text-[11px] text-[#d3a74d] font-bold uppercase tracking-wider mb-1">
-            Faith anchor for {profile.name}
+            Verse of the Day
           </p>
           <h2 className="font-bold text-[#6db898] text-base mb-3">
-            Quran spark
+            Quran
           </h2>
           <p
             className="text-[#f0cb6a] text-xl leading-relaxed text-right mb-3"
@@ -542,10 +539,10 @@ export function HomeScreen({
           <div className="flex items-start justify-between mb-4">
             <div>
               <h2 className="font-black text-[#18231f] text-base">
-                Mission board
+                Today's Focus
               </h2>
               <p className="text-[11px] text-[#657a71] mt-0.5">
-                Three things only.
+                Your top 3 tasks for today.
               </p>
             </div>
             <span
@@ -615,9 +612,9 @@ export function HomeScreen({
         <article className="bg-white border border-black/[0.06] rounded-2xl p-5">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="font-black text-[#18231f] text-base">Vitals</h2>
+              <h2 className="font-black text-[#18231f] text-base">Energy &amp; Water</h2>
               <p className="text-[11px] text-[#657a71] mt-0.5">
-                Energy + hydration.
+                How are you feeling? How much water?
               </p>
             </div>
             <span className="text-[11px] font-semibold bg-[#faf5eb] text-[#5d6f65] px-2.5 py-1 rounded-full">
@@ -708,10 +705,10 @@ export function HomeScreen({
           <div className="flex items-start justify-between mb-4">
             <div>
               <h2 className="font-black text-[#18231f] text-base">
-                Prayer on time
+                Today's Prayers
               </h2>
               <p className="text-[11px] text-[#657a71] mt-0.5">
-                Guard the five anchors.
+                Tap each prayer you completed on time.
               </p>
             </div>
             <div className="flex items-center gap-2">
@@ -776,9 +773,9 @@ export function HomeScreen({
         >
           <div className="flex items-start justify-between mb-3">
             <div>
-              <h2 className="font-black text-white text-base">Dhikr tracker</h2>
+              <h2 className="font-black text-white text-base">Dhikr Counter</h2>
               <p className="text-[11px] text-[#6db898] mt-0.5">
-                Keep remembrance alive.
+                Tap + to count. Goal: {dhikrGoal} remembrances.
               </p>
             </div>
             <span className="font-black text-[#f0cb6a] text-lg leading-none">

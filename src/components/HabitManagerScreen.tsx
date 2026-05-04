@@ -24,7 +24,6 @@ const EMPTY_FORM: HabitInput = {
 const frequencies: HabitFrequency[] = ["daily", "weekdays", "weekends"];
 
 export function HabitManagerScreen({
-  profile,
   habits,
   onSaveHabit,
   onDeleteHabit,
@@ -65,14 +64,13 @@ export function HabitManagerScreen({
         }}
       >
         <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">
-          Stack architecture
+          Manage Habits
         </p>
         <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">
           Habit Manager
         </h1>
         <p className="text-[#6db898] text-sm mt-1">
-          Keep only the rituals that deserve a home on your daily screen.{" "}
-          {profile.name} is capped at eight for a reason.
+          Add, edit, or remove habits. Max 8 habits. They appear on your Home screen every day.
         </p>
         <div className="mt-4 flex items-center justify-between">
           <span className="text-[12px] font-bold text-[#f0cb6a]">
@@ -95,7 +93,7 @@ export function HabitManagerScreen({
               {editingId ? "Edit habit" : "Add habit"}
             </h2>
             <p className="text-[11px] text-[#657a71] mt-0.5">
-              Emoji first, label second, frequency third.
+              Fill in the details below and tap "Add to stack".
             </p>
           </div>
           <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#faf5eb] text-[#5d6f65] shrink-0">

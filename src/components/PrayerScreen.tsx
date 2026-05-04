@@ -52,7 +52,7 @@ export function PrayerScreen({
         }}
       >
         <p className="text-[11px] text-[#8fd2b5] font-bold uppercase tracking-widest mb-2">
-          Prayer history
+          Daily Prayers
         </p>
         <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">
           Prayers
