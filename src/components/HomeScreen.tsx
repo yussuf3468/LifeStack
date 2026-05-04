@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import type {
   DailyEntry,
@@ -226,231 +225,380 @@ export function HomeScreen({
   ];
 
   return (
-    <div className="screen">
-      <section className="card hero-panel">
-        <div>
-          <div className="eyebrow">Soul + Sprint OS</div>
-          <h1 className="hero-title">{greeting}</h1>
-          <p className="hero-supporting">{longDate}</p>
-          <p className="hero-quote">“{quote.text}”</p>
-          <p className="hero-quote-author">{quote.author}</p>
-        </div>
+    <div className="flex flex-col gap-4 pb-4">
+      {/* ── HERO ───────────────────────────────────────── */}
+      <section
+        className="rounded-2xl px-5 pt-5 pb-6"
+        style={{
+          background: "linear-gradient(145deg, #17372c 0%, #1f5a46 85%)",
+        }}
+      >
+        <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">
+          Soul + Sprint OS
+        </p>
+        <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">
+          {greeting}
+        </h1>
+        <p className="text-[#6db898] text-sm mt-1">{longDate}</p>
+        <blockquote className="mt-4 border-l-2 border-[#d3a74d]/50 pl-3">
+          <p className="text-[#f0cb6a] text-[13px] italic leading-snug">
+            "{quote.text}"
+          </p>
+          <cite className="text-[#6db898] text-[11px] not-italic mt-1 block">
+            {quote.author}
+          </cite>
+        </blockquote>
+      </section>
 
-        <div className="hero-side">
-          <section className="card quick-card">
-            <div className="stack-head">
-              <div>
-                <h2 className="stack-title">Daily XP</h2>
-                <p className="stack-copy">
-                  Fast taps, visible momentum, no friction.
-                </p>
-              </div>
-              <div className="mini-chip">{xp.level}</div>
+      {/* PLACEHOLDER – rest of HomeScreen removed for replacement */}
+      <div id="__homecontent__">
+        {/* ── XP + STATS ─────────────────────────────────── */}
+        <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+          <div className="flex items-start justify-between mb-3">
+            <div>
+              <p className="text-[11px] text-[#8a9e95] font-bold uppercase tracking-wider">
+                Daily XP
+              </p>
+              <p className="text-lg font-black text-[#18231f] mt-0.5 leading-tight">
+                Level {xp.level}
+              </p>
             </div>
-
-            <div className="xp-row">
-              <p className="xp-value">{xp.percent}%</p>
-              <p className="xp-caption">
+            <div className="text-right">
+              <p className="text-2xl font-black text-[#1f5a46] leading-none">
+                {xp.percent}%
+              </p>
+              <p className="text-[10px] text-[#8a9e95] mt-0.5">
                 {xp.current}/{xp.max} XP
               </p>
             </div>
-
-            <div className="xp-track" aria-hidden="true">
-              <div className="xp-fill" style={{ width: `${xp.percent}%` }} />
-            </div>
-
-            <div className="summary-grid">
-              <div className="mini-stat">
-                <strong>{xp.completedCount}</strong>
-                <span>Habits done</span>
-              </div>
-              <div className="mini-stat">
-                <strong>
-                  {todayEntry.sleep ? `${todayEntry.sleep.hours}h` : "--"}
-                </strong>
-                <span>Sleep logged</span>
-              </div>
-              <div className="mini-stat">
-                <strong>{mood ? mood.emoji : "—"}</strong>
-                <span>Mood check</span>
-              </div>
-            </div>
-
-            <div className="sleep-summary">
-              <div>
-                <p className="muted">Barakah prompt</p>
-                <p className="sleep-result">{focusPrompt}</p>
-              </div>
-              <div className="tiny-badge">{backendLabel}</div>
-            </div>
-          </section>
-        </div>
-      </section>
-
-      <section className="coach-deck">
-        <article className="card coach-card">
-          <div className="section-row">
-            <div>
-              <p className="section-subtitle coach-kicker">Life coach mode</p>
-              <h2 className="section-title">{coachHeadline}</h2>
-            </div>
-            <div className="mini-chip coach-mini-chip">Phone-first</div>
           </div>
-
-          <p className="coach-note">{coachNote}</p>
-
-          <div className="coach-chip-row">
-            {coachChips.map((chip) => (
-              <div key={chip} className="coach-chip">
-                {chip}
+          <div className="h-2 bg-[#f0ede4] rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-700"
+              style={{
+                width: `${xp.percent}%`,
+                background: "linear-gradient(90deg,#1f5a46,#2f8a67)",
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-4 gap-2 mt-4">
+            {[
+              { value: String(xp.completedCount), label: "Habits" },
+              {
+                value: todayEntry.sleep ? `${todayEntry.sleep.hours}h` : "—",
+                label: "Sleep",
+              },
+              { value: mood ? mood.emoji : "—", label: "Mood" },
+              { value: `${prayerDoneCount}/5`, label: "Prayers" },
+            ].map(({ value, label }) => (
+              <div
+                key={label}
+                className="bg-[#faf5eb] rounded-xl p-2.5 text-center"
+              >
+                <p className="font-black text-[#18231f] text-sm leading-none">
+                  {value}
+                </p>
+                <p className="text-[10px] text-[#8a9e95] mt-1">{label}</p>
               </div>
             ))}
           </div>
+          <div className="mt-3 pt-3 border-t border-black/[0.05] flex items-start gap-2">
+            <span className="text-[10px] font-black text-[#d3a74d] uppercase tracking-wider shrink-0 mt-0.5">
+              Barakah
+            </span>
+            <p className="text-[12px] text-[#5d6f65] leading-snug">
+              {focusPrompt}
+            </p>
+          </div>
+        </section>
 
-          <div className="coach-grid">
+        {/* ── HABIT GRID ─────────────────────────────────── */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-bold text-[#18231f] text-base tracking-tight">
+              Habit grid
+            </h2>
+            <p className="text-[11px] text-[#8a9e95] mt-0.5">
+              Large taps. Under sixty seconds.
+            </p>
+          </div>
+          <Link
+            className="text-[12px] font-semibold text-[#1f5a46] hover:text-[#17372c] transition-colors"
+            to="/manager"
+          >
+            Tune stack →
+          </Link>
+        </div>
+
+        {activeHabits.length > 0 ? (
+          <section className="grid grid-cols-2 gap-2.5">
+            {activeHabits.map((habit) => {
+              const isDone = todayEntry.completedHabitIds.includes(habit.id);
+              return (
+                <button
+                  key={habit.id}
+                  type="button"
+                  onClick={() => onToggleHabit(habit.id)}
+                  className={[
+                    "flex flex-col items-start gap-1.5 p-4 rounded-2xl border-2 text-left transition-all duration-200 active:scale-[0.96]",
+                    isDone
+                      ? "bg-[#17372c] border-[#17372c]"
+                      : "bg-white border-black/[0.07] hover:border-[#1f5a46]/40",
+                  ].join(" ")}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-xl" aria-hidden="true">
+                      {habit.icon}
+                    </span>
+                    <span
+                      className={[
+                        "text-[10px] font-bold px-1.5 py-0.5 rounded-lg",
+                        isDone
+                          ? "bg-[#f0cb6a]/20 text-[#f0cb6a]"
+                          : "bg-[#f0ede4] text-[#8a9e95]",
+                      ].join(" ")}
+                    >
+                      {isDone ? "✓ Done" : "Tap"}
+                    </span>
+                  </div>
+                  <p
+                    className={[
+                      "font-semibold text-[13px] leading-tight",
+                      isDone ? "text-white" : "text-[#18231f]",
+                    ].join(" ")}
+                  >
+                    {habit.label}
+                  </p>
+                  <p
+                    className={[
+                      "text-[10px]",
+                      isDone ? "text-[#6db898]" : "text-[#8a9e95]",
+                    ].join(" ")}
+                  >
+                    {habit.frequency}
+                  </p>
+                </button>
+              );
+            })}
+          </section>
+        ) : (
+          <div className="bg-white border border-black/[0.06] rounded-2xl p-6 text-center">
+            <p className="font-semibold text-[#18231f] text-sm">
+              No habits scheduled today.
+            </p>
+            <p className="text-[12px] text-[#8a9e95] mt-1">
+              Open Habit Manager to add habits.
+            </p>
+          </div>
+        )}
+
+        {/* ── COACH CARD ─────────────────────────────────── */}
+        <article className="bg-white border border-black/[0.06] rounded-2xl p-5">
+          <div className="flex items-start justify-between mb-1">
+            <p className="text-[11px] text-[#d3a74d] font-bold uppercase tracking-wider">
+              Life coach
+            </p>
+            <span className="text-[10px] bg-[#faf5eb] text-[#5d6f65] font-semibold px-2 py-0.5 rounded-full">
+              Phone-first
+            </span>
+          </div>
+          <h2 className="font-black text-[#18231f] text-lg leading-tight">
+            {coachHeadline}
+          </h2>
+          <p className="text-[13px] text-[#5d6f65] mt-2 leading-relaxed">
+            {coachNote}
+          </p>
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {coachChips.map((chip) => (
+              <span
+                key={chip}
+                className="text-[11px] bg-[#faf5eb] text-[#5d6f65] font-medium px-2.5 py-1 rounded-full border border-black/[0.05]"
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
+          <div className="grid grid-cols-3 gap-2 mt-4">
             {coachSteps.map((step) => (
-              <article key={step.title} className="coach-step">
-                <div className="coach-step-top">
-                  <span className="coach-step-icon" aria-hidden="true">
+              <div key={step.title} className="bg-[#faf5eb] rounded-xl p-3">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-base" aria-hidden="true">
                     {step.icon}
                   </span>
-                  <span className="coach-step-status">{step.status}</span>
+                  <span className="text-[9px] font-bold text-[#1f5a46] bg-[#1f5a46]/10 px-1.5 py-0.5 rounded-full">
+                    {step.status}
+                  </span>
                 </div>
-                <p className="coach-step-title">{step.title}</p>
-                <p className="coach-step-copy">{step.copy}</p>
-              </article>
+                <p className="text-[11px] font-bold text-[#18231f] leading-tight">
+                  {step.title}
+                </p>
+                <p className="text-[10px] text-[#8a9e95] leading-snug mt-0.5">
+                  {step.copy}
+                </p>
+              </div>
             ))}
           </div>
         </article>
 
-        <article className="card verse-card">
-          <p className="section-subtitle">Faith anchor for {profile.name}</p>
-          <h2 className="section-title">Quran spark</h2>
-          <p className="verse-arabic">{verse.arabic}</p>
-          <p className="verse-copy">{verse.translation}</p>
-          <p className="verse-reflection">{verse.reflection}</p>
-          <p className="verse-reference">{verse.reference}</p>
+        {/* ── VERSE CARD ─────────────────────────────────── */}
+        <article
+          className="rounded-2xl p-5"
+          style={{
+            background: "linear-gradient(135deg, #0c1c12 0%, #17372c 100%)",
+          }}
+        >
+          <p className="text-[11px] text-[#d3a74d] font-bold uppercase tracking-wider mb-1">
+            Faith anchor for {profile.name}
+          </p>
+          <h2 className="font-bold text-[#6db898] text-base mb-3">
+            Quran spark
+          </h2>
+          <p
+            className="text-[#f0cb6a] text-xl leading-relaxed text-right mb-3"
+            dir="rtl"
+            lang="ar"
+          >
+            {verse.arabic}
+          </p>
+          <p className="text-white/90 text-[13px] leading-relaxed mb-2 font-medium">
+            {verse.translation}
+          </p>
+          <p className="text-[#6db898] text-[12px] leading-relaxed mb-2 italic">
+            {verse.reflection}
+          </p>
+          <p className="text-[#d3a74d]/70 text-[11px] font-semibold">
+            {verse.reference}
+          </p>
         </article>
-      </section>
 
-      <section
-        className={`card quran-study-card${quranStudyDone ? " is-done" : ""}`}
-      >
-        <div className="section-row quran-study-topline">
-          <div>
-            <p className="section-subtitle">Page of the day</p>
-            <h2 className="section-title">Quran + tafseer reading</h2>
+        {/* ── QURAN STUDY ────────────────────────────────── */}
+        <section
+          className={[
+            "bg-white border-2 rounded-2xl p-5 transition-colors",
+            quranStudyDone ? "border-[#1f5a46]" : "border-black/[0.06]",
+          ].join(" ")}
+        >
+          <div className="flex items-start justify-between mb-3">
+            <div>
+              <p className="text-[11px] text-[#8a9e95] font-bold uppercase tracking-wider">
+                Page of the day
+              </p>
+              <h2 className="font-black text-[#18231f] text-base mt-0.5">
+                Quran + tafseer reading
+              </h2>
+            </div>
+            <span className="text-[11px] font-bold text-[#1f5a46] bg-[#1f5a46]/10 px-2.5 py-1 rounded-full shrink-0">
+              Page {quranStudy.page}
+            </span>
           </div>
-          <div className="mini-chip">Page {quranStudy.page}</div>
-        </div>
-
-        <p className="quran-study-surah">{quranStudy.surah}</p>
-        <p className="quran-study-arabic">{quranStudy.arabic}</p>
-        <p className="quran-study-copy">{quranStudy.translation}</p>
-
-        <div className="tafsir-panel">
-          <p className="muted">Tafseer snapshot</p>
-          <p className="quran-study-tafsir">{quranStudy.tafsir}</p>
-        </div>
-
-        <div className="quran-study-footer">
-          <p className="helper-copy quran-study-practice">
+          <p className="text-[#5d6f65] font-semibold text-sm mb-2">
+            {quranStudy.surah}
+          </p>
+          <p
+            className="text-[#18231f] text-lg leading-relaxed text-right mb-3"
+            dir="rtl"
+            lang="ar"
+          >
+            {quranStudy.arabic}
+          </p>
+          <p className="text-[#5d6f65] text-[13px] leading-relaxed mb-3">
+            {quranStudy.translation}
+          </p>
+          <div className="bg-[#faf5eb] rounded-xl p-3 mb-4">
+            <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-1">
+              Tafseer snapshot
+            </p>
+            <p className="text-[12px] text-[#5d6f65] leading-relaxed">
+              {quranStudy.tafsir}
+            </p>
+          </div>
+          <p className="text-[12px] text-[#8a9e95] mb-4 leading-relaxed">
             {quranStudy.practice}
           </p>
-
-          <div className="quran-study-actions">
-            <Link className="ghost-link" to="/quran">
-              Open Quran page
+          <div className="flex gap-2.5">
+            <Link
+              className="flex-1 text-center text-[13px] font-semibold text-[#1f5a46] border border-[#1f5a46]/30 py-2.5 rounded-xl hover:bg-[#1f5a46]/[0.05] transition-colors"
+              to="/quran"
+            >
+              Open Quran
             </Link>
             <button
               type="button"
-              className={`secondary-button quran-study-button${quranStudyDone ? " is-active" : ""}`}
               onClick={onToggleQuranStudy}
+              className={[
+                "flex-1 py-2.5 rounded-xl text-[13px] font-bold transition-all duration-200 active:scale-[0.97]",
+                quranStudyDone
+                  ? "bg-[#1f5a46] text-[#f0cb6a]"
+                  : "bg-[#17372c] text-white hover:bg-[#1f5a46]",
+              ].join(" ")}
             >
-              {quranStudyDone ? "Reading logged" : "Mark page + tafseer done"}
+              {quranStudyDone ? "✓ Reading logged" : "Mark done"}
             </button>
           </div>
-        </div>
-      </section>
-
-      <div className="section-row">
-        <div>
-          <h2 className="section-title">Habit grid</h2>
-          <p className="section-subtitle">
-            Large taps only. Built for under sixty seconds.
-          </p>
-        </div>
-        <Link className="text-link" to="/manager">
-          Tune stack
-        </Link>
-      </div>
-
-      {activeHabits.length > 0 ? (
-        <section className="habit-grid">
-          {activeHabits.map((habit) => {
-            const isDone = todayEntry.completedHabitIds.includes(habit.id);
-
-            return (
-              <button
-                key={habit.id}
-                type="button"
-                className={`habit-button${isDone ? " is-done" : ""}`}
-                style={{ "--habit-accent": habit.accent } as CSSProperties}
-                onClick={() => onToggleHabit(habit.id)}
-              >
-                <div className="habit-topline">
-                  <span className="habit-icon" aria-hidden="true">
-                    {habit.icon}
-                  </span>
-                  <span className="habit-check">{isDone ? "Done" : "Tap"}</span>
-                </div>
-                <p className="habit-label">{habit.label}</p>
-                <p className="habit-meta">{habit.frequency}</p>
-                <p className="habit-caption">One clean action counts.</p>
-              </button>
-            );
-          })}
         </section>
-      ) : (
-        <section className="empty-state">
-          <p className="sleep-result">No habits scheduled today.</p>
-          <p className="helper-copy">
-            Open Habit Manager and build a lighter stack for the days you
-            actually live.
-          </p>
-        </section>
-      )}
 
-      <section className="feature-grid">
-        <article className="card focus-card">
-          <div className="section-row">
+        {/* ── MISSION BOARD ──────────────────────────────── */}
+        <article className="bg-white border border-black/[0.06] rounded-2xl p-5">
+          <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="section-title">Mission board</h2>
-              <p className="section-subtitle">
-                Three things only. Keep the day narrow enough to win.
+              <h2 className="font-black text-[#18231f] text-base">
+                Mission board
+              </h2>
+              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                Three things only.
               </p>
             </div>
-            <div className="mini-chip">{focusDoneCount}/3 done</div>
+            <span
+              className={[
+                "text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0",
+                focusDoneCount === 3
+                  ? "bg-[#1f5a46] text-[#f0cb6a]"
+                  : "bg-[#faf5eb] text-[#5d6f65]",
+              ].join(" ")}
+            >
+              {focusDoneCount}/3 done
+            </span>
           </div>
-
-          <div className="focus-list">
+          <div className="flex flex-col gap-3">
             {focusItems.map((item) => (
-              <article
+              <div
                 key={item.id}
-                className={`focus-item${item.done ? " is-done" : ""}`}
+                className={[
+                  "rounded-xl border p-3.5 transition-colors",
+                  item.done
+                    ? "bg-[#f0fdf4] border-[#1f5a46]/20"
+                    : "bg-[#faf5eb] border-transparent",
+                ].join(" ")}
               >
-                <div className="focus-item-top">
-                  <span className="focus-slot-label">{item.label}</span>
+                <div className="flex items-center justify-between mb-2">
+                  <span
+                    className={[
+                      "text-[10px] font-bold uppercase tracking-wider",
+                      item.done ? "text-[#1f5a46]" : "text-[#8a9e95]",
+                    ].join(" ")}
+                  >
+                    {item.label}
+                  </span>
                   <button
                     type="button"
-                    className={`focus-toggle${item.done ? " is-done" : ""}`}
                     onClick={() => onToggleFocusItem(item.id)}
+                    className={[
+                      "text-[11px] font-bold px-2.5 py-1 rounded-lg transition-all active:scale-95",
+                      item.done
+                        ? "bg-[#1f5a46] text-white"
+                        : "bg-white border border-black/[0.1] text-[#5d6f65] hover:border-[#1f5a46]/40",
+                    ].join(" ")}
                   >
-                    {item.done ? "Done" : "Open"}
+                    {item.done ? "✓ Done" : "Mark done"}
                   </button>
                 </div>
                 <input
-                  className="text-input focus-input"
+                  className={[
+                    "w-full bg-transparent text-[13px] outline-none placeholder:text-[#8a9e95]",
+                    item.done
+                      ? "text-[#1f5a46] line-through decoration-[#1f5a46]/40"
+                      : "text-[#18231f]",
+                  ].join(" ")}
                   value={item.text}
                   maxLength={64}
                   onChange={(event) =>
@@ -458,325 +606,446 @@ export function HomeScreen({
                   }
                   placeholder={item.placeholder}
                 />
-              </article>
+              </div>
             ))}
           </div>
         </article>
 
-        <article className="card vitals-card">
-          <div className="section-row">
+        {/* ── VITALS ─────────────────────────────────────── */}
+        <article className="bg-white border border-black/[0.06] rounded-2xl p-5">
+          <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="section-title">Vitals</h2>
-              <p className="section-subtitle">
-                Energy and hydration so your output has context.
+              <h2 className="font-black text-[#18231f] text-base">Vitals</h2>
+              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                Energy + hydration.
               </p>
             </div>
-            <div className="mini-chip">
+            <span className="text-[11px] font-semibold bg-[#faf5eb] text-[#5d6f65] px-2.5 py-1 rounded-full">
               {energy ? energy.label : "Check in"}
+            </span>
+          </div>
+          <div className="mb-4">
+            <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-2">
+              Energy
+            </p>
+            <div className="flex flex-col gap-2">
+              {energyOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => onEnergyChange(option.value)}
+                  className={[
+                    "flex items-center gap-3 p-3 rounded-xl border-2 text-left transition-all duration-150 active:scale-[0.98]",
+                    todayEntry.energy === option.value
+                      ? "border-[#1f5a46] bg-[#1f5a46]/[0.06]"
+                      : "border-transparent bg-[#faf5eb] hover:border-[#1f5a46]/20",
+                  ].join(" ")}
+                >
+                  <span className="text-xl shrink-0" aria-hidden="true">
+                    {option.emoji}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className={[
+                        "text-[13px] font-semibold leading-tight",
+                        todayEntry.energy === option.value
+                          ? "text-[#1f5a46]"
+                          : "text-[#18231f]",
+                      ].join(" ")}
+                    >
+                      {option.label}
+                    </p>
+                    <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                      {option.cue}
+                    </p>
+                  </div>
+                  {todayEntry.energy === option.value && (
+                    <span className="text-[#1f5a46] font-bold shrink-0">✓</span>
+                  )}
+                </button>
+              ))}
             </div>
           </div>
-
-          <div className="vitals-stack">
-            <div className="field">
-              <span className="field-label">Energy check</span>
-              <div className="energy-row">
-                {energyOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    className={`choice-button energy-button${todayEntry.energy === option.value ? " is-active" : ""}`}
-                    onClick={() => onEnergyChange(option.value)}
-                  >
-                    <span className="energy-emoji" aria-hidden="true">
-                      {option.emoji}
-                    </span>
-                    <span>{option.label}</span>
-                    <span className="energy-copy">{option.cue}</span>
-                  </button>
-                ))}
-              </div>
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">
+                Hydration
+              </p>
+              <span className="text-[11px] font-bold text-[#1f5a46]">
+                {waterCups}/{waterGoal} cups
+              </span>
             </div>
-
-            <div className="field">
-              <div className="section-row water-section-head">
-                <span className="field-label">Hydration</span>
-                <span className="water-count">
-                  {waterCups}/{waterGoal} cups
-                </span>
-              </div>
-              <div className="water-grid">
-                {Array.from({ length: waterGoal }, (_, index) => {
-                  const value = index + 1;
-                  const isFilled = value <= waterCups;
-
-                  return (
-                    <button
-                      key={value}
-                      type="button"
-                      className={`water-cup${isFilled ? " is-filled" : ""}`}
-                      onClick={() =>
-                        onWaterCupsChange(
-                          value === waterCups ? value - 1 : value,
-                        )
-                      }
-                      aria-label={`Set hydration to ${value} cups`}
-                    >
-                      <span className="water-cup-icon" aria-hidden="true">
-                        💧
-                      </span>
-                      <span className="water-cup-label">{value}</span>
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="grid grid-cols-8 gap-1.5">
+              {Array.from({ length: waterGoal }, (_, index) => {
+                const value = index + 1;
+                const isFilled = value <= waterCups;
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() =>
+                      onWaterCupsChange(value === waterCups ? value - 1 : value)
+                    }
+                    aria-label={`Set hydration to ${value} cups`}
+                    className={[
+                      "flex flex-col items-center gap-0.5 py-1.5 rounded-xl text-[10px] font-bold transition-all active:scale-90",
+                      isFilled
+                        ? "bg-[#1f5a46] text-white"
+                        : "bg-[#faf5eb] text-[#8a9e95]",
+                    ].join(" ")}
+                  >
+                    <span aria-hidden="true">{isFilled ? "💧" : "○"}</span>
+                    <span>{value}</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </article>
-      </section>
 
-      <section className="faith-grid">
-        <article className="card prayer-card">
-          <div className="section-row">
+        {/* ── PRAYER ─────────────────────────────────────── */}
+        <article className="bg-white border border-black/[0.06] rounded-2xl p-5">
+          <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="section-title">Prayer on time</h2>
-              <p className="section-subtitle">
-                Guard the five anchors so the rest of the day stays aligned.
+              <h2 className="font-black text-[#18231f] text-base">
+                Prayer on time
+              </h2>
+              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                Guard the five anchors.
               </p>
             </div>
-            <div className="section-actions">
-              <div className="mini-chip">{prayerDoneCount}/5 protected</div>
-              <Link className="mini-button" to="/prayers">
+            <div className="flex items-center gap-2">
+              <span
+                className={[
+                  "text-[11px] font-bold px-2.5 py-1 rounded-full",
+                  prayerDoneCount === 5
+                    ? "bg-[#1f5a46] text-[#f0cb6a]"
+                    : "bg-[#faf5eb] text-[#5d6f65]",
+                ].join(" ")}
+              >
+                {prayerDoneCount}/5
+              </span>
+              <Link
+                className="text-[11px] font-semibold text-[#1f5a46] hover:text-[#17372c] transition-colors"
+                to="/prayers"
+              >
                 History
               </Link>
             </div>
           </div>
-
-          <div className="prayer-grid">
+          <div className="grid grid-cols-5 gap-2">
             {prayers.map((prayer) => (
               <button
                 key={prayer.id}
                 type="button"
-                className={`prayer-button${prayer.onTime ? " is-done" : ""}`}
                 onClick={() => onTogglePrayer(prayer.id)}
+                className={[
+                  "flex flex-col items-center gap-1 py-3 rounded-xl border-2 transition-all duration-200 active:scale-[0.95]",
+                  prayer.onTime
+                    ? "bg-[#17372c] border-[#17372c]"
+                    : "bg-[#faf5eb] border-transparent hover:border-[#1f5a46]/30",
+                ].join(" ")}
               >
-                <span className="prayer-name">{prayer.label}</span>
-                <span className="prayer-cue">{prayer.cue}</span>
-                <span className="prayer-state">
-                  {prayer.onTime ? "On time" : "Track"}
+                <span
+                  className={[
+                    "text-[12px] font-bold",
+                    prayer.onTime ? "text-[#f0cb6a]" : "text-[#18231f]",
+                  ].join(" ")}
+                >
+                  {prayer.label}
+                </span>
+                <span
+                  className={[
+                    "text-[9px]",
+                    prayer.onTime ? "text-[#6db898]" : "text-[#8a9e95]",
+                  ].join(" ")}
+                >
+                  {prayer.onTime ? "✓" : prayer.cue}
                 </span>
               </button>
             ))}
           </div>
         </article>
 
-        <article className="card dhikr-card">
-          <div className="section-row">
+        {/* ── DHIKR ──────────────────────────────────────── */}
+        <article
+          className="rounded-2xl p-5"
+          style={{
+            background: "linear-gradient(135deg, #0c1c12 0%, #17372c 100%)",
+          }}
+        >
+          <div className="flex items-start justify-between mb-3">
             <div>
-              <h2 className="section-title">Dhikr tracker</h2>
-              <p className="section-subtitle">
-                Keep remembrance alive between classes, bugs, and errands.
+              <h2 className="font-black text-white text-base">Dhikr tracker</h2>
+              <p className="text-[11px] text-[#6db898] mt-0.5">
+                Keep remembrance alive.
               </p>
             </div>
-            <div className="mini-chip">
-              {dhikrCount}/{dhikrGoal}
-            </div>
+            <span className="font-black text-[#f0cb6a] text-lg leading-none">
+              {dhikrCount}
+              <span className="text-[#6db898] font-normal text-sm">
+                /{dhikrGoal}
+              </span>
+            </span>
           </div>
-
-          <p className="dhikr-arabic">
+          <p
+            className="text-[#f0cb6a] text-base text-right mb-3 leading-relaxed"
+            dir="rtl"
+            lang="ar"
+          >
             سُبْحَانَ اللَّهِ • الْحَمْدُ لِلَّهِ • اللَّهُ أَكْبَر
           </p>
-
-          <div className="dhikr-meter" aria-hidden="true">
+          <div className="h-2 bg-white/[0.1] rounded-full overflow-hidden mb-4">
             <div
-              className="dhikr-meter-fill"
-              style={{ width: `${dhikrPercent}%` }}
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${dhikrPercent}%`,
+                background: "linear-gradient(90deg,#d3a74d,#f0cb6a)",
+              }}
             />
           </div>
-
-          <p className="helper-copy">
-            Use quick adds after salah, walking, or the end of a focus block.
-          </p>
-
-          <div className="dhikr-actions">
+          <div className="flex flex-wrap gap-2">
             {dhikrQuickSteps.map((step) => (
               <button
                 key={step}
                 type="button"
-                className="choice-button dhikr-step"
                 onClick={() => onAdjustDhikr(step)}
+                className="px-4 py-2.5 rounded-xl font-bold text-[13px] text-[#17372c] bg-[#f0cb6a] hover:bg-[#d3a74d] transition-colors active:scale-95"
               >
                 +{step}
               </button>
             ))}
-
             <button
               type="button"
-              className="ghost-button"
               onClick={() => onAdjustDhikr(-10)}
+              className="px-3 py-2.5 rounded-xl font-semibold text-[13px] text-[#6db898] border border-[#6db898]/30 hover:bg-white/[0.05] transition-colors active:scale-95"
             >
-              Undo 10
+              −10
             </button>
-
             <button
               type="button"
-              className="ghost-button"
               onClick={onResetDhikr}
+              className="px-3 py-2.5 rounded-xl font-semibold text-[13px] text-[#6db898]/60 border border-white/[0.1] hover:bg-white/[0.05] transition-colors active:scale-95"
             >
               Reset
             </button>
           </div>
         </article>
-      </section>
 
-      <div className="split-grid">
-        <section className="card sleep-card">
-          <div className="section-row">
-            <div>
-              <h2 className="section-title">Sleep logger</h2>
-              <p className="section-subtitle">
-                Two taps: bedtime preset, then wake time preset.
+        {/* ── SLEEP + MOOD ───────────────────────────────── */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h2 className="font-black text-[#18231f] text-base">
+                  Sleep logger
+                </h2>
+                <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                  Two taps to log.
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className={[
+                    "text-[11px] font-bold px-2.5 py-1 rounded-full",
+                    todayEntry.sleep
+                      ? "bg-[#1f5a46] text-[#f0cb6a]"
+                      : "bg-[#faf5eb] text-[#8a9e95]",
+                  ].join(" ")}
+                >
+                  {todayEntry.sleep ? "Logged" : "Pending"}
+                </span>
+                {todayEntry.sleep ? (
+                  <button
+                    type="button"
+                    onClick={onClearSleep}
+                    className="text-[11px] font-semibold text-[#8a9e95] hover:text-red-400 transition-colors"
+                  >
+                    Clear
+                  </button>
+                ) : null}
+              </div>
+            </div>
+            <div className="mb-3">
+              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-2">
+                Bedtime
               </p>
+              <div className="flex flex-wrap gap-1.5">
+                {bedtimePresets.map((preset) => (
+                  <button
+                    key={preset.value}
+                    type="button"
+                    onClick={() => onSleepSelection("bedtime", preset.value)}
+                    className={[
+                      "px-3 py-1.5 rounded-xl text-[12px] font-semibold transition-all active:scale-95",
+                      currentBedtime === preset.value
+                        ? "bg-[#17372c] text-[#f0cb6a]"
+                        : "bg-[#faf5eb] text-[#5d6f65] hover:bg-[#1f5a46]/[0.08]",
+                    ].join(" ")}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
             </div>
-            {todayEntry.sleep ? (
-              <button
-                type="button"
-                className="ghost-button"
-                onClick={onClearSleep}
-              >
-                Clear
-              </button>
-            ) : null}
-          </div>
-
-          <div className="field">
-            <span className="field-label">Bedtime</span>
-            <div className="preset-row">
-              {bedtimePresets.map((preset) => (
-                <button
-                  key={preset.value}
-                  type="button"
-                  className={`preset-button${currentBedtime === preset.value ? " is-active" : ""}`}
-                  onClick={() => onSleepSelection("bedtime", preset.value)}
-                >
-                  {preset.label}
-                </button>
-              ))}
+            <div className="mb-4">
+              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-2">
+                Wake time
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {wakeTimePresets.map((preset) => (
+                  <button
+                    key={preset.value}
+                    type="button"
+                    onClick={() => onSleepSelection("wakeTime", preset.value)}
+                    className={[
+                      "px-3 py-1.5 rounded-xl text-[12px] font-semibold transition-all active:scale-95",
+                      currentWakeTime === preset.value
+                        ? "bg-[#17372c] text-[#f0cb6a]"
+                        : "bg-[#faf5eb] text-[#5d6f65] hover:bg-[#1f5a46]/[0.08]",
+                    ].join(" ")}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-
-          <div className="field">
-            <span className="field-label">Wake time</span>
-            <div className="preset-row">
-              {wakeTimePresets.map((preset) => (
-                <button
-                  key={preset.value}
-                  type="button"
-                  className={`preset-button${currentWakeTime === preset.value ? " is-active" : ""}`}
-                  onClick={() => onSleepSelection("wakeTime", preset.value)}
-                >
-                  {preset.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="sleep-summary">
-            <div>
-              <p className="muted">Tonight’s signal</p>
-              <p className="sleep-result">
+            <div className="bg-[#faf5eb] rounded-xl p-3">
+              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-1">
+                Tonight's signal
+              </p>
+              <p className="text-[13px] font-semibold text-[#18231f]">
                 {todayEntry.sleep
                   ? `${todayEntry.sleep.hours} hours recovered`
                   : "Select both presets to log sleep."}
               </p>
             </div>
-            <div className="mini-chip">
-              {todayEntry.sleep ? "Logged" : "Pending"}
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="card mood-card">
-          <div className="section-row">
-            <div>
-              <h2 className="section-title">Mood check</h2>
-              <p className="section-subtitle">
-                One tap keeps your trend honest.
-              </p>
-            </div>
-            <Link className="ghost-link" to="/stats">
-              View trend
-            </Link>
-          </div>
-
-          <div className="emoji-row">
-            {moodOptions.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                className={`emoji-button mood-option${todayEntry.mood === option.value ? " is-active" : ""}`}
-                onClick={() => onMoodChange(option.value)}
+          <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h2 className="font-black text-[#18231f] text-base">
+                  Mood check
+                </h2>
+                <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                  One tap keeps the trend honest.
+                </p>
+              </div>
+              <Link
+                className="text-[11px] font-semibold text-[#1f5a46] hover:text-[#17372c] transition-colors"
+                to="/stats"
               >
-                <span className="mood-emoji" aria-hidden="true">
-                  {option.emoji}
-                </span>
-                <span className="mood-label">{option.label}</span>
-              </button>
-            ))}
-          </div>
+                View trend
+              </Link>
+            </div>
+            <div className="flex flex-col gap-2 mb-4">
+              {moodOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => onMoodChange(option.value)}
+                  className={[
+                    "flex items-center gap-3 p-3 rounded-xl border-2 text-left transition-all duration-150 active:scale-[0.98]",
+                    todayEntry.mood === option.value
+                      ? "border-[#1f5a46] bg-[#1f5a46]/[0.06]"
+                      : "border-transparent bg-[#faf5eb] hover:border-[#1f5a46]/20",
+                  ].join(" ")}
+                >
+                  <span className="text-xl shrink-0" aria-hidden="true">
+                    {option.emoji}
+                  </span>
+                  <span
+                    className={[
+                      "text-[13px] font-semibold flex-1",
+                      todayEntry.mood === option.value
+                        ? "text-[#1f5a46]"
+                        : "text-[#18231f]",
+                    ].join(" ")}
+                  >
+                    {option.label}
+                  </span>
+                  {todayEntry.mood === option.value && (
+                    <span className="text-[#1f5a46] font-bold shrink-0">✓</span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <div className="bg-[#faf5eb] rounded-xl p-3 flex items-center justify-between">
+              <div>
+                <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-1">
+                  Current mood
+                </p>
+                <p className="text-[13px] font-semibold text-[#18231f]">
+                  {mood ? `${mood.emoji} ${mood.label}` : "Not checked in yet"}
+                </p>
+              </div>
+              <Link
+                className="text-[11px] font-semibold text-[#1f5a46] border border-[#1f5a46]/30 px-2.5 py-1.5 rounded-lg hover:bg-[#1f5a46]/[0.06] transition-colors shrink-0"
+                to="/heatmap"
+              >
+                Weekly
+              </Link>
+            </div>
+          </section>
+        </div>
 
-          <div className="sleep-summary">
+        {/* ── JOURNAL ────────────────────────────────────── */}
+        <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+          <div className="flex items-start justify-between mb-4">
             <div>
-              <p className="muted">Current mood</p>
-              <p className="sleep-result">
-                {mood ? `${mood.emoji} ${mood.label}` : "Not checked in yet"}
+              <h2 className="font-black text-[#18231f] text-base">
+                Daily capture
+              </h2>
+              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                One win + one dua.
               </p>
             </div>
-            <Link className="mini-button" to="/heatmap">
-              Weekly view
-            </Link>
+            <span
+              className={[
+                "text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0",
+                journalReady
+                  ? "bg-[#1f5a46] text-[#f0cb6a]"
+                  : "bg-[#faf5eb] text-[#8a9e95]",
+              ].join(" ")}
+            >
+              {journalReady ? "Saved" : "Optional"}
+            </span>
+          </div>
+          <div className="flex flex-col gap-3">
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">
+                One-line win
+              </span>
+              <textarea
+                className="w-full bg-[#faf5eb] rounded-xl p-3.5 text-[13px] text-[#18231f] placeholder:text-[#8a9e95] outline-none focus:ring-2 focus:ring-[#1f5a46]/25 resize-none leading-relaxed"
+                rows={4}
+                maxLength={220}
+                value={todayEntry.reflection ?? ""}
+                onChange={(event) =>
+                  onDailyNoteChange("reflection", event.target.value)
+                }
+                placeholder="What moved forward today?"
+              />
+            </label>
+            <label className="flex flex-col gap-1.5">
+              <span className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">
+                Dua / support ask
+              </span>
+              <textarea
+                className="w-full bg-[#faf5eb] rounded-xl p-3.5 text-[13px] text-[#18231f] placeholder:text-[#8a9e95] outline-none focus:ring-2 focus:ring-[#1f5a46]/25 resize-none leading-relaxed"
+                rows={4}
+                maxLength={220}
+                value={todayEntry.dua ?? ""}
+                onChange={(event) =>
+                  onDailyNoteChange("dua", event.target.value)
+                }
+                placeholder="What are you asking Allah to open for you right now?"
+              />
+            </label>
           </div>
         </section>
       </div>
-
-      <section className="card journal-card">
-        <div className="section-row">
-          <div>
-            <h2 className="section-title">Daily capture</h2>
-            <p className="section-subtitle">
-              Store one win and one dua so your day leaves evidence behind.
-            </p>
-          </div>
-          <div className="mini-chip">{journalReady ? "Saved" : "Optional"}</div>
-        </div>
-
-        <div className="journal-grid">
-          <label className="field">
-            <span className="field-label">One-line win</span>
-            <textarea
-              className="text-area"
-              rows={4}
-              maxLength={220}
-              value={todayEntry.reflection ?? ""}
-              onChange={(event) =>
-                onDailyNoteChange("reflection", event.target.value)
-              }
-              placeholder="What moved forward today?"
-            />
-          </label>
-
-          <label className="field">
-            <span className="field-label">Dua / support ask</span>
-            <textarea
-              className="text-area"
-              rows={4}
-              maxLength={220}
-              value={todayEntry.dua ?? ""}
-              onChange={(event) => onDailyNoteChange("dua", event.target.value)}
-              placeholder="What are you asking Allah to open for you right now?"
-            />
-          </label>
-        </div>
-      </section>
     </div>
   );
 }

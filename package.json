@@ -13,11 +13,13 @@
     "@fontsource/noto-naskh-arabic": "^5.2.11",
     "@fontsource/space-grotesk": "^5.2.10",
     "@supabase/supabase-js": "^2.105.1",
+    "@tailwindcss/vite": "^4.2.4",
     "date-fns": "^4.1.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router-dom": "^7.14.2",
-    "recharts": "^3.8.1"
+    "recharts": "^3.8.1",
+    "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

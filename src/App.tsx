@@ -3,6 +3,8 @@ import type { FormEvent } from "react";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthScreen } from "./components/AuthScreen";
 import { BottomNav } from "./components/BottomNav";
+import { ToastContainer } from "./components/ToastContainer";
+import { toast } from "./lib/toast";
 import { HomeScreen } from "./components/HomeScreen";
 import {
   BEDTIME_PRESETS,
@@ -457,11 +459,22 @@ function App() {
 
   function handleToggleHabit(habitId: string) {
     updateTodayEntry((entry) => {
-      const completedHabitIds = entry.completedHabitIds.includes(habitId)
-        ? entry.completedHabitIds.filter(
+      const isAdding = !entry.completedHabitIds.includes(habitId);
+      const completedHabitIds = isAdding
+        ? [...entry.completedHabitIds, habitId]
+        : entry.completedHabitIds.filter(
             (currentHabitId) => currentHabitId !== habitId,
-          )
-        : [...entry.completedHabitIds, habitId];
+          );
+
+      if (
+        isAdding &&
+        activeHabits.length > 0 &&
+        activeHabits.every((h) => completedHabitIds.includes(h.id))
+      ) {
+        queueMicrotask(() => {
+          toast.success("All Habits Complete!", "Stack sealed for today 🔥");
+        });
+      }
 
       return {
         ...entry,
@@ -485,28 +498,47 @@ function App() {
   }
 
   function handleTogglePrayer(prayerId: PrayerName) {
-    updateTodayEntry((entry) => ({
-      ...entry,
-      prayers:
+    updateTodayEntry((entry) => {
+      const newPrayers =
         entry.prayers?.map((item) =>
-          item.id === prayerId
-            ? {
-                ...item,
-                onTime: !item.onTime,
-              }
-            : item,
-        ) ?? [],
-    }));
+          item.id === prayerId ? { ...item, onTime: !item.onTime } : item,
+        ) ?? [];
+
+      const wasAllDone = (entry.prayers ?? []).every((p) => p.onTime);
+      const isAllDone =
+        newPrayers.length === 5 && newPrayers.every((p) => p.onTime);
+
+      if (!wasAllDone && isAllDone) {
+        queueMicrotask(() => {
+          toast.islamic(
+            "All 5 Prayers Complete",
+            "الحمد لله",
+            "May Allah accept your salah",
+          );
+        });
+      }
+
+      return { ...entry, prayers: newPrayers };
+    });
   }
 
   function handleAdjustDhikr(delta: number) {
-    updateTodayEntry((entry) => ({
-      ...entry,
-      dhikrCount: Math.max(
-        0,
-        Math.min(DHIKR_GOAL, (entry.dhikrCount ?? 0) + delta),
-      ),
-    }));
+    updateTodayEntry((entry) => {
+      const prev = entry.dhikrCount ?? 0;
+      const next = Math.max(0, Math.min(DHIKR_GOAL, prev + delta));
+
+      if (prev < DHIKR_GOAL && next >= DHIKR_GOAL) {
+        queueMicrotask(() => {
+          toast.islamic(
+            "Dhikr Goal Reached!",
+            "سبحان الله",
+            "100 remembrances completed",
+          );
+        });
+      }
+
+      return { ...entry, dhikrCount: next };
+    });
   }
 
   function handleResetDhikr() {
@@ -517,6 +549,15 @@ function App() {
   }
 
   function handleToggleQuranStudy() {
+    if (!todayEntry.quranStudyDone) {
+      queueMicrotask(() => {
+        toast.islamic(
+          "Quran Study Complete",
+          "بارك الله فيك",
+          "Reading recorded for today",
+        );
+      });
+    }
     updateTodayEntry((entry) => ({
       ...entry,
       quranStudyDone: !entry.quranStudyDone,
@@ -524,6 +565,15 @@ function App() {
   }
 
   function handleWaterCupsChange(value: number) {
+    const prev = todayEntry.waterCups ?? 0;
+    if (prev < WATER_GOAL && value >= WATER_GOAL) {
+      queueMicrotask(() => {
+        toast.success(
+          "Hydration Goal Reached!",
+          `${WATER_GOAL} cups — body fueled 💧`,
+        );
+      });
+    }
     updateTodayEntry((entry) => ({
       ...entry,
       waterCups: Math.max(0, Math.min(WATER_GOAL, value)),
@@ -546,18 +596,24 @@ function App() {
   }
 
   function handleToggleFocusItem(focusId: string) {
-    updateTodayEntry((entry) => ({
-      ...entry,
-      focusItems:
+    updateTodayEntry((entry) => {
+      const isCompleting = !(
+        entry.focusItems?.find((i) => i.id === focusId)?.done ?? false
+      );
+      const newFocusItems =
         entry.focusItems?.map((item) =>
-          item.id === focusId
-            ? {
-                ...item,
-                done: !item.done,
-              }
-            : item,
-        ) ?? [],
-    }));
+          item.id === focusId ? { ...item, done: !item.done } : item,
+        ) ?? [];
+
+      const filled = newFocusItems.filter((i) => i.text?.trim());
+      if (isCompleting && filled.length > 0 && filled.every((i) => i.done)) {
+        queueMicrotask(() => {
+          toast.success("Focus Blocks Done!", "Deep work logged 🎯");
+        });
+      }
+
+      return { ...entry, focusItems: newFocusItems };
+    });
   }
 
   function handleDailyNoteChange(field: "reflection" | "dua", value: string) {
@@ -690,6 +746,11 @@ function App() {
 
     try {
       await signInWithEmail(email, password);
+      toast.islamic(
+        `Welcome back, ${email.split("@")[0]}`,
+        "بسم الله",
+        "Your stack is loading…",
+      );
       setAuthDraft((current) => ({
         ...current,
         password: "",
@@ -717,32 +778,67 @@ function App() {
         <div className="ambient-orb ambient-orb-one" aria-hidden="true" />
         <div className="ambient-orb ambient-orb-two" aria-hidden="true" />
 
-        <header className="global-header page-width">
-          <div className="brand-block">
-            <div className="brand-mark">LS</div>
-            <div>
-              <p className="brand-title">LifeStack</p>
-              <p className="brand-subtitle">
-                One-minute check-ins for soul, study, and stamina
-              </p>
-            </div>
-          </div>
-          <div className="header-actions">
-            {authIdentity?.email ? (
-              <div className="status-badge account-badge">
-                {authIdentity.email}
-              </div>
-            ) : null}
-            <div className="status-badge">{backendLabel}</div>
-            {authIdentity ? (
-              <button
-                type="button"
-                className="ghost-button header-button"
-                onClick={handleSignOut}
+        <header
+          className="sticky top-0 z-40 border-b border-black/[0.06]"
+          style={{
+            background: "rgba(247,241,228,0.9)",
+            backdropFilter: "blur(24px) saturate(1.4)",
+            WebkitBackdropFilter: "blur(24px) saturate(1.4)",
+            paddingTop: "env(safe-area-inset-top, 0px)",
+          }}
+        >
+          <div className="page-width flex items-center justify-between px-4 h-14">
+            {/* Brand */}
+            <div className="flex items-center gap-2.5">
+              <div
+                className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-[#d3a74d] text-[11px] font-black tracking-tight"
+                style={{
+                  background: "#17372c",
+                  boxShadow: "0 2px 10px rgba(23,55,44,0.32)",
+                }}
               >
-                Sign out
-              </button>
-            ) : null}
+                LS
+              </div>
+              <div className="leading-none">
+                <p className="font-bold text-[#18231f] text-sm tracking-tight m-0 leading-tight">
+                  LifeStack
+                </p>
+                <p className="text-[10px] text-[#8a9e95] mt-0.5 m-0 leading-tight">
+                  Soul · Study · Stamina
+                </p>
+              </div>
+            </div>
+
+            {/* Status + sign-out */}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
+                <div
+                  className={`w-2 h-2 rounded-full shrink-0 transition-colors duration-500 ${
+                    backendStatus === "synced"
+                      ? "bg-[#2f8a67]"
+                      : backendStatus === "syncing" ||
+                          backendStatus === "connecting"
+                        ? "bg-[#2f8a67] animate-pulse"
+                        : backendStatus === "offline"
+                          ? "bg-amber-400"
+                          : "bg-gray-300"
+                  }`}
+                  title={backendLabel}
+                />
+                <span className="hidden sm:block text-[10px] text-[#8a9e95] font-medium max-w-[140px] truncate">
+                  {backendLabel}
+                </span>
+              </div>
+              {authIdentity ? (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="text-[11px] font-semibold text-[#5d6f65] hover:text-[#1f5a46] transition-colors px-2.5 py-1.5 rounded-lg hover:bg-[#1f5a46]/[0.08] active:scale-95"
+                >
+                  Sign out
+                </button>
+              ) : null}
+            </div>
           </div>
         </header>
 
@@ -878,11 +974,9 @@ function App() {
           )}
         </main>
 
-        {!isSecureLocked && !isHydratingSecureState ? (
-          <div className="page-width nav-wrap">
-            <BottomNav />
-          </div>
-        ) : null}
+        {!isSecureLocked && !isHydratingSecureState ? <BottomNav /> : null}
+
+        <ToastContainer />
       </div>
     </HashRouter>
   );
