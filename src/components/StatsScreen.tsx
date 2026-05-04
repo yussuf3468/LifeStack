@@ -196,7 +196,12 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
                       y1={y}
                       y2={y}
                     />
-                    <text fill="rgba(255,253,248,0.4)" fontSize="16" x={6} y={y + 4}>
+                    <text
+                      fill="rgba(255,253,248,0.4)"
+                      fontSize="16"
+                      x={6}
+                      y={y + 4}
+                    >
                       {value}
                     </text>
                   </g>
@@ -305,4 +310,3 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
     </div>
   );
 }
-

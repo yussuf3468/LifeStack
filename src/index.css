@@ -2350,43 +2350,93 @@ div.bg-white.border {
 }
 
 /* ── Border colors ── */
-.border-black\/\[0\.04\] { border-color: rgba(255, 253, 248, 0.06) !important; }
-.border-black\/\[0\.05\] { border-color: rgba(255, 253, 248, 0.07) !important; }
-.border-black\/\[0\.06\] { border-color: rgba(255, 253, 248, 0.08) !important; }
-.border-black\/\[0\.07\] { border-color: rgba(255, 253, 248, 0.08) !important; }
-.border-black\/\[0\.08\] { border-color: rgba(255, 253, 248, 0.09) !important; }
-.border-black\/\[0\.1\]  { border-color: rgba(255, 253, 248, 0.1)  !important; }
-.border-black\/\[0\.12\] { border-color: rgba(255, 253, 248, 0.12) !important; }
-.border-black\/\[0\.15\] { border-color: rgba(255, 253, 248, 0.14) !important; }
+.border-black\/\[0\.04\] {
+  border-color: rgba(255, 253, 248, 0.06) !important;
+}
+.border-black\/\[0\.05\] {
+  border-color: rgba(255, 253, 248, 0.07) !important;
+}
+.border-black\/\[0\.06\] {
+  border-color: rgba(255, 253, 248, 0.08) !important;
+}
+.border-black\/\[0\.07\] {
+  border-color: rgba(255, 253, 248, 0.08) !important;
+}
+.border-black\/\[0\.08\] {
+  border-color: rgba(255, 253, 248, 0.09) !important;
+}
+.border-black\/\[0\.1\] {
+  border-color: rgba(255, 253, 248, 0.1) !important;
+}
+.border-black\/\[0\.12\] {
+  border-color: rgba(255, 253, 248, 0.12) !important;
+}
+.border-black\/\[0\.15\] {
+  border-color: rgba(255, 253, 248, 0.14) !important;
+}
 
 /* Sand border (prayer card undone) → dim white */
-.border-\[\#e8decb\] { border-color: rgba(255, 253, 248, 0.12) !important; }
+.border-\[\#e8decb\] {
+  border-color: rgba(255, 253, 248, 0.12) !important;
+}
 
 /* Emerald active border → gold */
-.border-\[\#1f5a46\] { border-color: #d3a74d !important; }
+.border-\[\#1f5a46\] {
+  border-color: #d3a74d !important;
+}
 
 /* Emerald opacity borders → gold opacity */
-.border-\[\#1f5a46\]\/20 { border-color: rgba(211, 167, 77, 0.2) !important; }
-.border-\[\#1f5a46\]\/30 { border-color: rgba(211, 167, 77, 0.3) !important; }
-.border-\[\#1f5a46\]\/40 { border-color: rgba(211, 167, 77, 0.4) !important; }
+.border-\[\#1f5a46\]\/20 {
+  border-color: rgba(211, 167, 77, 0.2) !important;
+}
+.border-\[\#1f5a46\]\/30 {
+  border-color: rgba(211, 167, 77, 0.3) !important;
+}
+.border-\[\#1f5a46\]\/40 {
+  border-color: rgba(211, 167, 77, 0.4) !important;
+}
 
 /* ── Active tint backgrounds ── */
-.bg-\[\#1f5a46\]\/\[0\.06\] { background-color: rgba(211, 167, 77, 0.1)  !important; }
-.bg-\[\#1f5a46\]\/\[0\.08\] { background-color: rgba(211, 167, 77, 0.1)  !important; }
-.bg-\[\#1f5a46\]\/10       { background-color: rgba(211, 167, 77, 0.12) !important; }
+.bg-\[\#1f5a46\]\/\[0\.06\] {
+  background-color: rgba(211, 167, 77, 0.1) !important;
+}
+.bg-\[\#1f5a46\]\/\[0\.08\] {
+  background-color: rgba(211, 167, 77, 0.1) !important;
+}
+.bg-\[\#1f5a46\]\/10 {
+  background-color: rgba(211, 167, 77, 0.12) !important;
+}
 
 /* ── Hover overrides ── */
-.hover\:bg-\[\#f0ede4\]:hover          { background-color: rgba(255, 253, 248, 0.12) !important; }
-.hover\:bg-\[\#1f5a46\]\/\[0\.05\]:hover { background-color: rgba(211, 167, 77, 0.08) !important; }
-.hover\:bg-\[\#1f5a46\]\/\[0\.06\]:hover { background-color: rgba(211, 167, 77, 0.1)  !important; }
-.hover\:bg-\[\#1f5a46\]\/\[0\.08\]:hover { background-color: rgba(211, 167, 77, 0.1)  !important; }
-.hover\:border-\[\#1f5a46\]:hover      { border-color: #d3a74d !important; }
-.hover\:border-\[\#1f5a46\]\/40:hover  { border-color: rgba(211, 167, 77, 0.4) !important; }
-.hover\:text-\[\#17372c\]:hover        { color: #f0cb6a !important; }
-.hover\:text-\[\#1f5a46\]:hover        { color: #f0cb6a !important; }
+.hover\:bg-\[\#f0ede4\]:hover {
+  background-color: rgba(255, 253, 248, 0.12) !important;
+}
+.hover\:bg-\[\#1f5a46\]\/\[0\.05\]:hover {
+  background-color: rgba(211, 167, 77, 0.08) !important;
+}
+.hover\:bg-\[\#1f5a46\]\/\[0\.06\]:hover {
+  background-color: rgba(211, 167, 77, 0.1) !important;
+}
+.hover\:bg-\[\#1f5a46\]\/\[0\.08\]:hover {
+  background-color: rgba(211, 167, 77, 0.1) !important;
+}
+.hover\:border-\[\#1f5a46\]:hover {
+  border-color: #d3a74d !important;
+}
+.hover\:border-\[\#1f5a46\]\/40:hover {
+  border-color: rgba(211, 167, 77, 0.4) !important;
+}
+.hover\:text-\[\#17372c\]:hover {
+  color: #f0cb6a !important;
+}
+.hover\:text-\[\#1f5a46\]:hover {
+  color: #f0cb6a !important;
+}
 
 /* ── Focus overrides ── */
-.focus\:border-\[\#1f5a46\]:focus { border-color: rgba(211, 167, 77, 0.5) !important; }
+.focus\:border-\[\#1f5a46\]:focus {
+  border-color: rgba(211, 167, 77, 0.5) !important;
+}
 
 /* ── Placeholder text ── */
 .placeholder\:text-\[\#657a71\]::placeholder {
@@ -2397,3 +2447,19 @@ div.bg-white.border {
 
 /* ── Ensure stat/streak text bg stays dark emerald as badge bg ── */
 /* bg-[#1f5a46] solid (no opacity suffix) stays as dark emerald — correct for badge bg */
+
+/* ── Selected state border (emoji color picker ring) ── */
+.border-\[\#18231f\] {
+  border-color: rgba(255, 253, 248, 0.85) !important;
+}
+
+/* ── Destructive / delete button (red on dark bg) ── */
+.text-red-600 {
+  color: #ff8080 !important;
+}
+.border-red-200 {
+  border-color: rgba(220, 60, 60, 0.3) !important;
+}
+.hover\:border-red-400:hover {
+  border-color: rgba(220, 60, 60, 0.6) !important;
+}

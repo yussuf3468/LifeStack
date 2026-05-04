@@ -190,7 +190,9 @@ export function HeatmapScreen({ habits, daily }: HeatmapScreenProps) {
                           ? "ring-1 ring-[#f0cb6a] ring-offset-1"
                           : "",
                         day.isFuture ? "opacity-25" : "",
-                        !day.done && !day.scheduled ? "bg-[rgba(255,253,248,0.08)]" : "",
+                        !day.done && !day.scheduled
+                          ? "bg-[rgba(255,253,248,0.08)]"
+                          : "",
                       ]
                         .filter(Boolean)
                         .join(" ")}
@@ -220,4 +222,3 @@ export function HeatmapScreen({ habits, daily }: HeatmapScreenProps) {
     </div>
   );
 }
-
