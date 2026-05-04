@@ -50,109 +50,84 @@ export function QuranScreen({
   const quranStreak = getQuranStudyStreak(daily);
 
   return (
-    <div className="screen">
-      <header className="screen-header">
-        <div className="screen-topline">
-          <div>
-            <p className="muted">Daily study</p>
-            <h1 className="screen-title">Quran</h1>
-            <p className="screen-copy">
-              One page, short tafseer, and a practical takeaway you can keep for
-              years.
-            </p>
+    <div className="flex flex-col gap-4 pb-4">
+
+      {/* ── HERO ── */}
+      <section
+        className="rounded-2xl px-5 pt-5 pb-6"
+        style={{ background: "linear-gradient(145deg, #0c1c12 0%, #17372c 85%)" }}
+      >
+        <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">Daily study</p>
+        <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">Quran</h1>
+        <p className="text-[#6db898] text-sm mt-1">One page, short tafseer, a practical takeaway.</p>
+        <div className="mt-4 flex items-center justify-between">
+          <div className="flex gap-4">
+            <div className="text-center">
+              <p className="font-black text-[#f0cb6a] text-lg leading-none">{quranStreak}</p>
+              <p className="text-[10px] text-[#6db898] mt-0.5">Day streak</p>
+            </div>
+            <div className="text-center">
+              <p className="font-black text-[#f0cb6a] text-lg leading-none">{completedCount}</p>
+              <p className="text-[10px] text-[#6db898] mt-0.5">Last 21 days</p>
+            </div>
+            <div className="text-center">
+              <p className="font-black text-[#f0cb6a] text-lg leading-none">{studyPage.page}</p>
+              <p className="text-[10px] text-[#6db898] mt-0.5">Today's page</p>
+            </div>
           </div>
-          <Link className="text-link" to="/stats">
-            Open stats
+          <Link className="text-[11px] font-semibold text-[#6db898] border border-[#6db898]/30 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] transition-colors" to="/stats">
+            Stats →
           </Link>
         </div>
-      </header>
-
-      <section
-        className={`card quran-study-card quran-screen-card${quranStudyDone ? " is-done" : ""}`}
-      >
-        <div className="section-row quran-study-topline">
-          <div>
-            <p className="section-subtitle">Today&apos;s reading</p>
-            <h2 className="section-title">Page {studyPage.page}</h2>
-          </div>
-          <div className="mini-chip">
-            {quranStudyDone ? "Logged" : "Pending"}
-          </div>
-        </div>
-
-        <p className="quran-study-surah">{studyPage.surah}</p>
-        <p className="quran-study-arabic">{studyPage.arabic}</p>
-        <p className="quran-study-copy">{studyPage.translation}</p>
-
-        <div className="tafsir-panel">
-          <p className="muted">Tafseer snapshot</p>
-          <p className="quran-study-tafsir">{studyPage.tafsir}</p>
-        </div>
-
-        <div className="quran-study-footer">
-          <p className="helper-copy quran-study-practice">
-            {studyPage.practice}
-          </p>
-          <button
-            type="button"
-            className={`secondary-button quran-study-button${quranStudyDone ? " is-active" : ""}`}
-            onClick={onToggleStudy}
-          >
-            {quranStudyDone ? "Reading logged" : "Mark page + tafseer done"}
-          </button>
-        </div>
       </section>
 
-      <section className="stats-grid quran-stats-grid">
-        <article className="card stats-card">
-          <p className="muted">Current streak</p>
-          <strong className="stats-number">{quranStreak}</strong>
-          <p className="stats-label">
-            Consecutive days with Quran study logged
-          </p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">21-day completions</p>
-          <strong className="stats-number">{completedCount}</strong>
-          <p className="stats-label">Recent page + tafseer check-ins</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Today&apos;s page</p>
-          <strong className="stats-number">{studyPage.page}</strong>
-          <p className="stats-label">
-            Rotates by date so the reading keeps moving
-          </p>
-        </article>
+      {/* ── TODAY'S READING ── */}
+      <section className={["bg-white border-2 rounded-2xl p-5 transition-colors", quranStudyDone ? "border-[#1f5a46]" : "border-black/[0.06]"].join(" ")}>
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <p className="text-[11px] text-[#8a9e95] font-bold uppercase tracking-wider">Today's reading</p>
+            <h2 className="font-black text-[#18231f] text-base mt-0.5">Page {studyPage.page}</h2>
+          </div>
+          <span className={["text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0", quranStudyDone ? "bg-[#1f5a46] text-[#f0cb6a]" : "bg-[#faf5eb] text-[#8a9e95]"].join(" ")}>
+            {quranStudyDone ? "✓ Logged" : "Pending"}
+          </span>
+        </div>
+        <p className="text-[#5d6f65] font-semibold text-sm mb-2">{studyPage.surah}</p>
+        <p className="text-[#18231f] text-xl leading-relaxed text-right mb-4" dir="rtl" lang="ar">{studyPage.arabic}</p>
+        <p className="text-[#5d6f65] text-[13px] leading-relaxed mb-3">{studyPage.translation}</p>
+        <div className="bg-[#faf5eb] rounded-xl p-3 mb-4">
+          <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-1">Tafseer snapshot</p>
+          <p className="text-[12px] text-[#5d6f65] leading-relaxed">{studyPage.tafsir}</p>
+        </div>
+        <p className="text-[12px] text-[#8a9e95] mb-4 leading-relaxed">{studyPage.practice}</p>
+        <button
+          type="button"
+          onClick={onToggleStudy}
+          className={["w-full py-3 rounded-xl text-[13px] font-bold transition-all duration-200 active:scale-[0.98]", quranStudyDone ? "bg-[#1f5a46] text-[#f0cb6a]" : "bg-[#17372c] text-white hover:bg-[#1f5a46]"].join(" ")}
+        >
+          {quranStudyDone ? "✓ Reading logged" : "Mark page + tafseer done"}
+        </button>
       </section>
 
-      <section className="card list-card quran-history-card">
-        <div className="section-row">
-          <div>
-            <h2 className="chart-title">Recent reading log</h2>
-            <p className="chart-copy">
-              Keep a visible trail of days you read the page and its tafseer.
-            </p>
-          </div>
-        </div>
-
-        <div className="quran-history-list">
+      {/* ── RECENT LOG ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">Recent reading log</h2>
+        <p className="text-[11px] text-[#8a9e95] mb-4">21-day trail — page read and tafseer done.</p>
+        <div className="flex flex-col gap-0">
           {recentStudy.map((item) => (
-            <article key={item.dateKey} className="history-row">
+            <div key={item.dateKey} className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0">
               <div>
-                <p className="stats-copy">{item.label}</p>
-                <p className="helper-copy">
-                  Page {item.page.page} • {item.page.surah}
-                </p>
+                <p className="text-[13px] font-semibold text-[#18231f]">{item.label}</p>
+                <p className="text-[11px] text-[#8a9e95] mt-0.5">Page {item.page.page} · {item.page.surah}</p>
               </div>
-              <span className={`history-pill${item.done ? " is-done" : ""}`}>
+              <span className={["text-[11px] font-bold px-2.5 py-0.5 rounded-full shrink-0 ml-3", item.done ? "bg-[#1f5a46] text-[#f0cb6a]" : "bg-[#faf5eb] text-[#8a9e95]"].join(" ")}>
                 {item.done ? "Done" : "Pending"}
               </span>
-            </article>
+            </div>
           ))}
         </div>
       </section>
+
     </div>
   );
 }

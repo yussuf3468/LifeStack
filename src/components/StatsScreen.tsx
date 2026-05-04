@@ -24,10 +24,7 @@ const chartHeight = 260;
 const chartPadding = { top: 18, right: 18, bottom: 34, left: 24 };
 
 function buildChartPath(points: Array<{ x: number; y: number }>) {
-  if (points.length === 0) {
-    return "";
-  }
-
+  if (points.length === 0) return "";
   return points
     .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`)
     .join(" ");
@@ -49,24 +46,15 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
       completionRate: getHabitCompletionRate(habit, daily),
       ...getHabitStreak(habit, daily),
     }))
-    .sort(
-      (left, right) =>
-        right.current - left.current || right.longest - left.longest,
-    );
+    .sort((left, right) => right.current - left.current || right.longest - left.longest);
 
   const currentStreaks = streaks.filter((streak) => streak.current > 0);
-  const longestStreaks = [...streaks].sort(
-    (left, right) => right.longest - left.longest,
-  );
+  const longestStreaks = [...streaks].sort((left, right) => right.longest - left.longest);
 
   const innerWidth = chartWidth - chartPadding.left - chartPadding.right;
   const innerHeight = chartHeight - chartPadding.top - chartPadding.bottom;
   const points = moodTrend.map((entry, index) => ({
-    x:
-      chartPadding.left +
-      (moodTrend.length === 1
-        ? innerWidth / 2
-        : (index / (moodTrend.length - 1)) * innerWidth),
+    x: chartPadding.left + (moodTrend.length === 1 ? innerWidth / 2 : (index / (moodTrend.length - 1)) * innerWidth),
     y: chartPadding.top + ((5 - entry.mood) / 4) * innerHeight,
     label: entry.label,
     date: entry.date,
@@ -74,210 +62,128 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
   const chartPath = buildChartPath(points);
 
   return (
-    <div className="screen">
-      <header className="screen-header">
-        <div className="screen-topline">
-          <div>
-            <p className="muted">Signal board</p>
-            <h1 className="screen-title">Stats</h1>
-            <p className="screen-copy">
-              Sleep, mood, Quran, and faith signals without dashboard bloat.
-            </p>
-          </div>
-          <Link className="text-link" to="/heatmap">
-            Open heatmap
+    <div className="flex flex-col gap-4 pb-4">
+
+      {/* ── HERO ── */}
+      <section
+        className="rounded-2xl px-5 pt-5 pb-6"
+        style={{ background: "linear-gradient(145deg, #17372c 0%, #1f5a46 85%)" }}
+      >
+        <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">Signal board</p>
+        <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">Stats</h1>
+        <p className="text-[#6db898] text-sm mt-1">Sleep, mood, Quran, and faith signals without dashboard bloat.</p>
+        <div className="mt-4 flex justify-end">
+          <Link
+            className="text-[11px] font-semibold text-[#6db898] border border-[#6db898]/30 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] transition-colors"
+            to="/heatmap"
+          >
+            Heatmap →
           </Link>
         </div>
-      </header>
-
-      <section className="stats-grid">
-        <article className="card stats-card">
-          <p className="muted">Average sleep</p>
-          <strong className="stats-number">
-            {sleepAverage ? `${sleepAverage}h` : "--"}
-          </strong>
-          <p className="stats-label">Across the last 14 days</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Mood average</p>
-          <strong className="stats-number">
-            {moodAverage ? `${moodAverage}/5` : "--"}
-          </strong>
-          <p className="stats-label">Recent emotional baseline</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Prayers on time</p>
-          <strong className="stats-number">
-            {prayerAverage ? `${prayerAverage}/5` : "--"}
-          </strong>
-          <p className="stats-label">Average protected prayers over 14 days</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Average dhikr</p>
-          <strong className="stats-number">
-            {dhikrAverage ? `${dhikrAverage}/100` : "--"}
-          </strong>
-          <p className="stats-label">Average daily remembrance count</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Quran study days</p>
-          <strong className="stats-number">{quranStudyDays}</strong>
-          <p className="stats-label">Days with page + tafseer completed</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Best live streak</p>
-          <strong className="stats-number">
-            {currentStreaks[0]?.current ?? 0}
-          </strong>
-          <p className="stats-label">Days on your strongest active habit</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Average water</p>
-          <strong className="stats-number">
-            {waterAverage ? `${waterAverage}/8` : "--"}
-          </strong>
-          <p className="stats-label">Daily hydration over 14 days</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Focus follow-through</p>
-          <strong className="stats-number">
-            {focusAverage ? `${focusAverage}%` : "--"}
-          </strong>
-          <p className="stats-label">Completion of your top three priorities</p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Reflection days</p>
-          <strong className="stats-number">{journalDays}</strong>
-          <p className="stats-label">Days with a win or dua captured</p>
-        </article>
       </section>
 
-      <section className="card chart-card">
-        <div className="chart-meta">
-          <div>
-            <h2 className="chart-title">Mood trend</h2>
-            <p className="chart-copy">
-              A lightweight line chart over the last two weeks.
-            </p>
+      {/* ── STATS GRID ── */}
+      <div className="grid grid-cols-2 gap-3">
+        {[
+          { label: "Average sleep", value: sleepAverage ? `${sleepAverage}h` : "--", sub: "Across the last 14 days" },
+          { label: "Mood average", value: moodAverage ? `${moodAverage}/5` : "--", sub: "Recent emotional baseline" },
+          { label: "Prayers on time", value: prayerAverage ? `${prayerAverage}/5` : "--", sub: "Average protected over 14 days" },
+          { label: "Average dhikr", value: dhikrAverage ? `${dhikrAverage}/100` : "--", sub: "Average daily remembrance" },
+          { label: "Quran study days", value: String(quranStudyDays), sub: "Days with page + tafseer done" },
+          { label: "Best live streak", value: String(currentStreaks[0]?.current ?? 0), sub: "Strongest active habit" },
+          { label: "Average water", value: waterAverage ? `${waterAverage}/8` : "--", sub: "Daily hydration over 14 days" },
+          { label: "Focus follow-through", value: focusAverage ? `${focusAverage}%` : "--", sub: "Completion of top 3 priorities" },
+          { label: "Reflection days", value: String(journalDays), sub: "Days with win or dua captured" },
+        ].map(({ label, value, sub }) => (
+          <div key={label} className="bg-white border border-black/[0.06] rounded-2xl p-4">
+            <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">{label}</p>
+            <p className="font-black text-[#18231f] text-2xl mt-1 leading-none">{value}</p>
+            <p className="text-[11px] text-[#8a9e95] mt-1">{sub}</p>
           </div>
-          <div className="mini-chip">{moodTrend.length} logged days</div>
+        ))}
+      </div>
+
+      {/* ── MOOD CHART ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h2 className="font-black text-[#18231f] text-base">Mood trend</h2>
+            <p className="text-[11px] text-[#8a9e95] mt-0.5">Lightweight line chart over the last two weeks.</p>
+          </div>
+          <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#faf5eb] text-[#5d6f65] shrink-0">{moodTrend.length} logged</span>
         </div>
 
         {moodTrend.length > 0 ? (
-          <div className="chart-shell">
+          <div className="w-full overflow-x-auto rounded-xl">
             <svg
-              className="chart-svg"
+              className="w-full h-auto"
               viewBox={`0 0 ${chartWidth} ${chartHeight}`}
               role="img"
               aria-label="Mood trend chart"
             >
               {[1, 2, 3, 4, 5].map((value) => {
                 const y = chartPadding.top + ((5 - value) / 4) * innerHeight;
-
                 return (
                   <g key={value}>
-                    <line
-                      className="chart-grid-line"
-                      x1={chartPadding.left}
-                      x2={chartWidth - chartPadding.right}
-                      y1={y}
-                      y2={y}
-                    />
-                    <text className="chart-axis-label" x={6} y={y + 4}>
-                      {value}
-                    </text>
+                    <line stroke="#f0ede4" strokeWidth="1" x1={chartPadding.left} x2={chartWidth - chartPadding.right} y1={y} y2={y} />
+                    <text fill="#8a9e95" fontSize="16" x={6} y={y + 4}>{value}</text>
                   </g>
                 );
               })}
-
-              {chartPath ? <path className="chart-path" d={chartPath} /> : null}
-
+              {chartPath ? (
+                <path d={chartPath} fill="none" stroke="#2f8a67" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              ) : null}
               {points.map((point) => (
                 <g key={`${point.date}-${point.x}`}>
-                  <circle
-                    className="chart-point"
-                    cx={point.x}
-                    cy={point.y}
-                    r={6}
-                  />
-                  <text
-                    className="chart-point-label"
-                    x={point.x}
-                    y={chartHeight - 10}
-                    textAnchor="middle"
-                  >
-                    {point.date}
-                  </text>
+                  <circle cx={point.x} cy={point.y} r={6} fill="#1f5a46" />
+                  <circle cx={point.x} cy={point.y} r={3} fill="#f0cb6a" />
+                  <text fill="#8a9e95" fontSize="13" x={point.x} y={chartHeight - 10} textAnchor="middle">{point.date}</text>
                   <title>{`${point.date}: ${point.label}`}</title>
                 </g>
               ))}
             </svg>
           </div>
         ) : (
-          <div className="empty-state">
-            <p className="sleep-result">No mood trend yet.</p>
-            <p className="helper-copy">
-              Start logging mood on the home screen and the chart will wake up.
-            </p>
+          <div className="flex flex-col items-center py-8 text-center">
+            <p className="font-black text-[#18231f] text-base">No mood trend yet.</p>
+            <p className="text-[12px] text-[#8a9e95] mt-1">Start logging mood on the home screen and the chart will wake up.</p>
           </div>
         )}
       </section>
 
-      <div className="streak-grid">
-        <section className="card list-card stats-card">
-          <div>
-            <h2 className="chart-title">Current streaks</h2>
-            <p className="chart-copy">What is alive right now.</p>
-          </div>
+      {/* ── STREAKS ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">Current streaks</h2>
+        <p className="text-[11px] text-[#8a9e95] mb-4">What is alive right now.</p>
+        <div className="flex flex-col">
+          {(currentStreaks.length > 0 ? currentStreaks : streaks).slice(0, 6).map((item) => (
+            <div key={item.habit.id} className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0">
+              <div>
+                <p className="text-[13px] font-semibold text-[#18231f]">{item.habit.icon} {item.habit.label}</p>
+                <p className="text-[11px] text-[#8a9e95] mt-0.5">{item.completionRate}% completion rate</p>
+              </div>
+              <span className="font-black text-[#1f5a46] text-[13px] ml-3 shrink-0">{item.current} days</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-          <div className="streak-list">
-            {(currentStreaks.length > 0 ? currentStreaks : streaks)
-              .slice(0, 6)
-              .map((item) => (
-                <article key={item.habit.id} className="streak-item">
-                  <div>
-                    <p className="stats-copy">
-                      {item.habit.icon} {item.habit.label}
-                    </p>
-                    <p className="helper-copy">
-                      {item.completionRate}% completion rate
-                    </p>
-                  </div>
-                  <strong>{item.current} days</strong>
-                </article>
-              ))}
-          </div>
-        </section>
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">Longest streaks</h2>
+        <p className="text-[11px] text-[#8a9e95] mb-4">Your strongest proof of consistency.</p>
+        <div className="flex flex-col">
+          {longestStreaks.slice(0, 6).map((item) => (
+            <div key={`${item.habit.id}-longest`} className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0">
+              <div>
+                <p className="text-[13px] font-semibold text-[#18231f]">{item.habit.icon} {item.habit.label}</p>
+                <p className="text-[11px] text-[#8a9e95] mt-0.5">Current: {item.current} days</p>
+              </div>
+              <span className="font-black text-[#1f5a46] text-[13px] ml-3 shrink-0">{item.longest} days</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <section className="card list-card stats-card">
-          <div>
-            <h2 className="chart-title">Longest streaks</h2>
-            <p className="chart-copy">Your strongest proof of consistency.</p>
-          </div>
-
-          <div className="streak-list">
-            {longestStreaks.slice(0, 6).map((item) => (
-              <article key={`${item.habit.id}-longest`} className="streak-item">
-                <div>
-                  <p className="stats-copy">
-                    {item.habit.icon} {item.habit.label}
-                  </p>
-                  <p className="helper-copy">Current: {item.current} days</p>
-                </div>
-                <strong>{item.longest} days</strong>
-              </article>
-            ))}
-          </div>
-        </section>
-      </div>
     </div>
   );
 }

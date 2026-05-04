@@ -43,131 +43,101 @@ export function PrayerScreen({
   );
 
   return (
-    <div className="screen">
-      <header className="screen-header">
-        <div className="screen-topline">
-          <div>
-            <p className="muted">Prayer history</p>
-            <h1 className="screen-title">Prayers</h1>
-            <p className="screen-copy">
-              Track today, review missed prayers, and see your averages over the
-              last month.
-            </p>
+    <div className="flex flex-col gap-4 pb-4">
+
+      {/* ── HERO ── */}
+      <section
+        className="rounded-2xl px-5 pt-5 pb-6"
+        style={{ background: "linear-gradient(145deg, #17372c 0%, #1f5a46 85%)" }}
+      >
+        <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">Prayer history</p>
+        <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">Prayers</h1>
+        <p className="text-[#6db898] text-sm mt-1">Track today, review misses, and see your 30-day averages.</p>
+        <div className="mt-4 flex items-center justify-between">
+          <div className="flex gap-3">
+            <div className="text-center">
+              <p className="font-black text-[#f0cb6a] text-lg leading-none">{loggedDays ? `${protectedAverage}/5` : "--"}</p>
+              <p className="text-[10px] text-[#6db898] mt-0.5">Avg protected</p>
+            </div>
+            <div className="text-center">
+              <p className="font-black text-[#f0cb6a] text-lg leading-none">{perfectDays}</p>
+              <p className="text-[10px] text-[#6db898] mt-0.5">Perfect days</p>
+            </div>
+            <div className="text-center">
+              <p className="font-black text-[#f0cb6a] text-lg leading-none">{missedTotal}</p>
+              <p className="text-[10px] text-[#6db898] mt-0.5">Missed total</p>
+            </div>
           </div>
-          <Link className="text-link" to="/heatmap">
-            Open heatmap
+          <Link className="text-[11px] font-semibold text-[#6db898] border border-[#6db898]/30 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] transition-colors" to="/heatmap">
+            Heatmap →
           </Link>
         </div>
-      </header>
+      </section>
 
-      <section className="card prayer-screen-card">
-        <div className="section-row">
+      {/* ── TODAY'S BOARD ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <div className="flex items-start justify-between mb-4">
           <div>
-            <h2 className="section-title">Today&apos;s prayer board</h2>
-            <p className="section-subtitle">
-              Mark each prayer on time so the history stays honest.
-            </p>
+            <h2 className="font-black text-[#18231f] text-base">Today's prayer board</h2>
+            <p className="text-[11px] text-[#8a9e95] mt-0.5">Mark each prayer on time.</p>
           </div>
-          <div className="mini-chip">
-            {todayPrayers.filter((prayer) => prayer.onTime).length}/5 protected
-          </div>
+          <span className={[
+            "text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0",
+            todayPrayers.filter((p) => p.onTime).length === 5 ? "bg-[#1f5a46] text-[#f0cb6a]" : "bg-[#faf5eb] text-[#5d6f65]",
+          ].join(" ")}>
+            {todayPrayers.filter((p) => p.onTime).length}/5 protected
+          </span>
         </div>
-
-        <div className="prayer-grid">
+        <div className="grid grid-cols-5 gap-2">
           {todayPrayers.map((prayer) => (
             <button
               key={prayer.id}
               type="button"
-              className={`prayer-button${prayer.onTime ? " is-done" : ""}`}
               onClick={() => onTogglePrayer(prayer.id)}
+              className={[
+                "flex flex-col items-center gap-1.5 py-4 rounded-2xl border-2 transition-all duration-200 active:scale-[0.95]",
+                prayer.onTime ? "bg-[#17372c] border-[#17372c]" : "bg-[#faf5eb] border-transparent hover:border-[#1f5a46]/30",
+              ].join(" ")}
             >
-              <span className="prayer-name">{prayer.label}</span>
-              <span className="prayer-cue">{prayer.cue}</span>
-              <span className="prayer-state">
-                {prayer.onTime ? "On time" : "Track"}
-              </span>
+              <span className={["text-[13px] font-black", prayer.onTime ? "text-[#f0cb6a]" : "text-[#18231f]"].join(" ")}>{prayer.label}</span>
+              <span className={["text-[10px]", prayer.onTime ? "text-[#6db898]" : "text-[#8a9e95]"].join(" ")}>{prayer.onTime ? "✓ On time" : prayer.cue}</span>
             </button>
           ))}
         </div>
       </section>
 
-      <section className="stats-grid prayer-summary-grid">
-        <article className="card stats-card">
-          <p className="muted">Protected average</p>
-          <strong className="stats-number">
-            {loggedDays ? `${protectedAverage}/5` : "--"}
-          </strong>
-          <p className="stats-label">
-            Average prayers on time across logged days
-          </p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Logged days</p>
-          <strong className="stats-number">{loggedDays}</strong>
-          <p className="stats-label">
-            Days with prayer tracking in the last 30 days
-          </p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Missed prayers</p>
-          <strong className="stats-number">{missedTotal}</strong>
-          <p className="stats-label">
-            Total missed across the tracked 30-day window
-          </p>
-        </article>
-
-        <article className="card stats-card">
-          <p className="muted">Perfect days</p>
-          <strong className="stats-number">{perfectDays}</strong>
-          <p className="stats-label">
-            Days where all five prayers were protected
-          </p>
-        </article>
-      </section>
-
-      <section className="card list-card prayer-average-card">
-        <div>
-          <h2 className="chart-title">Average by prayer</h2>
-          <p className="chart-copy">
-            See which salah is most exposed so your improvement has a target.
-          </p>
-        </div>
-
-        <div className="prayer-average-grid">
+      {/* ── AVERAGE BY PRAYER ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">Average by prayer</h2>
+        <p className="text-[11px] text-[#8a9e95] mb-4">Which salah is most exposed over 30 days.</p>
+        <div className="flex flex-col gap-3">
           {prayerAverages.map((row) => (
-            <article key={row.id} className="prayer-average-item">
-              <div>
-                <p className="stats-copy">{row.label}</p>
-                <p className="helper-copy">
-                  {row.protectedDays}/{row.loggedDays || 0} logged days on time
-                </p>
+            <div key={row.id} className="flex items-center gap-3">
+              <span className="text-[12px] font-bold text-[#18231f] w-14 shrink-0">{row.label}</span>
+              <div className="flex-1 h-2 bg-[#f0ede4] rounded-full overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-700"
+                  style={{ width: `${row.loggedDays ? row.percent : 0}%`, background: "linear-gradient(90deg,#1f5a46,#2f8a67)" }}
+                />
               </div>
-              <strong>{row.loggedDays ? `${row.percent}%` : "--"}</strong>
-            </article>
+              <span className="text-[12px] font-black text-[#1f5a46] w-10 text-right shrink-0">
+                {row.loggedDays ? `${row.percent}%` : "—"}
+              </span>
+            </div>
           ))}
         </div>
       </section>
 
-      <section className="card list-card prayer-history-card">
-        <div>
-          <h2 className="chart-title">Missed prayer history</h2>
-          <p className="chart-copy">
-            Review each day and the specific prayers that were missed or left
-            untracked.
-          </p>
-        </div>
-
-        <div className="prayer-history-list">
+      {/* ── MISSED HISTORY ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">Missed prayer history</h2>
+        <p className="text-[11px] text-[#8a9e95] mb-4">Last 30 days — specific missed prayers shown.</p>
+        <div className="flex flex-col gap-2">
           {history.map((row) => (
-            <article
-              key={row.dateKey}
-              className="history-row prayer-history-row"
-            >
+            <div key={row.dateKey} className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0">
               <div>
-                <p className="stats-copy">{row.label}</p>
-                <p className="helper-copy">
+                <p className="text-[13px] font-semibold text-[#18231f]">{row.label}</p>
+                <p className="text-[11px] text-[#8a9e95] mt-0.5">
                   {row.logged
                     ? row.missed.length === 0
                       ? "All five prayers protected"
@@ -175,17 +145,17 @@ export function PrayerScreen({
                     : "No prayer log saved"}
                 </p>
               </div>
-              <span
-                className={`history-pill${
-                  row.logged && row.missed.length === 0 ? " is-done" : ""
-                }`}
-              >
+              <span className={[
+                "text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 ml-3",
+                row.logged && row.missed.length === 0 ? "bg-[#1f5a46] text-[#f0cb6a]" : row.logged ? "bg-[#faf5eb] text-[#5d6f65]" : "bg-gray-100 text-[#8a9e95]",
+              ].join(" ")}>
                 {row.logged ? `${row.protectedCount}/5` : "No log"}
               </span>
-            </article>
+            </div>
           ))}
         </div>
       </section>
+
     </div>
   );
 }
