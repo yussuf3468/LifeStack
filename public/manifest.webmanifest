@@ -1,0 +1,18 @@
+{
+  "name": "LifeStack",
+  "short_name": "LifeStack",
+  "description": "Ultra-fast daily check-ins for habits, sleep, mood, streaks, and barakah-centered momentum.",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/",
+  "background_color": "#f7f1e4",
+  "theme_color": "#17372c",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
