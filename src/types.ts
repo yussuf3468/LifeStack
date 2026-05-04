@@ -65,6 +65,7 @@ export interface AppState {
   profile: Profile;
   habits: Habit[];
   daily: Record<string, DailyEntry>;
+  addictionTracker: AddictionTracker;
   updatedAt: string;
 }
 
@@ -126,4 +127,19 @@ export interface QuranStudyPage {
   translation: string;
   tafsir: string;
   practice: string;
+}
+
+export interface AddictionEntry {
+  /** ISO date string of the relapse, or "clean" marker entries */
+  date: string;
+  note?: string;
+}
+
+export interface AddictionTracker {
+  /** ISO date string when the clean streak started */
+  cleanSince: string;
+  /** All logged relapses (most recent last) */
+  relapses: AddictionEntry[];
+  /** Urge log entries with timestamps */
+  urges: string[];
 }

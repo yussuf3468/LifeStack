@@ -5,6 +5,7 @@ import {
 } from "../data/content";
 import type {
   AppState,
+  AddictionTracker,
   DailyEntry,
   DailyFocusItem,
   DailyPrayerItem,
@@ -54,6 +55,11 @@ export function createDefaultState(): AppState {
       ...habit,
     })),
     daily: {},
+    addictionTracker: {
+      cleanSince: timestamp,
+      relapses: [],
+      urges: [],
+    },
     updatedAt: timestamp,
   };
 }
@@ -301,6 +307,32 @@ function normalizeDaily(value: unknown): Record<string, DailyEntry> {
   return output;
 }
 
+function normalizeAddictionTracker(
+  value: unknown,
+  fallback: AddictionTracker,
+): AddictionTracker {
+  if (!value || typeof value !== "object") {
+    return fallback;
+  }
+
+  const candidate = value as Partial<AddictionTracker>;
+
+  return {
+    cleanSince:
+      typeof candidate.cleanSince === "string" && candidate.cleanSince.trim()
+        ? candidate.cleanSince
+        : fallback.cleanSince,
+    relapses: Array.isArray(candidate.relapses)
+      ? candidate.relapses
+          .filter((r) => r && typeof r === "object" && typeof r.date === "string")
+          .map((r) => ({ date: r.date, note: typeof r.note === "string" ? r.note : undefined }))
+      : [],
+    urges: Array.isArray(candidate.urges)
+      ? candidate.urges.filter((u): u is string => typeof u === "string")
+      : [],
+  };
+}
+
 export function hydrateState(value: unknown): AppState {
   const fallback = createDefaultState();
 
@@ -314,6 +346,10 @@ export function hydrateState(value: unknown): AppState {
     profile: normalizeProfile(candidate.profile, fallback.profile),
     habits: normalizeHabits(candidate.habits, fallback.habits),
     daily: normalizeDaily(candidate.daily),
+    addictionTracker: normalizeAddictionTracker(
+      candidate.addictionTracker,
+      fallback.addictionTracker,
+    ),
     updatedAt:
       typeof candidate.updatedAt === "string" && candidate.updatedAt.trim()
         ? candidate.updatedAt

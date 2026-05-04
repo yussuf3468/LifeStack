@@ -83,6 +83,23 @@ function BarChartIcon() {
   );
 }
 
+function ShieldIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.75}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ width: 22, height: 22, display: "block" }}
+    >
+      <path d="M12 22C12 22 4 18 4 12V5L12 2L20 5V12C20 18 12 22 12 22Z" />
+      <path d="M9 12L11 14L15 10" />
+    </svg>
+  );
+}
+
 const NAV_ITEMS: Array<{
   to: string;
   label: string;
@@ -94,6 +111,7 @@ const NAV_ITEMS: Array<{
   { to: "/prayers", label: "Prayers", Icon: CrescentIcon },
   { to: "/manager", label: "Habits", Icon: ChecklistIcon },
   { to: "/stats", label: "Stats", Icon: BarChartIcon },
+  { to: "/recovery", label: "Recovery", Icon: ShieldIcon },
 ];
 
 export function BottomNav() {

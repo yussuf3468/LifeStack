@@ -96,6 +96,12 @@ const PrayerScreen = lazy(() =>
   })),
 );
 
+const RecoveryScreen = lazy(() =>
+  import("./components/RecoveryScreen").then((module) => ({
+    default: module.RecoveryScreen,
+  })),
+);
+
 type BackendStatus =
   | "local"
   | "auth"
@@ -800,6 +806,33 @@ function App() {
     });
   }
 
+  function handleLogUrge() {
+    const now = new Date().toISOString();
+    updateState((current) => ({
+      ...current,
+      addictionTracker: {
+        ...current.addictionTracker,
+        urges: [...(current.addictionTracker?.urges ?? []), now],
+      },
+    }));
+  }
+
+  function handleLogRelapse(note?: string) {
+    const today = getDateKey();
+    const now = new Date().toISOString();
+    updateState((current) => {
+      const tracker = current.addictionTracker;
+      return {
+        ...current,
+        addictionTracker: {
+          cleanSince: now,
+          relapses: [...(tracker?.relapses ?? []), { date: today, note }],
+          urges: tracker?.urges ?? [],
+        },
+      };
+    });
+  }
+
   async function handleSignIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -1036,6 +1069,16 @@ function App() {
                   path="/stats"
                   element={
                     <StatsScreen habits={state.habits} daily={state.daily} />
+                  }
+                />
+                <Route
+                  path="/recovery"
+                  element={
+                    <RecoveryScreen
+                      tracker={state.addictionTracker}
+                      onLogUrge={handleLogUrge}
+                      onLogRelapse={handleLogRelapse}
+                    />
                   }
                 />
                 <Route path="*" element={<Navigate to="/" replace />} />

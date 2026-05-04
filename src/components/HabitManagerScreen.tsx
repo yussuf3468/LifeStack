@@ -70,7 +70,8 @@ export function HabitManagerScreen({
           Habit Manager
         </h1>
         <p className="text-[#6db898] text-sm mt-1">
-          Add, edit, or remove habits. Max 8 habits. They appear on your Home screen every day.
+          Add, edit, or remove habits. Max 8 habits. They appear on your Home
+          screen every day.
         </p>
         <div className="mt-4 flex items-center justify-between">
           <span className="text-[12px] font-bold text-[#f0cb6a]">
@@ -293,4 +294,3 @@ export function HabitManagerScreen({
     </div>
   );
 }
-

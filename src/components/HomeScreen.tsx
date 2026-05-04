@@ -447,9 +447,7 @@ export function HomeScreen({
           <p className="text-[11px] text-[#d3a74d] font-bold uppercase tracking-wider mb-1">
             Verse of the Day
           </p>
-          <h2 className="font-bold text-[#6db898] text-base mb-3">
-            Quran
-          </h2>
+          <h2 className="font-bold text-[#6db898] text-base mb-3">Quran</h2>
           <p
             className="text-[#f0cb6a] text-xl leading-relaxed text-right mb-3"
             dir="rtl"
@@ -612,7 +610,9 @@ export function HomeScreen({
         <article className="bg-white border border-black/[0.06] rounded-2xl p-5">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="font-black text-[#18231f] text-base">Energy &amp; Water</h2>
+              <h2 className="font-black text-[#18231f] text-base">
+                Energy &amp; Water
+              </h2>
               <p className="text-[11px] text-[#657a71] mt-0.5">
                 How are you feeling? How much water?
               </p>
@@ -1046,4 +1046,3 @@ export function HomeScreen({
     </div>
   );
 }
-
