@@ -1,3 +1,4 @@
+import "@fontsource/amiri-quran/400.css";
 import "@fontsource/noto-naskh-arabic/500.css";
 import "@fontsource/noto-naskh-arabic/700.css";
 import "@fontsource/space-grotesk/400.css";

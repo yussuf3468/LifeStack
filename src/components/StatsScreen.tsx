@@ -46,15 +46,24 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
       completionRate: getHabitCompletionRate(habit, daily),
       ...getHabitStreak(habit, daily),
     }))
-    .sort((left, right) => right.current - left.current || right.longest - left.longest);
+    .sort(
+      (left, right) =>
+        right.current - left.current || right.longest - left.longest,
+    );
 
   const currentStreaks = streaks.filter((streak) => streak.current > 0);
-  const longestStreaks = [...streaks].sort((left, right) => right.longest - left.longest);
+  const longestStreaks = [...streaks].sort(
+    (left, right) => right.longest - left.longest,
+  );
 
   const innerWidth = chartWidth - chartPadding.left - chartPadding.right;
   const innerHeight = chartHeight - chartPadding.top - chartPadding.bottom;
   const points = moodTrend.map((entry, index) => ({
-    x: chartPadding.left + (moodTrend.length === 1 ? innerWidth / 2 : (index / (moodTrend.length - 1)) * innerWidth),
+    x:
+      chartPadding.left +
+      (moodTrend.length === 1
+        ? innerWidth / 2
+        : (index / (moodTrend.length - 1)) * innerWidth),
     y: chartPadding.top + ((5 - entry.mood) / 4) * innerHeight,
     label: entry.label,
     date: entry.date,
@@ -63,15 +72,22 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
 
   return (
     <div className="flex flex-col gap-4 pb-4">
-
       {/* ── HERO ── */}
       <section
         className="rounded-2xl px-5 pt-5 pb-6"
-        style={{ background: "linear-gradient(145deg, #17372c 0%, #1f5a46 85%)" }}
+        style={{
+          background: "linear-gradient(145deg, #17372c 0%, #1f5a46 85%)",
+        }}
       >
-        <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">Signal board</p>
-        <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">Stats</h1>
-        <p className="text-[#6db898] text-sm mt-1">Sleep, mood, Quran, and faith signals without dashboard bloat.</p>
+        <p className="text-[11px] text-[#6db898] font-bold uppercase tracking-widest mb-2">
+          Signal board
+        </p>
+        <h1 className="text-[1.65rem] font-black text-white leading-tight tracking-tight">
+          Stats
+        </h1>
+        <p className="text-[#6db898] text-sm mt-1">
+          Sleep, mood, Quran, and faith signals without dashboard bloat.
+        </p>
         <div className="mt-4 flex justify-end">
           <Link
             className="text-[11px] font-semibold text-[#6db898] border border-[#6db898]/30 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] transition-colors"
@@ -85,20 +101,63 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
       {/* ── STATS GRID ── */}
       <div className="grid grid-cols-2 gap-3">
         {[
-          { label: "Average sleep", value: sleepAverage ? `${sleepAverage}h` : "--", sub: "Across the last 14 days" },
-          { label: "Mood average", value: moodAverage ? `${moodAverage}/5` : "--", sub: "Recent emotional baseline" },
-          { label: "Prayers on time", value: prayerAverage ? `${prayerAverage}/5` : "--", sub: "Average protected over 14 days" },
-          { label: "Average dhikr", value: dhikrAverage ? `${dhikrAverage}/100` : "--", sub: "Average daily remembrance" },
-          { label: "Quran study days", value: String(quranStudyDays), sub: "Days with page + tafseer done" },
-          { label: "Best live streak", value: String(currentStreaks[0]?.current ?? 0), sub: "Strongest active habit" },
-          { label: "Average water", value: waterAverage ? `${waterAverage}/8` : "--", sub: "Daily hydration over 14 days" },
-          { label: "Focus follow-through", value: focusAverage ? `${focusAverage}%` : "--", sub: "Completion of top 3 priorities" },
-          { label: "Reflection days", value: String(journalDays), sub: "Days with win or dua captured" },
+          {
+            label: "Average sleep",
+            value: sleepAverage ? `${sleepAverage}h` : "--",
+            sub: "Across the last 14 days",
+          },
+          {
+            label: "Mood average",
+            value: moodAverage ? `${moodAverage}/5` : "--",
+            sub: "Recent emotional baseline",
+          },
+          {
+            label: "Prayers on time",
+            value: prayerAverage ? `${prayerAverage}/5` : "--",
+            sub: "Average protected over 14 days",
+          },
+          {
+            label: "Average dhikr",
+            value: dhikrAverage ? `${dhikrAverage}/100` : "--",
+            sub: "Average daily remembrance",
+          },
+          {
+            label: "Quran study days",
+            value: String(quranStudyDays),
+            sub: "Days with page + tafseer done",
+          },
+          {
+            label: "Best live streak",
+            value: String(currentStreaks[0]?.current ?? 0),
+            sub: "Strongest active habit",
+          },
+          {
+            label: "Average water",
+            value: waterAverage ? `${waterAverage}/8` : "--",
+            sub: "Daily hydration over 14 days",
+          },
+          {
+            label: "Focus follow-through",
+            value: focusAverage ? `${focusAverage}%` : "--",
+            sub: "Completion of top 3 priorities",
+          },
+          {
+            label: "Reflection days",
+            value: String(journalDays),
+            sub: "Days with win or dua captured",
+          },
         ].map(({ label, value, sub }) => (
-          <div key={label} className="bg-white border border-black/[0.06] rounded-2xl p-4">
-            <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">{label}</p>
-            <p className="font-black text-[#18231f] text-2xl mt-1 leading-none">{value}</p>
-            <p className="text-[11px] text-[#8a9e95] mt-1">{sub}</p>
+          <div
+            key={label}
+            className="bg-white border border-black/[0.06] rounded-2xl p-4"
+          >
+            <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider">
+              {label}
+            </p>
+            <p className="font-black text-[#18231f] text-2xl mt-1 leading-none">
+              {value}
+            </p>
+            <p className="text-[11px] text-[#657a71] mt-1">{sub}</p>
           </div>
         ))}
       </div>
@@ -108,9 +167,13 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
         <div className="flex items-start justify-between mb-4">
           <div>
             <h2 className="font-black text-[#18231f] text-base">Mood trend</h2>
-            <p className="text-[11px] text-[#8a9e95] mt-0.5">Lightweight line chart over the last two weeks.</p>
+            <p className="text-[11px] text-[#657a71] mt-0.5">
+              Lightweight line chart over the last two weeks.
+            </p>
           </div>
-          <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#faf5eb] text-[#5d6f65] shrink-0">{moodTrend.length} logged</span>
+          <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#faf5eb] text-[#5d6f65] shrink-0">
+            {moodTrend.length} logged
+          </span>
         </div>
 
         {moodTrend.length > 0 ? (
@@ -125,19 +188,43 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
                 const y = chartPadding.top + ((5 - value) / 4) * innerHeight;
                 return (
                   <g key={value}>
-                    <line stroke="#f0ede4" strokeWidth="1" x1={chartPadding.left} x2={chartWidth - chartPadding.right} y1={y} y2={y} />
-                    <text fill="#8a9e95" fontSize="16" x={6} y={y + 4}>{value}</text>
+                    <line
+                      stroke="rgba(255,253,248,0.08)"
+                      strokeWidth="1"
+                      x1={chartPadding.left}
+                      x2={chartWidth - chartPadding.right}
+                      y1={y}
+                      y2={y}
+                    />
+                    <text fill="rgba(255,253,248,0.4)" fontSize="16" x={6} y={y + 4}>
+                      {value}
+                    </text>
                   </g>
                 );
               })}
               {chartPath ? (
-                <path d={chartPath} fill="none" stroke="#2f8a67" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d={chartPath}
+                  fill="none"
+                  stroke="#2f8a67"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               ) : null}
               {points.map((point) => (
                 <g key={`${point.date}-${point.x}`}>
                   <circle cx={point.x} cy={point.y} r={6} fill="#1f5a46" />
                   <circle cx={point.x} cy={point.y} r={3} fill="#f0cb6a" />
-                  <text fill="#8a9e95" fontSize="13" x={point.x} y={chartHeight - 10} textAnchor="middle">{point.date}</text>
+                  <text
+                    fill="rgba(255,253,248,0.4)"
+                    fontSize="13"
+                    x={point.x}
+                    y={chartHeight - 10}
+                    textAnchor="middle"
+                  >
+                    {point.date}
+                  </text>
                   <title>{`${point.date}: ${point.label}`}</title>
                 </g>
               ))}
@@ -145,45 +232,77 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
           </div>
         ) : (
           <div className="flex flex-col items-center py-8 text-center">
-            <p className="font-black text-[#18231f] text-base">No mood trend yet.</p>
-            <p className="text-[12px] text-[#8a9e95] mt-1">Start logging mood on the home screen and the chart will wake up.</p>
+            <p className="font-black text-[#18231f] text-base">
+              No mood trend yet.
+            </p>
+            <p className="text-[12px] text-[#657a71] mt-1">
+              Start logging mood on the home screen and the chart will wake up.
+            </p>
           </div>
         )}
       </section>
 
       {/* ── STREAKS ── */}
       <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
-        <h2 className="font-black text-[#18231f] text-base mb-1">Current streaks</h2>
-        <p className="text-[11px] text-[#8a9e95] mb-4">What is alive right now.</p>
+        <h2 className="font-black text-[#18231f] text-base mb-1">
+          Current streaks
+        </h2>
+        <p className="text-[11px] text-[#657a71] mb-4">
+          What is alive right now.
+        </p>
         <div className="flex flex-col">
-          {(currentStreaks.length > 0 ? currentStreaks : streaks).slice(0, 6).map((item) => (
-            <div key={item.habit.id} className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0">
-              <div>
-                <p className="text-[13px] font-semibold text-[#18231f]">{item.habit.icon} {item.habit.label}</p>
-                <p className="text-[11px] text-[#8a9e95] mt-0.5">{item.completionRate}% completion rate</p>
+          {(currentStreaks.length > 0 ? currentStreaks : streaks)
+            .slice(0, 6)
+            .map((item) => (
+              <div
+                key={item.habit.id}
+                className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0"
+              >
+                <div>
+                  <p className="text-[13px] font-semibold text-[#18231f]">
+                    {item.habit.icon} {item.habit.label}
+                  </p>
+                  <p className="text-[11px] text-[#657a71] mt-0.5">
+                    {item.completionRate}% completion rate
+                  </p>
+                </div>
+                <span className="font-black text-[#1f5a46] text-[13px] ml-3 shrink-0">
+                  {item.current} days
+                </span>
               </div>
-              <span className="font-black text-[#1f5a46] text-[13px] ml-3 shrink-0">{item.current} days</span>
-            </div>
-          ))}
+            ))}
         </div>
       </section>
 
       <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
-        <h2 className="font-black text-[#18231f] text-base mb-1">Longest streaks</h2>
-        <p className="text-[11px] text-[#8a9e95] mb-4">Your strongest proof of consistency.</p>
+        <h2 className="font-black text-[#18231f] text-base mb-1">
+          Longest streaks
+        </h2>
+        <p className="text-[11px] text-[#657a71] mb-4">
+          Your strongest proof of consistency.
+        </p>
         <div className="flex flex-col">
           {longestStreaks.slice(0, 6).map((item) => (
-            <div key={`${item.habit.id}-longest`} className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0">
+            <div
+              key={`${item.habit.id}-longest`}
+              className="flex items-center justify-between py-2.5 border-b border-black/[0.05] last:border-0"
+            >
               <div>
-                <p className="text-[13px] font-semibold text-[#18231f]">{item.habit.icon} {item.habit.label}</p>
-                <p className="text-[11px] text-[#8a9e95] mt-0.5">Current: {item.current} days</p>
+                <p className="text-[13px] font-semibold text-[#18231f]">
+                  {item.habit.icon} {item.habit.label}
+                </p>
+                <p className="text-[11px] text-[#657a71] mt-0.5">
+                  Current: {item.current} days
+                </p>
               </div>
-              <span className="font-black text-[#1f5a46] text-[13px] ml-3 shrink-0">{item.longest} days</span>
+              <span className="font-black text-[#1f5a46] text-[13px] ml-3 shrink-0">
+                {item.longest} days
+              </span>
             </div>
           ))}
         </div>
       </section>
-
     </div>
   );
 }
+

@@ -1,6 +1,19 @@
-import { Suspense, lazy, startTransition, useEffect, useState } from "react";
+import {
+  Suspense,
+  lazy,
+  startTransition,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import type { FormEvent } from "react";
-import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { AuthScreen } from "./components/AuthScreen";
 import { BottomNav } from "./components/BottomNav";
 import { ToastContainer } from "./components/ToastContainer";
@@ -198,6 +211,16 @@ function getAuthErrorMessage(error: unknown) {
   return "Unable to sign in right now. Try again in a moment.";
 }
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
+
+  return null;
+}
+
 function buildFocusPrompt(
   entry: DailyEntry,
   xpPercent: number,
@@ -248,6 +271,15 @@ function App() {
   const storageKey = isSupabaseConfigured
     ? getStorageKey(authUserId)
     : getStorageKey();
+  const stateRef = useRef(state);
+  const authStatusRef = useRef(authStatus);
+  const remoteReadyRef = useRef(remoteReady);
+  const authIdentityRef = useRef(authIdentity);
+
+  stateRef.current = state;
+  authStatusRef.current = authStatus;
+  remoteReadyRef.current = remoteReady;
+  authIdentityRef.current = authIdentity;
 
   const todayKey = getDateKey();
   const todayEntry = withEntryDefaults(todayKey, state.daily[todayKey]);
@@ -435,11 +467,49 @@ function App() {
     };
   }, [authIdentity, authStatus, remoteReady, state]);
 
+  useEffect(() => {
+    function flushStateOnBackground() {
+      const snapshot = stateRef.current;
+      saveState(snapshot, storageKey);
+
+      if (
+        !isSupabaseConfigured ||
+        authStatusRef.current !== "signed-in" ||
+        !authIdentityRef.current ||
+        !remoteReadyRef.current
+      ) {
+        return;
+      }
+
+      void pushRemoteState(snapshot).catch(() => {
+        setBackendStatus("offline");
+      });
+    }
+
+    function handleVisibilityChange() {
+      if (document.visibilityState === "hidden") {
+        flushStateOnBackground();
+      }
+    }
+
+    window.addEventListener("beforeunload", flushStateOnBackground);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("beforeunload", flushStateOnBackground);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [storageKey]);
+
   function updateState(recipe: (current: AppState) => AppState) {
-    setState((current) => ({
-      ...recipe(current),
+    const next = {
+      ...recipe(stateRef.current),
       updatedAt: new Date().toISOString(),
-    }));
+    };
+
+    stateRef.current = next;
+    saveState(next, storageKey);
+    setState(next);
   }
 
   function updateTodayEntry(recipe: (current: DailyEntry) => DailyEntry) {
@@ -774,36 +844,37 @@ function App() {
 
   return (
     <HashRouter>
+      <ScrollToTop />
       <div className="app-shell">
         <div className="ambient-orb ambient-orb-one" aria-hidden="true" />
         <div className="ambient-orb ambient-orb-two" aria-hidden="true" />
 
         <header
-          className="sticky top-0 z-40 border-b border-black/[0.06]"
+          className="sticky top-0 z-40 border-b border-[rgba(255,253,248,0.07)]"
           style={{
-            background: "rgba(247,241,228,0.9)",
+            background: "rgba(10,22,15,0.92)",
             backdropFilter: "blur(24px) saturate(1.4)",
             WebkitBackdropFilter: "blur(24px) saturate(1.4)",
             paddingTop: "env(safe-area-inset-top, 0px)",
           }}
         >
-          <div className="page-width flex items-center justify-between px-4 h-14">
+          <div className="page-width flex items-center justify-between px-4 h-16">
             {/* Brand */}
             <div className="flex items-center gap-2.5">
               <div
                 className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-[#d3a74d] text-[11px] font-black tracking-tight"
                 style={{
-                  background: "#17372c",
-                  boxShadow: "0 2px 10px rgba(23,55,44,0.32)",
+                  background: "linear-gradient(135deg, #d3a74d, #b8882e)",
+                  boxShadow: "0 2px 10px rgba(211,167,77,0.35)",
                 }}
               >
                 LS
               </div>
               <div className="leading-none">
-                <p className="font-bold text-[#18231f] text-sm tracking-tight m-0 leading-tight">
+                <p className="font-bold text-[rgba(255,253,248,0.92)] text-sm tracking-tight m-0 leading-tight">
                   LifeStack
                 </p>
-                <p className="text-[10px] text-[#8a9e95] mt-0.5 m-0 leading-tight">
+                <p className="text-[10px] text-[rgba(255,253,248,0.45)] mt-0.5 m-0 leading-tight">
                   Soul · Study · Stamina
                 </p>
               </div>
@@ -821,11 +892,11 @@ function App() {
                         ? "bg-[#2f8a67] animate-pulse"
                         : backendStatus === "offline"
                           ? "bg-amber-400"
-                          : "bg-gray-300"
+                          : "bg-[rgba(255,253,248,0.2)]"
                   }`}
                   title={backendLabel}
                 />
-                <span className="hidden sm:block text-[10px] text-[#8a9e95] font-medium max-w-[140px] truncate">
+                <span className="hidden sm:block text-[10px] text-[rgba(255,253,248,0.45)] font-medium max-w-[140px] truncate">
                   {backendLabel}
                 </span>
               </div>
@@ -833,7 +904,7 @@ function App() {
                 <button
                   type="button"
                   onClick={handleSignOut}
-                  className="text-[11px] font-semibold text-[#5d6f65] hover:text-[#1f5a46] transition-colors px-2.5 py-1.5 rounded-lg hover:bg-[#1f5a46]/[0.08] active:scale-95"
+                  className="text-[11px] font-semibold text-[rgba(255,253,248,0.55)] hover:text-[#f0cb6a] transition-colors px-2.5 py-1.5 rounded-lg hover:bg-[rgba(255,253,248,0.06)] active:scale-95"
                 >
                   Sign out
                 </button>
@@ -842,7 +913,7 @@ function App() {
           </div>
         </header>
 
-        <main className="page-width page-main">
+        <main className="page-width page-main px-1 sm:px-0">
           {isSecureLocked ? (
             authStatus === "checking" ? (
               <section className="card quick-card">
@@ -929,7 +1000,6 @@ function App() {
                     <QuranScreen
                       daily={state.daily}
                       todayEntry={todayEntry}
-                      studyPage={quranStudy}
                       onToggleStudy={handleToggleQuranStudy}
                     />
                   }

@@ -22,8 +22,17 @@ export function getStorageKey(userId?: string | null) {
   return userId ? `${STORAGE_KEY}:${userId}` : STORAGE_KEY;
 }
 
-function createHabitId(index: number) {
-  return globalThis.crypto?.randomUUID?.() ?? `habit-${Date.now()}-${index}`;
+function slugifyHabitLabel(label: string) {
+  return label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 40);
+}
+
+function createHabitId(label: string, index: number) {
+  const slug = slugifyHabitLabel(label);
+  return slug ? `starter-${slug}` : `starter-habit-${index + 1}`;
 }
 
 function getTimezone() {
@@ -40,12 +49,59 @@ export function createDefaultState(): AppState {
       timezone: getTimezone(),
     },
     habits: STARTER_HABIT_TEMPLATES.map((habit, index) => ({
-      id: createHabitId(index),
+      id: createHabitId(habit.label, index),
       createdAt: timestamp,
       ...habit,
     })),
     daily: {},
     updatedAt: timestamp,
+  };
+}
+
+function isStarterHabitLabel(label: string) {
+  return STARTER_HABIT_TEMPLATES.some((habit) => habit.label === label);
+}
+
+function migrateStarterHabitIds(state: AppState) {
+  const idMap = new Map<string, string>();
+
+  const habits = state.habits.map((habit, index) => {
+    if (!isStarterHabitLabel(habit.label)) {
+      return habit;
+    }
+
+    const stableId = createHabitId(habit.label, index);
+
+    if (habit.id !== stableId) {
+      idMap.set(habit.id, stableId);
+    }
+
+    return {
+      ...habit,
+      id: stableId,
+    };
+  });
+
+  if (idMap.size === 0) {
+    return state;
+  }
+
+  const daily = Object.fromEntries(
+    Object.entries(state.daily).map(([dateKey, entry]) => [
+      dateKey,
+      {
+        ...entry,
+        completedHabitIds: entry.completedHabitIds.map(
+          (habitId) => idMap.get(habitId) ?? habitId,
+        ),
+      },
+    ]),
+  );
+
+  return {
+    ...state,
+    habits,
+    daily,
   };
 }
 
@@ -254,7 +310,7 @@ export function hydrateState(value: unknown): AppState {
 
   const candidate = value as Partial<AppState>;
 
-  return {
+  const hydrated = {
     profile: normalizeProfile(candidate.profile, fallback.profile),
     habits: normalizeHabits(candidate.habits, fallback.habits),
     daily: normalizeDaily(candidate.daily),
@@ -263,6 +319,8 @@ export function hydrateState(value: unknown): AppState {
         ? candidate.updatedAt
         : fallback.updatedAt,
   };
+
+  return migrateStarterHabitIds(hydrated);
 }
 
 export function loadState(storageKey = getStorageKey()) {

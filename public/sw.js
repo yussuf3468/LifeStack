@@ -1,5 +1,13 @@
-const CACHE_NAME = "lifestack-v1";
+const CACHE_NAME = "lifestack-v4";
 const APP_SHELL = ["/", "/index.html", "/manifest.webmanifest", "/favicon.svg"];
+
+function isAppAsset(url) {
+  return (
+    url.pathname.startsWith("/assets/") ||
+    url.pathname.endsWith(".js") ||
+    url.pathname.endsWith(".css")
+  );
+}
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -48,6 +56,22 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
 
   if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  if (isAppAsset(url)) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          }
+
+          return response;
+        })
+        .catch(() => caches.match(request)),
+    );
     return;
   }
 

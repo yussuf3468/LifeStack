@@ -256,7 +256,7 @@ export function HomeScreen({
         <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
           <div className="flex items-start justify-between mb-3">
             <div>
-              <p className="text-[11px] text-[#8a9e95] font-bold uppercase tracking-wider">
+              <p className="text-[11px] text-[#657a71] font-bold uppercase tracking-wider">
                 Daily XP
               </p>
               <p className="text-lg font-black text-[#18231f] mt-0.5 leading-tight">
@@ -267,7 +267,7 @@ export function HomeScreen({
               <p className="text-2xl font-black text-[#1f5a46] leading-none">
                 {xp.percent}%
               </p>
-              <p className="text-[10px] text-[#8a9e95] mt-0.5">
+              <p className="text-[10px] text-[#657a71] mt-0.5">
                 {xp.current}/{xp.max} XP
               </p>
             </div>
@@ -298,7 +298,7 @@ export function HomeScreen({
                 <p className="font-black text-[#18231f] text-sm leading-none">
                   {value}
                 </p>
-                <p className="text-[10px] text-[#8a9e95] mt-1">{label}</p>
+                <p className="text-[10px] text-[#657a71] mt-1">{label}</p>
               </div>
             ))}
           </div>
@@ -318,7 +318,7 @@ export function HomeScreen({
             <h2 className="font-bold text-[#18231f] text-base tracking-tight">
               Habit grid
             </h2>
-            <p className="text-[11px] text-[#8a9e95] mt-0.5">
+            <p className="text-[11px] text-[#657a71] mt-0.5">
               Large taps. Under sixty seconds.
             </p>
           </div>
@@ -355,7 +355,7 @@ export function HomeScreen({
                         "text-[10px] font-bold px-1.5 py-0.5 rounded-lg",
                         isDone
                           ? "bg-[#f0cb6a]/20 text-[#f0cb6a]"
-                          : "bg-[#f0ede4] text-[#8a9e95]",
+                          : "bg-[#f0ede4] text-[#657a71]",
                       ].join(" ")}
                     >
                       {isDone ? "✓ Done" : "Tap"}
@@ -372,7 +372,7 @@ export function HomeScreen({
                   <p
                     className={[
                       "text-[10px]",
-                      isDone ? "text-[#6db898]" : "text-[#8a9e95]",
+                      isDone ? "text-[#6db898]" : "text-[#657a71]",
                     ].join(" ")}
                   >
                     {habit.frequency}
@@ -386,7 +386,7 @@ export function HomeScreen({
             <p className="font-semibold text-[#18231f] text-sm">
               No habits scheduled today.
             </p>
-            <p className="text-[12px] text-[#8a9e95] mt-1">
+            <p className="text-[12px] text-[#657a71] mt-1">
               Open Habit Manager to add habits.
             </p>
           </div>
@@ -432,7 +432,7 @@ export function HomeScreen({
                 <p className="text-[11px] font-bold text-[#18231f] leading-tight">
                   {step.title}
                 </p>
-                <p className="text-[10px] text-[#8a9e95] leading-snug mt-0.5">
+                <p className="text-[10px] text-[#657a71] leading-snug mt-0.5">
                   {step.copy}
                 </p>
               </div>
@@ -480,7 +480,7 @@ export function HomeScreen({
         >
           <div className="flex items-start justify-between mb-3">
             <div>
-              <p className="text-[11px] text-[#8a9e95] font-bold uppercase tracking-wider">
+              <p className="text-[11px] text-[#657a71] font-bold uppercase tracking-wider">
                 Page of the day
               </p>
               <h2 className="font-black text-[#18231f] text-base mt-0.5">
@@ -505,14 +505,14 @@ export function HomeScreen({
             {quranStudy.translation}
           </p>
           <div className="bg-[#faf5eb] rounded-xl p-3 mb-4">
-            <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-1">
+            <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider mb-1">
               Tafseer snapshot
             </p>
             <p className="text-[12px] text-[#5d6f65] leading-relaxed">
               {quranStudy.tafsir}
             </p>
           </div>
-          <p className="text-[12px] text-[#8a9e95] mb-4 leading-relaxed">
+          <p className="text-[12px] text-[#657a71] mb-4 leading-relaxed">
             {quranStudy.practice}
           </p>
           <div className="flex gap-2.5">
@@ -544,7 +544,7 @@ export function HomeScreen({
               <h2 className="font-black text-[#18231f] text-base">
                 Mission board
               </h2>
-              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+              <p className="text-[11px] text-[#657a71] mt-0.5">
                 Three things only.
               </p>
             </div>
@@ -574,7 +574,7 @@ export function HomeScreen({
                   <span
                     className={[
                       "text-[10px] font-bold uppercase tracking-wider",
-                      item.done ? "text-[#1f5a46]" : "text-[#8a9e95]",
+                      item.done ? "text-[#1f5a46]" : "text-[#657a71]",
                     ].join(" ")}
                   >
                     {item.label}
@@ -594,7 +594,7 @@ export function HomeScreen({
                 </div>
                 <input
                   className={[
-                    "w-full bg-transparent text-[13px] outline-none placeholder:text-[#8a9e95]",
+                    "w-full bg-transparent text-[13px] outline-none placeholder:text-[#657a71]",
                     item.done
                       ? "text-[#1f5a46] line-through decoration-[#1f5a46]/40"
                       : "text-[#18231f]",
@@ -616,7 +616,7 @@ export function HomeScreen({
           <div className="flex items-start justify-between mb-4">
             <div>
               <h2 className="font-black text-[#18231f] text-base">Vitals</h2>
-              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+              <p className="text-[11px] text-[#657a71] mt-0.5">
                 Energy + hydration.
               </p>
             </div>
@@ -625,7 +625,7 @@ export function HomeScreen({
             </span>
           </div>
           <div className="mb-4">
-            <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-2">
+            <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider mb-2">
               Energy
             </p>
             <div className="flex flex-col gap-2">
@@ -655,7 +655,7 @@ export function HomeScreen({
                     >
                       {option.label}
                     </p>
-                    <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                    <p className="text-[11px] text-[#657a71] mt-0.5">
                       {option.cue}
                     </p>
                   </div>
@@ -668,7 +668,7 @@ export function HomeScreen({
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">
+              <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider">
                 Hydration
               </p>
               <span className="text-[11px] font-bold text-[#1f5a46]">
@@ -691,7 +691,7 @@ export function HomeScreen({
                       "flex flex-col items-center gap-0.5 py-1.5 rounded-xl text-[10px] font-bold transition-all active:scale-90",
                       isFilled
                         ? "bg-[#1f5a46] text-white"
-                        : "bg-[#faf5eb] text-[#8a9e95]",
+                        : "bg-[#faf5eb] text-[#657a71]",
                     ].join(" ")}
                   >
                     <span aria-hidden="true">{isFilled ? "💧" : "○"}</span>
@@ -710,7 +710,7 @@ export function HomeScreen({
               <h2 className="font-black text-[#18231f] text-base">
                 Prayer on time
               </h2>
-              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+              <p className="text-[11px] text-[#657a71] mt-0.5">
                 Guard the five anchors.
               </p>
             </div>
@@ -757,7 +757,7 @@ export function HomeScreen({
                 <span
                   className={[
                     "text-[9px]",
-                    prayer.onTime ? "text-[#6db898]" : "text-[#8a9e95]",
+                    prayer.onTime ? "text-[#6db898]" : "text-[#657a71]",
                   ].join(" ")}
                 >
                   {prayer.onTime ? "✓" : prayer.cue}
@@ -840,7 +840,7 @@ export function HomeScreen({
                 <h2 className="font-black text-[#18231f] text-base">
                   Sleep logger
                 </h2>
-                <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                <p className="text-[11px] text-[#657a71] mt-0.5">
                   Two taps to log.
                 </p>
               </div>
@@ -850,7 +850,7 @@ export function HomeScreen({
                     "text-[11px] font-bold px-2.5 py-1 rounded-full",
                     todayEntry.sleep
                       ? "bg-[#1f5a46] text-[#f0cb6a]"
-                      : "bg-[#faf5eb] text-[#8a9e95]",
+                      : "bg-[#faf5eb] text-[#657a71]",
                   ].join(" ")}
                 >
                   {todayEntry.sleep ? "Logged" : "Pending"}
@@ -859,7 +859,7 @@ export function HomeScreen({
                   <button
                     type="button"
                     onClick={onClearSleep}
-                    className="text-[11px] font-semibold text-[#8a9e95] hover:text-red-400 transition-colors"
+                    className="text-[11px] font-semibold text-[#657a71] hover:text-red-400 transition-colors"
                   >
                     Clear
                   </button>
@@ -867,7 +867,7 @@ export function HomeScreen({
               </div>
             </div>
             <div className="mb-3">
-              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-2">
+              <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider mb-2">
                 Bedtime
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -889,7 +889,7 @@ export function HomeScreen({
               </div>
             </div>
             <div className="mb-4">
-              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-2">
+              <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider mb-2">
                 Wake time
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -911,7 +911,7 @@ export function HomeScreen({
               </div>
             </div>
             <div className="bg-[#faf5eb] rounded-xl p-3">
-              <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-1">
+              <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider mb-1">
                 Tonight's signal
               </p>
               <p className="text-[13px] font-semibold text-[#18231f]">
@@ -928,7 +928,7 @@ export function HomeScreen({
                 <h2 className="font-black text-[#18231f] text-base">
                   Mood check
                 </h2>
-                <p className="text-[11px] text-[#8a9e95] mt-0.5">
+                <p className="text-[11px] text-[#657a71] mt-0.5">
                   One tap keeps the trend honest.
                 </p>
               </div>
@@ -973,7 +973,7 @@ export function HomeScreen({
             </div>
             <div className="bg-[#faf5eb] rounded-xl p-3 flex items-center justify-between">
               <div>
-                <p className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider mb-1">
+                <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider mb-1">
                   Current mood
                 </p>
                 <p className="text-[13px] font-semibold text-[#18231f]">
@@ -997,7 +997,7 @@ export function HomeScreen({
               <h2 className="font-black text-[#18231f] text-base">
                 Daily capture
               </h2>
-              <p className="text-[11px] text-[#8a9e95] mt-0.5">
+              <p className="text-[11px] text-[#657a71] mt-0.5">
                 One win + one dua.
               </p>
             </div>
@@ -1006,7 +1006,7 @@ export function HomeScreen({
                 "text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0",
                 journalReady
                   ? "bg-[#1f5a46] text-[#f0cb6a]"
-                  : "bg-[#faf5eb] text-[#8a9e95]",
+                  : "bg-[#faf5eb] text-[#657a71]",
               ].join(" ")}
             >
               {journalReady ? "Saved" : "Optional"}
@@ -1014,11 +1014,11 @@ export function HomeScreen({
           </div>
           <div className="flex flex-col gap-3">
             <label className="flex flex-col gap-1.5">
-              <span className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider">
                 One-line win
               </span>
               <textarea
-                className="w-full bg-[#faf5eb] rounded-xl p-3.5 text-[13px] text-[#18231f] placeholder:text-[#8a9e95] outline-none focus:ring-2 focus:ring-[#1f5a46]/25 resize-none leading-relaxed"
+                className="w-full bg-[#faf5eb] rounded-xl p-3.5 text-[13px] text-[#18231f] placeholder:text-[#657a71] outline-none focus:ring-2 focus:ring-[#1f5a46]/25 resize-none leading-relaxed"
                 rows={4}
                 maxLength={220}
                 value={todayEntry.reflection ?? ""}
@@ -1029,11 +1029,11 @@ export function HomeScreen({
               />
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className="text-[10px] font-bold text-[#8a9e95] uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider">
                 Dua / support ask
               </span>
               <textarea
-                className="w-full bg-[#faf5eb] rounded-xl p-3.5 text-[13px] text-[#18231f] placeholder:text-[#8a9e95] outline-none focus:ring-2 focus:ring-[#1f5a46]/25 resize-none leading-relaxed"
+                className="w-full bg-[#faf5eb] rounded-xl p-3.5 text-[13px] text-[#18231f] placeholder:text-[#657a71] outline-none focus:ring-2 focus:ring-[#1f5a46]/25 resize-none leading-relaxed"
                 rows={4}
                 maxLength={220}
                 value={todayEntry.dua ?? ""}
@@ -1049,3 +1049,4 @@ export function HomeScreen({
     </div>
   );
 }
+

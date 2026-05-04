@@ -18,8 +18,8 @@
   --sand-100: #f4ebdc;
   --sand-200: #ebdcc5;
   --ink-900: #18231f;
-  --ink-700: #31433b;
-  --ink-500: #5d6f65;
+  --ink-700: #24332d;
+  --ink-500: #44564f;
   --emerald-700: #1f5a46;
   --emerald-500: #2f8a67;
   --emerald-200: rgba(47, 138, 103, 0.16);
@@ -28,30 +28,19 @@
   --rose-500: #b6556b;
   --sky-500: #4d819f;
   --white: #fffdf8;
-  --border: rgba(24, 35, 31, 0.09);
-  --card-shadow: 0 16px 40px rgba(25, 40, 34, 0.08);
-  --card-shadow-strong: 0 24px 60px rgba(25, 40, 34, 0.16);
+  --border: rgba(255, 253, 248, 0.08);
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  --card-shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.42);
   --radius-xl: 28px;
   --radius-lg: 22px;
   --radius-md: 16px;
   --radius-sm: 12px;
   --safe-top: env(safe-area-inset-top);
   --safe-bottom: env(safe-area-inset-bottom);
-  --page-width: min(1120px, calc(100vw - 24px));
-  color: var(--ink-700);
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(211, 167, 77, 0.26),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at left 15%,
-      rgba(47, 138, 103, 0.16),
-      transparent 24%
-    ),
-    linear-gradient(180deg, #fcf7ef 0%, #f7f1e4 46%, #f4ecdf 100%);
-  color-scheme: light;
+  --page-width: min(980px, calc(100vw - 24px));
+  color: rgba(255, 253, 248, 0.92);
+  background: linear-gradient(145deg, #0e2119 0%, #163325 50%, #1f4b36 100%);
+  color-scheme: dark;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
   font-synthesis: none;
   line-height: 1.5;
@@ -73,8 +62,33 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100svh;
-  color: var(--ink-700);
+  color: rgba(255, 253, 248, 0.92);
   background: transparent;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.quran-mushaf-text {
+  font-family: "Amiri Quran", "Noto Naskh Arabic", "Amiri", serif;
+  font-size: clamp(1.45rem, 3.5vw, 2.05rem);
+  line-height: 2.25;
+  letter-spacing: 0;
+  text-align: justify;
+  text-justify: inter-word;
+  word-spacing: 0.04em;
+  font-weight: 500;
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1,
+    "kern" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+.quran-mushaf-meta {
+  font-family: "Amiri Quran", "Noto Naskh Arabic", "Amiri", serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  font-weight: 700;
 }
 
 body::before {
@@ -82,10 +96,10 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: 0.45;
+  opacity: 0.2;
   background-image:
-    linear-gradient(rgba(24, 35, 31, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(24, 35, 31, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 253, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 253, 248, 0.06) 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: radial-gradient(circle at center, black 30%, transparent 88%);
 }
@@ -128,17 +142,17 @@ button {
 .ambient-orb-one {
   top: -60px;
   right: 4vw;
-  width: 240px;
-  height: 240px;
-  background: rgba(211, 167, 77, 0.22);
+  width: 280px;
+  height: 280px;
+  background: rgba(211, 167, 77, 0.14);
 }
 
 .ambient-orb-two {
   bottom: 90px;
   left: 2vw;
-  width: 200px;
-  height: 200px;
-  background: rgba(47, 138, 103, 0.16);
+  width: 220px;
+  height: 220px;
+  background: rgba(47, 138, 103, 0.12);
 }
 
 .page-width {
@@ -238,7 +252,8 @@ button {
 
 .page-main {
   display: grid;
-  gap: 22px;
+  gap: 26px;
+  padding-top: 12px;
 }
 
 .screen {
@@ -249,23 +264,12 @@ button {
 .card {
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 253, 248, 0.08);
   border-radius: var(--radius-xl);
-  background: rgba(255, 253, 248, 0.84);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 253, 248, 0.04);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
   box-shadow: var(--card-shadow);
-}
-
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.4),
-    transparent 34%
-  );
 }
 
 .hero-panel {
@@ -2272,3 +2276,124 @@ button {
     max-width: none;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   DARK GOLD THEME — global Tailwind utility overrides
+   Converts hard-coded light-mode Tailwind classes to dark palette
+   These rules sit outside @layer so they always win over utilities
+════════════════════════════════════════════════════════════ */
+
+/* ── Card / section backgrounds ── */
+section.bg-white,
+article.bg-white,
+div.bg-white.border {
+  background: rgba(255, 253, 248, 0.04) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.bg-white {
+  background-color: rgba(255, 253, 248, 0.06) !important;
+}
+
+/* Sand chip / small panel bg */
+.bg-\[\#faf5eb\] {
+  background-color: rgba(255, 253, 248, 0.07) !important;
+}
+
+/* Progress track / subtle bg */
+.bg-\[\#f0ede4\] {
+  background-color: rgba(255, 253, 248, 0.1) !important;
+}
+
+/* Done-item tint (was light green) → gold tint */
+.bg-\[\#f0fdf4\] {
+  background-color: rgba(211, 167, 77, 0.12) !important;
+}
+
+/* Error state bg (was pale pink) → dark red glass */
+.bg-\[\#fff4f2\] {
+  background-color: rgba(220, 60, 60, 0.12) !important;
+}
+
+/* ── Text colors ── */
+
+/* Primary ink → cream */
+.text-\[\#18231f\] {
+  color: rgba(255, 253, 248, 0.92) !important;
+}
+
+/* Muted text → dim cream */
+.text-\[\#5d6f65\] {
+  color: rgba(255, 253, 248, 0.52) !important;
+}
+.text-\[\#657a71\] {
+  color: rgba(255, 253, 248, 0.5) !important;
+}
+.text-\[\#52665f\] {
+  color: rgba(255, 253, 248, 0.5) !important;
+}
+
+/* Emerald accent text → gold (active / stat values on dark bg) */
+.text-\[\#1f5a46\] {
+  color: #d3a74d !important;
+}
+
+/* Bright emerald link text → also gold */
+.text-\[\#2f8a67\] {
+  color: #d3a74d !important;
+}
+
+/* Error text on dark */
+.text-red-700 {
+  color: #ff9090 !important;
+}
+
+/* ── Border colors ── */
+.border-black\/\[0\.04\] { border-color: rgba(255, 253, 248, 0.06) !important; }
+.border-black\/\[0\.05\] { border-color: rgba(255, 253, 248, 0.07) !important; }
+.border-black\/\[0\.06\] { border-color: rgba(255, 253, 248, 0.08) !important; }
+.border-black\/\[0\.07\] { border-color: rgba(255, 253, 248, 0.08) !important; }
+.border-black\/\[0\.08\] { border-color: rgba(255, 253, 248, 0.09) !important; }
+.border-black\/\[0\.1\]  { border-color: rgba(255, 253, 248, 0.1)  !important; }
+.border-black\/\[0\.12\] { border-color: rgba(255, 253, 248, 0.12) !important; }
+.border-black\/\[0\.15\] { border-color: rgba(255, 253, 248, 0.14) !important; }
+
+/* Sand border (prayer card undone) → dim white */
+.border-\[\#e8decb\] { border-color: rgba(255, 253, 248, 0.12) !important; }
+
+/* Emerald active border → gold */
+.border-\[\#1f5a46\] { border-color: #d3a74d !important; }
+
+/* Emerald opacity borders → gold opacity */
+.border-\[\#1f5a46\]\/20 { border-color: rgba(211, 167, 77, 0.2) !important; }
+.border-\[\#1f5a46\]\/30 { border-color: rgba(211, 167, 77, 0.3) !important; }
+.border-\[\#1f5a46\]\/40 { border-color: rgba(211, 167, 77, 0.4) !important; }
+
+/* ── Active tint backgrounds ── */
+.bg-\[\#1f5a46\]\/\[0\.06\] { background-color: rgba(211, 167, 77, 0.1)  !important; }
+.bg-\[\#1f5a46\]\/\[0\.08\] { background-color: rgba(211, 167, 77, 0.1)  !important; }
+.bg-\[\#1f5a46\]\/10       { background-color: rgba(211, 167, 77, 0.12) !important; }
+
+/* ── Hover overrides ── */
+.hover\:bg-\[\#f0ede4\]:hover          { background-color: rgba(255, 253, 248, 0.12) !important; }
+.hover\:bg-\[\#1f5a46\]\/\[0\.05\]:hover { background-color: rgba(211, 167, 77, 0.08) !important; }
+.hover\:bg-\[\#1f5a46\]\/\[0\.06\]:hover { background-color: rgba(211, 167, 77, 0.1)  !important; }
+.hover\:bg-\[\#1f5a46\]\/\[0\.08\]:hover { background-color: rgba(211, 167, 77, 0.1)  !important; }
+.hover\:border-\[\#1f5a46\]:hover      { border-color: #d3a74d !important; }
+.hover\:border-\[\#1f5a46\]\/40:hover  { border-color: rgba(211, 167, 77, 0.4) !important; }
+.hover\:text-\[\#17372c\]:hover        { color: #f0cb6a !important; }
+.hover\:text-\[\#1f5a46\]:hover        { color: #f0cb6a !important; }
+
+/* ── Focus overrides ── */
+.focus\:border-\[\#1f5a46\]:focus { border-color: rgba(211, 167, 77, 0.5) !important; }
+
+/* ── Placeholder text ── */
+.placeholder\:text-\[\#657a71\]::placeholder {
+  color: rgba(255, 253, 248, 0.3) !important;
+}
+
+/* ── Heatmap miss cell (inline style can't be overridden here — handled in component) ── */
+
+/* ── Ensure stat/streak text bg stays dark emerald as badge bg ── */
+/* bg-[#1f5a46] solid (no opacity suffix) stays as dark emerald — correct for badge bg */

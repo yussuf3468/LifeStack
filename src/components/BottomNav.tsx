@@ -106,13 +106,13 @@ export function BottomNav() {
       }}
     >
       <div
-        className="flex items-center w-full max-w-[440px] gap-1 px-2 py-2 pointer-events-auto rounded-[28px] border border-black/[0.07]"
+        className="flex items-center w-full max-w-[440px] gap-1 px-2 py-2 pointer-events-auto rounded-[28px] border border-[rgba(255,253,248,0.1)]"
         style={{
-          background: "rgba(255,253,248,0.92)",
+          background: "rgba(10,22,15,0.94)",
           backdropFilter: "blur(28px) saturate(1.6)",
           WebkitBackdropFilter: "blur(28px) saturate(1.6)",
           boxShadow:
-            "0 8px 40px rgba(0,0,0,0.16), 0 2px 8px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.6)",
+            "0 8px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)",
         }}
       >
         {NAV_ITEMS.map(({ to, label, end, Icon }) => (
@@ -125,7 +125,7 @@ export function BottomNav() {
                 "flex flex-1 flex-col items-center gap-0.5 py-2.5 rounded-[20px] transition-all duration-200 select-none no-underline",
                 isActive
                   ? "text-[#f0cb6a]"
-                  : "text-[#8a9e95] hover:text-[#1f5a46]",
+                  : "text-[rgba(255,253,248,0.4)] hover:text-[rgba(255,253,248,0.7)]",
               ].join(" ")
             }
             style={({ isActive }) =>
@@ -148,3 +148,4 @@ export function BottomNav() {
     </nav>
   );
 }
+
