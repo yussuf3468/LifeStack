@@ -142,7 +142,7 @@ export function RecoveryScreen({
           </p>
         </div>
 
-        {daysClean === 0 && (
+        {!tracker.started && (
           <button
             type="button"
             onClick={onResetStreak}

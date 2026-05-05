@@ -138,6 +138,8 @@ export interface AddictionEntry {
 export interface AddictionTracker {
   /** ISO date string when the clean streak started */
   cleanSince: string;
+  /** Whether the user has explicitly started their journey */
+  started: boolean;
   /** All logged relapses (most recent last) */
   relapses: AddictionEntry[];
   /** Urge log entries with timestamps */

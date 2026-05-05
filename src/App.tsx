@@ -824,6 +824,7 @@ function App() {
       addictionTracker: {
         ...current.addictionTracker,
         cleanSince: now,
+        started: true,
       },
     }));
   }
@@ -837,6 +838,7 @@ function App() {
         ...current,
         addictionTracker: {
           cleanSince: now,
+          started: true,
           relapses: [...(tracker?.relapses ?? []), { date: today, note }],
           urges: tracker?.urges ?? [],
         },

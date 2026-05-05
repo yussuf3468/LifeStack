@@ -57,6 +57,7 @@ export function createDefaultState(): AppState {
     daily: {},
     addictionTracker: {
       cleanSince: timestamp,
+      started: false,
       relapses: [],
       urges: [],
     },
@@ -322,6 +323,7 @@ function normalizeAddictionTracker(
       typeof candidate.cleanSince === "string" && candidate.cleanSince.trim()
         ? candidate.cleanSince
         : fallback.cleanSince,
+    started: typeof candidate.started === "boolean" ? candidate.started : false,
     relapses: Array.isArray(candidate.relapses)
       ? candidate.relapses
           .filter(
