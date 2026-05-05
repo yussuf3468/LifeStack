@@ -3,6 +3,11 @@ export function registerServiceWorker() {
     return;
   }
 
+  // When a new service worker takes control, reload so stale JS is replaced.
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    window.location.reload();
+  });
+
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/sw.js")

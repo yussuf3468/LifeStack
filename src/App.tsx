@@ -44,6 +44,7 @@ import {
   createDefaultState,
   getStorageKey,
   loadState,
+  loadStoredState,
   saveState,
 } from "./lib/storage";
 import {
@@ -327,7 +328,7 @@ function App() {
 
   useEffect(() => {
     if (isSupabaseConfigured) {
-      if (authStatus !== "signed-in" || !authIdentity) {
+      if (authStatus !== "signed-in" || !authIdentity || !remoteReady) {
         return;
       }
 
@@ -408,8 +409,11 @@ function App() {
         return;
       }
 
+      const userStorageKey = getStorageKey(authUserId);
+      const cachedState = loadStoredState(userStorageKey);
+
       startTransition(() => {
-        setState(loadState(getStorageKey(authUserId)));
+        setState(cachedState ?? createDefaultState());
       });
       setRemoteReady(false);
       setBackendStatus("connecting");
@@ -422,10 +426,13 @@ function App() {
         }
 
         if (remoteState) {
+          const nextState =
+            !cachedState || isRemoteStateNewer(remoteState, cachedState)
+              ? remoteState
+              : cachedState;
+
           startTransition(() => {
-            setState((current) =>
-              isRemoteStateNewer(remoteState, current) ? remoteState : current,
-            );
+            setState(nextState);
           });
         }
 
@@ -476,16 +483,21 @@ function App() {
   useEffect(() => {
     function flushStateOnBackground() {
       const snapshot = stateRef.current;
-      saveState(snapshot, storageKey);
+
+      if (!isSupabaseConfigured) {
+        saveState(snapshot, storageKey);
+        return;
+      }
 
       if (
-        !isSupabaseConfigured ||
         authStatusRef.current !== "signed-in" ||
         !authIdentityRef.current ||
         !remoteReadyRef.current
       ) {
         return;
       }
+
+      saveState(snapshot, getStorageKey(authIdentityRef.current.id));
 
       void pushRemoteState(snapshot).catch(() => {
         setBackendStatus("offline");

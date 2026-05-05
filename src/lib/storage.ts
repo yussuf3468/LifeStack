@@ -317,13 +317,17 @@ function normalizeAddictionTracker(
   }
 
   const candidate = value as Partial<AddictionTracker>;
+  const hasActivity =
+    (Array.isArray(candidate.relapses) && candidate.relapses.length > 0) ||
+    (Array.isArray(candidate.urges) && candidate.urges.length > 0);
 
   return {
     cleanSince:
       typeof candidate.cleanSince === "string" && candidate.cleanSince.trim()
         ? candidate.cleanSince
         : fallback.cleanSince,
-    started: typeof candidate.started === "boolean" ? candidate.started : false,
+    started:
+      typeof candidate.started === "boolean" ? candidate.started : hasActivity,
     relapses: Array.isArray(candidate.relapses)
       ? candidate.relapses
           .filter(
@@ -367,20 +371,26 @@ export function hydrateState(value: unknown): AppState {
 }
 
 export function loadState(storageKey = getStorageKey()) {
+  const storedState = loadStoredState(storageKey);
+
+  return storedState ?? createDefaultState();
+}
+
+export function loadStoredState(storageKey = getStorageKey()) {
   if (typeof window === "undefined") {
-    return createDefaultState();
+    return null;
   }
 
   try {
     const rawState = window.localStorage.getItem(storageKey);
 
     if (!rawState) {
-      return createDefaultState();
+      return null;
     }
 
     return hydrateState(JSON.parse(rawState));
   } catch {
-    return createDefaultState();
+    return null;
   }
 }
 

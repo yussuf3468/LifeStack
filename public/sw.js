@@ -1,4 +1,4 @@
-const CACHE_NAME = "lifestack-v5";
+const CACHE_NAME = "lifestack-v6";
 const APP_SHELL = ["/", "/index.html", "/manifest.webmanifest", "/favicon.svg"];
 
 function isAppAsset(url) {

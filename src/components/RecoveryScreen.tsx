@@ -78,7 +78,10 @@ export function RecoveryScreen({
 
   useEffect(() => {
     setElapsed(getElapsed(tracker.cleanSince));
-    const id = setInterval(() => setElapsed(getElapsed(tracker.cleanSince)), 1000);
+    const id = setInterval(
+      () => setElapsed(getElapsed(tracker.cleanSince)),
+      1000,
+    );
     return () => clearInterval(id);
   }, [tracker.cleanSince]);
 
@@ -117,21 +120,35 @@ export function RecoveryScreen({
             {tracker.started ? (
               <>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-[4rem] font-black text-white leading-none">{elapsed.days}</span>
+                  <span className="text-[4rem] font-black text-white leading-none">
+                    {elapsed.days}
+                  </span>
                   <span className="text-[#c9a0f0] text-lg font-bold">d</span>
-                  <span className="text-[2rem] font-black text-white/80 leading-none">{String(elapsed.hours).padStart(2, "0")}</span>
+                  <span className="text-[2rem] font-black text-white/80 leading-none">
+                    {String(elapsed.hours).padStart(2, "0")}
+                  </span>
                   <span className="text-[#c9a0f0] text-base font-bold">h</span>
-                  <span className="text-[2rem] font-black text-white/80 leading-none">{String(elapsed.minutes).padStart(2, "0")}</span>
+                  <span className="text-[2rem] font-black text-white/80 leading-none">
+                    {String(elapsed.minutes).padStart(2, "0")}
+                  </span>
                   <span className="text-[#c9a0f0] text-base font-bold">m</span>
-                  <span className="text-[1.4rem] font-black text-white/50 leading-none">{String(elapsed.seconds).padStart(2, "0")}</span>
+                  <span className="text-[1.4rem] font-black text-white/50 leading-none">
+                    {String(elapsed.seconds).padStart(2, "0")}
+                  </span>
                   <span className="text-[#c9a0f0] text-sm font-bold">s</span>
                 </div>
-                <p className="text-[#c9a0f0] text-sm font-semibold mt-1">clean and counting</p>
+                <p className="text-[#c9a0f0] text-sm font-semibold mt-1">
+                  clean and counting
+                </p>
               </>
             ) : (
               <>
-                <p className="text-[4rem] font-black text-white leading-none">0</p>
-                <p className="text-[#c9a0f0] text-sm font-semibold mt-1">days clean</p>
+                <p className="text-[4rem] font-black text-white leading-none">
+                  0
+                </p>
+                <p className="text-[#c9a0f0] text-sm font-semibold mt-1">
+                  days clean
+                </p>
               </>
             )}
           </div>
