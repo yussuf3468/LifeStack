@@ -95,7 +95,13 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
         <p className="text-[#6db898] text-sm mt-1">
           Sleep, mood, prayers, and habit streaks over the last 14 days.
         </p>
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex justify-end gap-2">
+          <Link
+            className="text-[11px] font-semibold text-[#d3a74d] border border-[#d3a74d]/30 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] transition-colors"
+            to="/journal"
+          >
+            Journal →
+          </Link>
           <Link
             className="text-[11px] font-semibold text-[#6db898] border border-[#6db898]/30 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] transition-colors"
             to="/heatmap"

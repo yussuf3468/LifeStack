@@ -103,6 +103,12 @@ const RecoveryScreen = lazy(() =>
   })),
 );
 
+const JournalScreen = lazy(() =>
+  import("./components/JournalScreen").then((module) => ({
+    default: module.JournalScreen,
+  })),
+);
+
 type BackendStatus =
   | "local"
   | "auth"
@@ -1105,6 +1111,12 @@ function App() {
                       onLogRelapse={handleLogRelapse}
                       onResetStreak={handleResetStreak}
                     />
+                  }
+                />
+                <Route
+                  path="/journal"
+                  element={
+                    <JournalScreen habits={state.habits} daily={state.daily} />
                   }
                 />
                 <Route path="*" element={<Navigate to="/" replace />} />

@@ -130,6 +130,14 @@ export function HomeScreen({
             {quote.author}
           </cite>
         </blockquote>
+        <div className="mt-4 flex justify-end">
+          <Link
+            className="text-[11px] font-semibold text-[#d3a74d] border border-[#d3a74d]/30 px-2.5 py-1.5 rounded-xl hover:bg-white/[0.06] transition-colors"
+            to="/journal"
+          >
+            History →
+          </Link>
+        </div>
       </section>
 
       {/* ── XP STRIP ── */}
