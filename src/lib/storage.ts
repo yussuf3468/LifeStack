@@ -324,8 +324,13 @@ function normalizeAddictionTracker(
         : fallback.cleanSince,
     relapses: Array.isArray(candidate.relapses)
       ? candidate.relapses
-          .filter((r) => r && typeof r === "object" && typeof r.date === "string")
-          .map((r) => ({ date: r.date, note: typeof r.note === "string" ? r.note : undefined }))
+          .filter(
+            (r) => r && typeof r === "object" && typeof r.date === "string",
+          )
+          .map((r) => ({
+            date: r.date,
+            note: typeof r.note === "string" ? r.note : undefined,
+          }))
       : [],
     urges: Array.isArray(candidate.urges)
       ? candidate.urges.filter((u): u is string => typeof u === "string")

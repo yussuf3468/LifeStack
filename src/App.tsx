@@ -817,6 +817,17 @@ function App() {
     }));
   }
 
+  function handleResetStreak() {
+    const now = new Date().toISOString();
+    updateState((current) => ({
+      ...current,
+      addictionTracker: {
+        ...current.addictionTracker,
+        cleanSince: now,
+      },
+    }));
+  }
+
   function handleLogRelapse(note?: string) {
     const today = getDateKey();
     const now = new Date().toISOString();
@@ -1078,6 +1089,7 @@ function App() {
                       tracker={state.addictionTracker}
                       onLogUrge={handleLogUrge}
                       onLogRelapse={handleLogRelapse}
+                      onResetStreak={handleResetStreak}
                     />
                   }
                 />

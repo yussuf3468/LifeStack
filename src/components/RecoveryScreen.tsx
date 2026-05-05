@@ -4,6 +4,7 @@ interface RecoveryScreenProps {
   tracker: AddictionTracker;
   onLogUrge: () => void;
   onLogRelapse: (note?: string) => void;
+  onResetStreak: () => void;
 }
 
 function getDaysBetween(isoA: string, isoB: string) {
@@ -59,6 +60,7 @@ export function RecoveryScreen({
   tracker,
   onLogUrge,
   onLogRelapse,
+  onResetStreak,
 }: RecoveryScreenProps) {
   const now = new Date().toISOString();
   const daysClean = Math.max(0, getDaysBetween(tracker.cleanSince, now));
@@ -76,7 +78,8 @@ export function RecoveryScreen({
       <section
         className="rounded-2xl px-5 pt-5 pb-6"
         style={{
-          background: "linear-gradient(145deg, #1a0f2e 0%, #2d1f4a 50%, #1f1035 100%)",
+          background:
+            "linear-gradient(145deg, #1a0f2e 0%, #2d1f4a 50%, #1f1035 100%)",
         }}
       >
         <p className="text-[11px] text-[#c9a0f0] font-bold uppercase tracking-widest mb-2">
@@ -112,7 +115,8 @@ export function RecoveryScreen({
             </span>
             {daysToNext <= 365 && (
               <p className="text-[11px] text-[#a07cc8] mt-1.5">
-                {daysToNext} {daysToNext === 1 ? "day" : "days"} to {getMilestoneLabel(nextMilestone)}
+                {daysToNext} {daysToNext === 1 ? "day" : "days"} to{" "}
+                {getMilestoneLabel(nextMilestone)}
               </p>
             )}
           </div>
@@ -133,9 +137,25 @@ export function RecoveryScreen({
             />
           </div>
           <p className="text-[10px] text-[#a07cc8] mt-1">
-            {Math.round((daysClean / nextMilestone) * 100)}% to {getMilestoneLabel(nextMilestone)} milestone
+            {Math.round((daysClean / nextMilestone) * 100)}% to{" "}
+            {getMilestoneLabel(nextMilestone)} milestone
           </p>
         </div>
+
+        {daysClean === 0 && (
+          <button
+            type="button"
+            onClick={onResetStreak}
+            className="mt-4 w-full py-3.5 rounded-2xl font-black text-[15px] transition-all active:scale-[0.97]"
+            style={{
+              background: "linear-gradient(135deg, #7c3aed, #c9a0f0)",
+              color: "#fff",
+              boxShadow: "0 4px 20px rgba(124,58,237,0.4)",
+            }}
+          >
+            Begin my journey today →
+          </button>
+        )}
       </section>
 
       {/* ── URGE BUTTON ── */}
@@ -157,7 +177,8 @@ export function RecoveryScreen({
           className="text-[12px] mb-4"
           style={{ color: "rgba(255,253,248,0.5)" }}
         >
-          Tap the button. The urge will pass. You are stronger than the algorithm.
+          Tap the button. The urge will pass. You are stronger than the
+          algorithm.
         </p>
 
         <button
@@ -181,37 +202,64 @@ export function RecoveryScreen({
               border: "1px solid rgba(124,58,237,0.25)",
             }}
           >
-            <p className="text-[11px] font-bold uppercase tracking-wider mb-1.5" style={{ color: "#c9a0f0" }}>
+            <p
+              className="text-[11px] font-bold uppercase tracking-wider mb-1.5"
+              style={{ color: "#c9a0f0" }}
+            >
               Action plan
             </p>
-            <p className="text-[13px] font-semibold leading-relaxed" style={{ color: "rgba(255,253,248,0.88)" }}>
+            <p
+              className="text-[13px] font-semibold leading-relaxed"
+              style={{ color: "rgba(255,253,248,0.88)" }}
+            >
               {urgeResponse}
             </p>
           </div>
         )}
 
-        <div className="flex gap-4 mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,253,248,0.07)" }}>
+        <div
+          className="flex gap-4 mt-4 pt-4"
+          style={{ borderTop: "1px solid rgba(255,253,248,0.07)" }}
+        >
           <div className="text-center flex-1">
-            <p className="font-black text-lg leading-none" style={{ color: "#c9a0f0" }}>
+            <p
+              className="font-black text-lg leading-none"
+              style={{ color: "#c9a0f0" }}
+            >
               {urgesLogged}
             </p>
-            <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,253,248,0.4)" }}>
+            <p
+              className="text-[10px] mt-0.5"
+              style={{ color: "rgba(255,253,248,0.4)" }}
+            >
               Urges resisted
             </p>
           </div>
           <div className="text-center flex-1">
-            <p className="font-black text-lg leading-none" style={{ color: "#d3a74d" }}>
+            <p
+              className="font-black text-lg leading-none"
+              style={{ color: "#d3a74d" }}
+            >
               {relapseCount === 0 ? "0" : relapseCount}
             </p>
-            <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,253,248,0.4)" }}>
+            <p
+              className="text-[10px] mt-0.5"
+              style={{ color: "rgba(255,253,248,0.4)" }}
+            >
               Relapses logged
             </p>
           </div>
           <div className="text-center flex-1">
-            <p className="font-black text-lg leading-none" style={{ color: "#6db898" }}>
+            <p
+              className="font-black text-lg leading-none"
+              style={{ color: "#6db898" }}
+            >
               {daysClean}
             </p>
-            <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,253,248,0.4)" }}>
+            <p
+              className="text-[10px] mt-0.5"
+              style={{ color: "rgba(255,253,248,0.4)" }}
+            >
               Days clean
             </p>
           </div>
@@ -227,10 +275,16 @@ export function RecoveryScreen({
           backdropFilter: "blur(12px)",
         }}
       >
-        <h2 className="font-black text-base mb-1" style={{ color: "rgba(255,253,248,0.92)" }}>
+        <h2
+          className="font-black text-base mb-1"
+          style={{ color: "rgba(255,253,248,0.92)" }}
+        >
           Milestones
         </h2>
-        <p className="text-[12px] mb-4" style={{ color: "rgba(255,253,248,0.5)" }}>
+        <p
+          className="text-[12px] mb-4"
+          style={{ color: "rgba(255,253,248,0.5)" }}
+        >
           Each milestone is a real physiological and spiritual reset.
         </p>
         <div className="grid grid-cols-5 gap-2">
@@ -250,10 +304,18 @@ export function RecoveryScreen({
                   border: `1px solid ${reached ? "rgba(201,160,240,0.4)" : isNext ? "rgba(124,58,237,0.3)" : "rgba(255,253,248,0.07)"}`,
                 }}
               >
-                <span className="text-base">{reached ? "✅" : isNext ? "🎯" : "○"}</span>
+                <span className="text-base">
+                  {reached ? "✅" : isNext ? "🎯" : "○"}
+                </span>
                 <p
                   className="text-[10px] font-bold"
-                  style={{ color: reached ? "#c9a0f0" : isNext ? "#a07cc8" : "rgba(255,253,248,0.35)" }}
+                  style={{
+                    color: reached
+                      ? "#c9a0f0"
+                      : isNext
+                        ? "#a07cc8"
+                        : "rgba(255,253,248,0.35)",
+                  }}
                 >
                   {milestone < 365 ? `${milestone}d` : "1yr"}
                 </p>
@@ -281,11 +343,21 @@ export function RecoveryScreen({
         >
           وَلَا تَقْرَبُوا الزِّنَا ۖ إِنَّهُ كَانَ فَاحِشَةً وَسَاءَ سَبِيلًا
         </p>
-        <p className="text-[13px] leading-relaxed mb-2" style={{ color: "rgba(255,253,248,0.88)" }}>
-          "And do not approach unlawful sexual intercourse. Indeed, it is ever an immorality and is evil as a way." — Quran 17:32
+        <p
+          className="text-[13px] leading-relaxed mb-2"
+          style={{ color: "rgba(255,253,248,0.88)" }}
+        >
+          "And do not approach unlawful sexual intercourse. Indeed, it is ever
+          an immorality and is evil as a way." — Quran 17:32
         </p>
-        <p className="text-[12px] leading-relaxed italic" style={{ color: "#6db898" }}>
-          Pornography and masturbation are widely considered ḥarām. Lowering the gaze (ghad al-basr) is the first defence. Fasting, marriage, and constant dhikr are the prophet's prescribed remedies for those who struggle.
+        <p
+          className="text-[12px] leading-relaxed italic"
+          style={{ color: "#6db898" }}
+        >
+          Pornography and masturbation are widely considered ḥarām. Lowering the
+          gaze (ghad al-basr) is the first defence. Fasting, marriage, and
+          constant dhikr are the prophet's prescribed remedies for those who
+          struggle.
         </p>
       </article>
 
@@ -298,10 +370,16 @@ export function RecoveryScreen({
           backdropFilter: "blur(12px)",
         }}
       >
-        <h2 className="font-black text-base mb-1" style={{ color: "rgba(255,253,248,0.92)" }}>
+        <h2
+          className="font-black text-base mb-1"
+          style={{ color: "rgba(255,253,248,0.92)" }}
+        >
           Log a relapse
         </h2>
-        <p className="text-[12px] mb-4" style={{ color: "rgba(255,253,248,0.5)" }}>
+        <p
+          className="text-[12px] mb-4"
+          style={{ color: "rgba(255,253,248,0.5)" }}
+        >
           Honesty is the foundation of recovery. Log it, learn from it, restart.
         </p>
         <button
@@ -326,24 +404,42 @@ export function RecoveryScreen({
 
         {relapseCount > 0 && (
           <div className="mt-4">
-            <p className="text-[11px] font-bold uppercase tracking-wider mb-2" style={{ color: "rgba(255,253,248,0.4)" }}>
+            <p
+              className="text-[11px] font-bold uppercase tracking-wider mb-2"
+              style={{ color: "rgba(255,253,248,0.4)" }}
+            >
               Relapse history ({relapseCount})
             </p>
             <div className="flex flex-col gap-2">
-              {[...tracker.relapses].reverse().slice(0, 5).map((entry, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between py-2 px-3 rounded-xl"
-                  style={{ background: "rgba(220,60,60,0.08)", border: "1px solid rgba(220,60,60,0.15)" }}
-                >
-                  <p className="text-[12px] font-semibold" style={{ color: "rgba(255,253,248,0.7)" }}>
-                    {formatRelativeDate(entry.date)}
-                  </p>
-                  <p className="text-[10px]" style={{ color: "rgba(255,253,248,0.35)" }}>
-                    {new Date(entry.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}
-                  </p>
-                </div>
-              ))}
+              {[...tracker.relapses]
+                .reverse()
+                .slice(0, 5)
+                .map((entry, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between py-2 px-3 rounded-xl"
+                    style={{
+                      background: "rgba(220,60,60,0.08)",
+                      border: "1px solid rgba(220,60,60,0.15)",
+                    }}
+                  >
+                    <p
+                      className="text-[12px] font-semibold"
+                      style={{ color: "rgba(255,253,248,0.7)" }}
+                    >
+                      {formatRelativeDate(entry.date)}
+                    </p>
+                    <p
+                      className="text-[10px]"
+                      style={{ color: "rgba(255,253,248,0.35)" }}
+                    >
+                      {new Date(entry.date).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "short",
+                      })}
+                    </p>
+                  </div>
+                ))}
             </div>
           </div>
         )}
@@ -358,28 +454,60 @@ export function RecoveryScreen({
           backdropFilter: "blur(12px)",
         }}
       >
-        <h2 className="font-black text-base mb-4" style={{ color: "rgba(255,253,248,0.92)" }}>
+        <h2
+          className="font-black text-base mb-4"
+          style={{ color: "rgba(255,253,248,0.92)" }}
+        >
           Practical defences
         </h2>
         <div className="flex flex-col gap-3">
           {[
-            { icon: "📵", title: "No phone in bed", body: "Set a physical charging spot outside your bedroom. Most relapses happen at night in bed." },
-            { icon: "🤲", title: "Fast on Mondays & Thursdays", body: "The Prophet ﷺ recommended fasting to cool desires. It directly reduces the biological drive." },
-            { icon: "💪", title: "Cold showers", body: "A 30-second cold flush after a warm shower reduces arousal hormones rapidly." },
-            { icon: "📖", title: "Surah Al-Mu'minun 1-11", body: "The first verses of Al-Mu'minun describe the believers who guard their private parts. Recite morning and night." },
-            { icon: "🔒", title: "Use a content filter", body: "Install a DNS-based filter (e.g. CleanBrowsing or NextDNS) on your router and devices. Give someone you trust the password." },
+            {
+              icon: "📵",
+              title: "No phone in bed",
+              body: "Set a physical charging spot outside your bedroom. Most relapses happen at night in bed.",
+            },
+            {
+              icon: "🤲",
+              title: "Fast on Mondays & Thursdays",
+              body: "The Prophet ﷺ recommended fasting to cool desires. It directly reduces the biological drive.",
+            },
+            {
+              icon: "💪",
+              title: "Cold showers",
+              body: "A 30-second cold flush after a warm shower reduces arousal hormones rapidly.",
+            },
+            {
+              icon: "📖",
+              title: "Surah Al-Mu'minun 1-11",
+              body: "The first verses of Al-Mu'minun describe the believers who guard their private parts. Recite morning and night.",
+            },
+            {
+              icon: "🔒",
+              title: "Use a content filter",
+              body: "Install a DNS-based filter (e.g. CleanBrowsing or NextDNS) on your router and devices. Give someone you trust the password.",
+            },
           ].map((tip) => (
             <div
               key={tip.title}
               className="flex gap-3 p-3 rounded-xl"
-              style={{ background: "rgba(255,253,248,0.04)", border: "1px solid rgba(255,253,248,0.06)" }}
+              style={{
+                background: "rgba(255,253,248,0.04)",
+                border: "1px solid rgba(255,253,248,0.06)",
+              }}
             >
               <span className="text-xl shrink-0 mt-0.5">{tip.icon}</span>
               <div>
-                <p className="text-[13px] font-bold mb-0.5" style={{ color: "rgba(255,253,248,0.88)" }}>
+                <p
+                  className="text-[13px] font-bold mb-0.5"
+                  style={{ color: "rgba(255,253,248,0.88)" }}
+                >
                   {tip.title}
                 </p>
-                <p className="text-[12px] leading-relaxed" style={{ color: "rgba(255,253,248,0.5)" }}>
+                <p
+                  className="text-[12px] leading-relaxed"
+                  style={{ color: "rgba(255,253,248,0.5)" }}
+                >
                   {tip.body}
                 </p>
               </div>

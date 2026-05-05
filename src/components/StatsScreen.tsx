@@ -9,9 +9,13 @@ import {
   getJournalDays,
   getMoodAverage,
   getMoodTrend,
+  getPrayerAveragesByPrayer,
+  getPrayerHistory,
   getQuranStudyDays,
   getSleepAverage,
 } from "../lib/stats";
+import { MOOD_OPTIONS, PRAYER_SLOTS } from "../data/content";
+import { getDateKey, listDates } from "../lib/date";
 import type { DailyEntry, Habit } from "../types";
 
 interface StatsScreenProps {
@@ -40,6 +44,9 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
   const waterAverage = getAverageWater(daily);
   const focusAverage = getAverageFocusCompletion(daily);
   const journalDays = getJournalDays(daily);
+  const prayerHistory = getPrayerHistory(daily, 14);
+  const prayerAverages = getPrayerAveragesByPrayer(daily, 14);
+  const last7 = listDates(7).reverse();
   const streaks = habits
     .map((habit) => ({
       habit,
@@ -162,6 +169,139 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
         ))}
       </div>
 
+      {/* ── PRAYER CALENDAR ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">
+          Prayer calendar
+        </h2>
+        <p className="text-[11px] text-[#657a71] mb-4">
+          Last 14 days — which prayers were protected each day.
+        </p>
+        <div className="flex flex-col">
+          {prayerHistory.map((row) => (
+            <div
+              key={row.dateKey}
+              className="flex items-center gap-2 py-2.5 border-b border-black/[0.04] last:border-0"
+            >
+              <p
+                className="text-[11px] font-semibold shrink-0 w-16"
+                style={{ color: "#657a71" }}
+              >
+                {row.label.split(",")[0]}
+                <span className="font-normal block text-[10px]">
+                  {row.label.split(",")[1]?.trim()}
+                </span>
+              </p>
+              {row.logged ? (
+                <div className="flex gap-1 flex-1">
+                  {PRAYER_SLOTS.map((slot) => {
+                    const missed = row.missed.includes(slot.id);
+                    return (
+                      <span
+                        key={slot.id}
+                        className="flex-1 py-1 rounded-lg text-center text-[10px] font-bold"
+                        style={{
+                          background: missed
+                            ? "rgba(220,60,60,0.12)"
+                            : "rgba(47,138,103,0.15)",
+                          color: missed ? "#dc3c3c" : "#2f8a67",
+                        }}
+                      >
+                        {slot.label[0]}
+                      </span>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p
+                  className="text-[11px] italic flex-1"
+                  style={{ color: "rgba(0,0,0,0.25)" }}
+                >
+                  Not logged
+                </p>
+              )}
+              {row.logged && (
+                <span
+                  className="text-[11px] font-black w-8 text-right shrink-0"
+                  style={{
+                    color:
+                      row.protectedCount === 5
+                        ? "#1f5a46"
+                        : row.protectedCount >= 3
+                          ? "#d3a74d"
+                          : "#dc3c3c",
+                  }}
+                >
+                  {row.protectedCount}/5
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── PER-PRAYER STATS ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">
+          Prayer hit rate
+        </h2>
+        <p className="text-[11px] text-[#657a71] mb-4">
+          Completion for each prayer over the last 14 days.
+        </p>
+        <div className="flex flex-col gap-4">
+          {prayerAverages.map((row) => (
+            <div key={row.id}>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-[13px] font-semibold text-[#18231f]">
+                  {row.label}
+                </p>
+                <div className="flex items-center gap-2.5">
+                  {row.missedDays > 0 && (
+                    <span className="text-[11px]" style={{ color: "#dc3c3c" }}>
+                      {row.missedDays} missed
+                    </span>
+                  )}
+                  <span
+                    className="text-[13px] font-black"
+                    style={{
+                      color:
+                        row.loggedDays === 0
+                          ? "#657a71"
+                          : row.percent >= 80
+                            ? "#1f5a46"
+                            : row.percent >= 50
+                              ? "#d3a74d"
+                              : "#dc3c3c",
+                    }}
+                  >
+                    {row.loggedDays === 0 ? "–" : `${row.percent}%`}
+                  </span>
+                </div>
+              </div>
+              {row.loggedDays > 0 && (
+                <div
+                  className="h-2 rounded-full overflow-hidden"
+                  style={{ background: "rgba(0,0,0,0.06)" }}
+                >
+                  <div
+                    className="h-full rounded-full transition-all duration-500"
+                    style={{
+                      width: `${row.percent}%`,
+                      background:
+                        row.percent >= 80
+                          ? "#2f8a67"
+                          : row.percent >= 50
+                            ? "#d3a74d"
+                            : "#dc3c3c",
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ── MOOD CHART ── */}
       <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
         <div className="flex items-start justify-between mb-4">
@@ -245,6 +385,97 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
             </p>
           </div>
         )}
+      </section>
+
+      {/* ── 7-DAY LOG ── */}
+      <section className="bg-white border border-black/[0.06] rounded-2xl p-5">
+        <h2 className="font-black text-[#18231f] text-base mb-1">Daily log</h2>
+        <p className="text-[11px] text-[#657a71] mb-4">
+          Last 7 days at a glance.
+        </p>
+        <div className="flex flex-col">
+          {last7.map((date) => {
+            const key = getDateKey(date);
+            const entry = daily[key];
+            const moodOpt = entry?.mood
+              ? MOOD_OPTIONS.find((o) => o.value === entry.mood)
+              : null;
+            const prayerCount =
+              entry?.prayers?.filter((p) => p.onTime).length ?? null;
+            const habitsCount = entry?.completedHabitIds?.length ?? null;
+            return (
+              <div
+                key={key}
+                className="py-3 border-b border-black/[0.04] last:border-0"
+              >
+                <p className="text-[12px] font-bold text-[#18231f] mb-2">
+                  {date.toLocaleDateString("en-GB", {
+                    weekday: "short",
+                    day: "numeric",
+                    month: "short",
+                  })}
+                </p>
+                {entry != null ? (
+                  <div className="grid grid-cols-3 gap-y-1.5 gap-x-3">
+                    <span className="text-[11px] text-[#657a71]">
+                      😴{" "}
+                      <span className="font-semibold text-[#18231f]">
+                        {entry.sleep ? `${entry.sleep.hours}h` : "—"}
+                      </span>
+                    </span>
+                    <span className="text-[11px] text-[#657a71]">
+                      {moodOpt?.emoji ?? "——"}{" "}
+                      <span className="font-semibold text-[#18231f]">
+                        {moodOpt?.label ?? "—"}
+                      </span>
+                    </span>
+                    <span className="text-[11px] text-[#657a71]">
+                      🕌{" "}
+                      <span
+                        className="font-semibold"
+                        style={{
+                          color:
+                            prayerCount === 5
+                              ? "#1f5a46"
+                              : (prayerCount ?? 0) >= 3
+                                ? "#d3a74d"
+                                : "#dc3c3c",
+                        }}
+                      >
+                        {prayerCount !== null ? `${prayerCount}/5` : "—"}
+                      </span>
+                    </span>
+                    <span className="text-[11px] text-[#657a71]">
+                      ✅{" "}
+                      <span className="font-semibold text-[#18231f]">
+                        {habitsCount !== null ? `${habitsCount} habits` : "—"}
+                      </span>
+                    </span>
+                    <span className="text-[11px] text-[#657a71]">
+                      💧{" "}
+                      <span className="font-semibold text-[#18231f]">
+                        {entry.waterCups != null ? `${entry.waterCups}/8` : "—"}
+                      </span>
+                    </span>
+                    <span className="text-[11px] text-[#657a71]">
+                      📿{" "}
+                      <span className="font-semibold text-[#18231f]">
+                        {entry.dhikrCount != null ? entry.dhikrCount : "—"}
+                      </span>
+                    </span>
+                  </div>
+                ) : (
+                  <p
+                    className="text-[11px] italic"
+                    style={{ color: "rgba(0,0,0,0.3)" }}
+                  >
+                    Nothing logged
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </section>
 
       {/* ── STREAKS ── */}
