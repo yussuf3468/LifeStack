@@ -60,14 +60,14 @@ function DayCard({
   const isToday = dateKey === getDateKey();
 
   const scoreColor =
-    score >= 8 ? "#6db898" : score >= 5 ? "#d3a74d" : "rgba(255,253,248,0.35)";
+    score >= 8 ? "#6db898" : score >= 5 ? "#d3a74d" : "rgba(255,253,248,0.6)";
 
   return (
     <article
       className="rounded-2xl border overflow-hidden"
       style={{
-        background: "rgba(255,253,248,0.04)",
-        borderColor: open ? "rgba(255,253,248,0.12)" : "rgba(255,253,248,0.07)",
+        background: "rgba(255,253,248,0.07)",
+        borderColor: open ? "rgba(255,253,248,0.18)" : "rgba(255,253,248,0.12)",
       }}
     >
       {/* Header row — always visible */}
@@ -97,8 +97,8 @@ function DayCard({
             </p>
           </div>
           <p
-            className="text-[11px] mt-0.5"
-            style={{ color: "rgba(255,253,248,0.4)" }}
+            className="text-[12px] mt-0.5"
+            style={{ color: "rgba(255,253,248,0.65)" }}
           >
             {short}
           </p>
@@ -111,20 +111,20 @@ function DayCard({
               <span className="text-base leading-none">{moodOpt.emoji}</span>
             )}
             <span
-              className="text-[11px] font-black"
+              className="text-[12px] font-black"
               style={{
                 color:
                   prayerCount === 5
                     ? "#6db898"
                     : prayerCount >= 3
                       ? "#d3a74d"
-                      : "rgba(255,253,248,0.35)",
+                      : "rgba(255,253,248,0.65)",
               }}
             >
               🕌 {prayerCount}/5
             </span>
             <span
-              className="text-[11px] font-black"
+              className="text-[12px] font-black"
               style={{ color: scoreColor }}
             >
               ✦ {score}
@@ -148,17 +148,17 @@ function DayCard({
       {open && (
         <div
           className="px-4 pb-4 flex flex-col gap-4"
-          style={{ borderTop: "1px solid rgba(255,253,248,0.07)" }}
+          style={{ borderTop: "1px solid rgba(255,253,248,0.12)" }}
         >
           {/* Row 1: Sleep + Mood + Energy */}
           <div className="flex gap-3 pt-3">
             <div
               className="flex-1 rounded-xl p-3"
-              style={{ background: "rgba(255,253,248,0.05)" }}
+              style={{ background: "rgba(255,253,248,0.09)" }}
             >
               <p
-                className="text-[10px] font-bold uppercase tracking-wider mb-1"
-                style={{ color: "rgba(255,253,248,0.4)" }}
+                className="text-[11px] font-bold uppercase tracking-wider mb-1"
+                style={{ color: "rgba(255,253,248,0.7)" }}
               >
                 Sleep
               </p>
@@ -170,8 +170,8 @@ function DayCard({
               </p>
               {entry.sleep && (
                 <p
-                  className="text-[10px] mt-0.5"
-                  style={{ color: "rgba(255,253,248,0.4)" }}
+                  className="text-[11px] mt-0.5"
+                  style={{ color: "rgba(255,253,248,0.65)" }}
                 >
                   {entry.sleep.bedtime} → {entry.sleep.wakeTime}
                 </p>
@@ -179,11 +179,11 @@ function DayCard({
             </div>
             <div
               className="flex-1 rounded-xl p-3"
-              style={{ background: "rgba(255,253,248,0.05)" }}
+              style={{ background: "rgba(255,253,248,0.09)" }}
             >
               <p
-                className="text-[10px] font-bold uppercase tracking-wider mb-1"
-                style={{ color: "rgba(255,253,248,0.4)" }}
+                className="text-[11px] font-bold uppercase tracking-wider mb-1"
+                style={{ color: "rgba(255,253,248,0.7)" }}
               >
                 Mood
               </p>
@@ -196,11 +196,11 @@ function DayCard({
             </div>
             <div
               className="flex-1 rounded-xl p-3"
-              style={{ background: "rgba(255,253,248,0.05)" }}
+              style={{ background: "rgba(255,253,248,0.09)" }}
             >
               <p
-                className="text-[10px] font-bold uppercase tracking-wider mb-1"
-                style={{ color: "rgba(255,253,248,0.4)" }}
+                className="text-[11px] font-bold uppercase tracking-wider mb-1"
+                style={{ color: "rgba(255,253,248,0.7)" }}
               >
                 Energy
               </p>
@@ -271,11 +271,11 @@ function DayCard({
               <div
                 key={label}
                 className="rounded-xl p-3 text-center"
-                style={{ background: "rgba(255,253,248,0.05)" }}
+                style={{ background: "rgba(255,253,248,0.09)" }}
               >
                 <p
-                  className="text-[10px] font-bold uppercase tracking-wider"
-                  style={{ color: "rgba(255,253,248,0.4)" }}
+                  className="text-[11px] font-bold uppercase tracking-wider"
+                  style={{ color: "rgba(255,253,248,0.7)" }}
                 >
                   {label}
                 </p>
@@ -293,8 +293,8 @@ function DayCard({
           {entry.focusItems?.some((f) => f.text.trim()) && (
             <div>
               <p
-                className="text-[10px] font-bold uppercase tracking-wider mb-2"
-                style={{ color: "rgba(255,253,248,0.4)" }}
+                className="text-[11px] font-bold uppercase tracking-wider mb-2"
+                style={{ color: "rgba(255,253,248,0.7)" }}
               >
                 Focus
               </p>
@@ -304,8 +304,8 @@ function DayCard({
                   .map((f) => (
                     <div
                       key={f.id}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl"
-                      style={{ background: "rgba(255,253,248,0.05)" }}
+                      className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl"
+                      style={{ background: "rgba(255,253,248,0.09)" }}
                     >
                       <span
                         className="text-sm shrink-0"
@@ -336,8 +336,8 @@ function DayCard({
           {completedHabits.length > 0 && (
             <div>
               <p
-                className="text-[10px] font-bold uppercase tracking-wider mb-2"
-                style={{ color: "rgba(255,253,248,0.4)" }}
+                className="text-[11px] font-bold uppercase tracking-wider mb-2"
+                style={{ color: "rgba(255,253,248,0.7)" }}
               >
                 Habits done ({completedHabits.length})
               </p>
@@ -370,7 +370,7 @@ function DayCard({
                   }}
                 >
                   <p
-                    className="text-[10px] font-bold uppercase tracking-wider mb-1.5"
+                    className="text-[11px] font-bold uppercase tracking-wider mb-1.5"
                     style={{ color: "#d3a74d" }}
                   >
                     One win
@@ -392,7 +392,7 @@ function DayCard({
                   }}
                 >
                   <p
-                    className="text-[10px] font-bold uppercase tracking-wider mb-1.5"
+                    className="text-[11px] font-bold uppercase tracking-wider mb-1.5"
                     style={{ color: "#6db898" }}
                   >
                     Dua

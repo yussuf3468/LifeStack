@@ -593,9 +593,17 @@ function App() {
 
   function handleTogglePrayer(prayerId: PrayerName) {
     updateTodayEntry((entry) => {
+      const existingPrayer = entry.prayers?.find(
+        (item) => item.id === prayerId,
+      );
+
+      if (existingPrayer?.onTime) {
+        return entry;
+      }
+
       const newPrayers =
         entry.prayers?.map((item) =>
-          item.id === prayerId ? { ...item, onTime: !item.onTime } : item,
+          item.id === prayerId ? { ...item, onTime: true } : item,
         ) ?? [];
 
       const wasAllDone = (entry.prayers ?? []).every((p) => p.onTime);

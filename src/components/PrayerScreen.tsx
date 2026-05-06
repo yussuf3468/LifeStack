@@ -66,19 +66,19 @@ export function PrayerScreen({
               <p className="font-black text-[#f0cb6a] text-lg leading-none">
                 {loggedDays ? `${protectedAverage}/5` : "--"}
               </p>
-              <p className="text-[10px] text-[#6db898] mt-0.5">Avg protected</p>
+              <p className="text-[11px] text-[#4d6459] mt-0.5">Avg protected</p>
             </div>
             <div className="text-center">
               <p className="font-black text-[#f0cb6a] text-lg leading-none">
                 {perfectDays}
               </p>
-              <p className="text-[10px] text-[#6db898] mt-0.5">Perfect days</p>
+              <p className="text-[11px] text-[#4d6459] mt-0.5">Perfect days</p>
             </div>
             <div className="text-center">
               <p className="font-black text-[#f0cb6a] text-lg leading-none">
                 {missedTotal}
               </p>
-              <p className="text-[10px] text-[#6db898] mt-0.5">Missed total</p>
+              <p className="text-[11px] text-[#4d6459] mt-0.5">Missed total</p>
             </div>
           </div>
           <Link
@@ -97,7 +97,7 @@ export function PrayerScreen({
             <h2 className="font-black text-[#18231f] text-base">
               Today's prayer board
             </h2>
-            <p className="text-[11px] text-[#657a71] mt-0.5">
+            <p className="text-[12px] text-[#4d6459] mt-0.5">
               Mark each prayer on time.
             </p>
           </div>
@@ -117,9 +117,11 @@ export function PrayerScreen({
             <button
               key={prayer.id}
               type="button"
+              aria-pressed={prayer.onTime}
+              disabled={prayer.onTime}
               onClick={() => onTogglePrayer(prayer.id)}
               className={[
-                "flex flex-col items-center gap-1.5 py-4 rounded-2xl border-2 shadow-sm transition-all duration-200 active:scale-[0.95]",
+                "flex flex-col items-center gap-1.5 py-4 rounded-2xl border-2 shadow-sm transition-all duration-200 active:scale-[0.95] disabled:cursor-default disabled:active:scale-100",
                 prayer.onTime
                   ? "bg-[#17372c] border-[#17372c]"
                   : "bg-[#faf5eb] border-[#e8decb] hover:border-[#1f5a46]/40",
@@ -151,7 +153,7 @@ export function PrayerScreen({
         <h2 className="font-black text-[#18231f] text-base mb-1">
           Average by prayer
         </h2>
-        <p className="text-[11px] text-[#657a71] mb-4">
+        <p className="text-[12px] text-[#4d6459] mb-4">
           Which salah is most exposed over 30 days.
         </p>
         <div className="flex flex-col gap-3">
@@ -182,7 +184,7 @@ export function PrayerScreen({
         <h2 className="font-black text-[#18231f] text-base mb-1">
           Missed prayer history
         </h2>
-        <p className="text-[11px] text-[#657a71] mb-4">
+        <p className="text-[12px] text-[#4d6459] mb-4">
           Last 30 days — specific missed prayers shown.
         </p>
         <div className="flex flex-col gap-2">
@@ -195,7 +197,7 @@ export function PrayerScreen({
                 <p className="text-[13px] font-semibold text-[#18231f]">
                   {row.label}
                 </p>
-                <p className="text-[11px] text-[#657a71] mt-0.5">
+                <p className="text-[11px] text-[#4d6459] mt-0.5">
                   {row.logged
                     ? row.missed.length === 0
                       ? "All five prayers protected"

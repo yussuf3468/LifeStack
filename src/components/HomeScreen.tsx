@@ -144,14 +144,14 @@ export function HomeScreen({
       <section
         className="rounded-2xl p-4 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
         }}
       >
         <div className="flex items-center justify-between mb-2">
           <p
-            className="text-[12px] font-bold"
-            style={{ color: "rgba(255,253,248,0.6)" }}
+            className="text-[13px] font-bold"
+            style={{ color: "rgba(255,253,248,0.8)" }}
           >
             Level {xp.level} · {xp.percent}%
           </p>
@@ -167,14 +167,14 @@ export function HomeScreen({
             ].map(({ v, l }) => (
               <div key={l}>
                 <p
-                  className="text-[13px] font-black"
-                  style={{ color: "rgba(255,253,248,0.9)" }}
+                  className="text-[14px] font-black"
+                  style={{ color: "rgba(255,253,248,0.95)" }}
                 >
                   {v}
                 </p>
                 <p
-                  className="text-[9px]"
-                  style={{ color: "rgba(255,253,248,0.4)" }}
+                  className="text-[11px]"
+                  style={{ color: "rgba(255,253,248,0.65)" }}
                 >
                   {l}
                 </p>
@@ -183,8 +183,8 @@ export function HomeScreen({
           </div>
         </div>
         <div
-          className="h-1.5 rounded-full overflow-hidden"
-          style={{ background: "rgba(255,253,248,0.08)" }}
+          className="h-2 rounded-full overflow-hidden"
+          style={{ background: "rgba(255,253,248,0.15)" }}
         >
           <div
             className="h-full rounded-full transition-all duration-700"
@@ -225,8 +225,8 @@ export function HomeScreen({
                 style={{
                   background: isDone
                     ? "rgba(31,90,70,0.6)"
-                    : "rgba(255,253,248,0.05)",
-                  border: `2px solid ${isDone ? "#2f8a67" : "rgba(255,253,248,0.08)"}`,
+                    : "rgba(255,253,248,0.08)",
+                  border: `2px solid ${isDone ? "#2f8a67" : "rgba(255,253,248,0.16)"}`,
                 }}
               >
                 <span className="text-xl shrink-0">{habit.icon}</span>
@@ -240,9 +240,9 @@ export function HomeScreen({
                     {habit.label}
                   </p>
                   <p
-                    className="text-[10px] mt-0.5"
+                    className="text-[11px] mt-0.5"
                     style={{
-                      color: isDone ? "#6db898" : "rgba(255,253,248,0.4)",
+                      color: isDone ? "#6db898" : "rgba(255,253,248,0.65)",
                     }}
                   >
                     {isDone ? "✓ Done" : habit.frequency}
@@ -280,23 +280,23 @@ export function HomeScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
         }}
       >
         <div className="flex items-center justify-between mb-3">
           <h2
             className="font-bold text-base"
-            style={{ color: "rgba(255,253,248,0.92)" }}
+            style={{ color: "rgba(255,253,248,0.95)" }}
           >
             Prayers
           </h2>
           <div className="flex items-center gap-2">
             <span
-              className="text-[11px] font-bold"
+              className="text-[13px] font-bold"
               style={{
                 color:
-                  prayerDoneCount === 5 ? "#f0cb6a" : "rgba(255,253,248,0.45)",
+                  prayerDoneCount === 5 ? "#f0cb6a" : "rgba(255,253,248,0.75)",
               }}
             >
               {prayerDoneCount}/5
@@ -315,27 +315,30 @@ export function HomeScreen({
             <button
               key={prayer.id}
               type="button"
+              aria-pressed={prayer.onTime}
+              disabled={prayer.onTime}
               onClick={() => onTogglePrayer(prayer.id)}
-              className="flex flex-col items-center gap-1 py-3 rounded-xl transition-all active:scale-[0.95]"
+              className="flex flex-col items-center gap-1 py-3.5 rounded-xl transition-all active:scale-[0.95] disabled:cursor-default disabled:active:scale-100"
               style={{
                 background: prayer.onTime
-                  ? "rgba(31,90,70,0.6)"
-                  : "rgba(255,253,248,0.05)",
-                border: `2px solid ${prayer.onTime ? "#2f8a67" : "rgba(255,253,248,0.08)"}`,
+                  ? "rgba(31,90,70,0.65)"
+                  : "rgba(255,253,248,0.09)",
+                border: `2px solid ${prayer.onTime ? "#2f8a67" : "rgba(255,253,248,0.2)"}`,
+                opacity: prayer.onTime ? 1 : 1,
               }}
             >
               <span
-                className="text-[12px] font-bold"
+                className="text-[13px] font-bold"
                 style={{
-                  color: prayer.onTime ? "#f0cb6a" : "rgba(255,253,248,0.75)",
+                  color: prayer.onTime ? "#f0cb6a" : "rgba(255,253,248,0.9)",
                 }}
               >
                 {prayer.label}
               </span>
               <span
-                className="text-[9px]"
+                className="text-[11px]"
                 style={{
-                  color: prayer.onTime ? "#6db898" : "rgba(255,253,248,0.4)",
+                  color: prayer.onTime ? "#6db898" : "rgba(255,253,248,0.6)",
                 }}
               >
                 {prayer.onTime ? "✓" : prayer.cue}
@@ -401,8 +404,8 @@ export function HomeScreen({
           <button
             type="button"
             onClick={onResetDhikr}
-            className="px-3 py-2.5 rounded-xl font-semibold text-[13px] border border-white/10 active:scale-95"
-            style={{ color: "rgba(255,253,248,0.35)" }}
+            className="px-3 py-2.5 rounded-xl font-semibold text-[13px] border border-white/25 active:scale-95"
+            style={{ color: "rgba(255,253,248,0.65)" }}
           >
             Reset
           </button>
@@ -413,18 +416,18 @@ export function HomeScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
         }}
       >
         <h2
           className="font-bold text-base mb-3"
-          style={{ color: "rgba(255,253,248,0.92)" }}
+          style={{ color: "rgba(255,253,248,0.95)" }}
         >
           Today's Focus
           <span
-            className="ml-2 text-[11px] font-semibold"
-            style={{ color: "rgba(255,253,248,0.4)" }}
+            className="ml-2 text-[12px] font-semibold"
+            style={{ color: "rgba(255,253,248,0.65)" }}
           >
             {focusItems.filter((i) => i.done).length}/3 done
           </span>
@@ -438,7 +441,7 @@ export function HomeScreen({
                 className="shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all active:scale-90"
                 style={{
                   background: item.done ? "#2f8a67" : "transparent",
-                  borderColor: item.done ? "#2f8a67" : "rgba(255,253,248,0.2)",
+                  borderColor: item.done ? "#2f8a67" : "rgba(255,253,248,0.4)",
                 }}
               >
                 {item.done && (
@@ -449,8 +452,8 @@ export function HomeScreen({
                 className="flex-1 bg-transparent text-[13px] outline-none"
                 style={{
                   color: item.done
-                    ? "rgba(255,253,248,0.35)"
-                    : "rgba(255,253,248,0.88)",
+                    ? "rgba(255,253,248,0.55)"
+                    : "rgba(255,253,248,0.92)",
                   textDecoration: item.done ? "line-through" : "none",
                 }}
                 value={item.text}
@@ -467,8 +470,8 @@ export function HomeScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
         }}
       >
         <div className="flex items-center justify-between mb-4">
@@ -482,8 +485,8 @@ export function HomeScreen({
             <button
               type="button"
               onClick={onClearSleep}
-              className="text-[11px] font-semibold transition-colors"
-              style={{ color: "rgba(255,253,248,0.4)" }}
+              className="text-[12px] font-semibold transition-colors"
+              style={{ color: "rgba(255,253,248,0.65)" }}
             >
               Clear sleep
             </button>
@@ -492,8 +495,8 @@ export function HomeScreen({
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div>
             <p
-              className="text-[10px] font-bold uppercase tracking-wider mb-1.5"
-              style={{ color: "rgba(255,253,248,0.45)" }}
+              className="text-[11px] font-bold uppercase tracking-wider mb-1.5"
+              style={{ color: "rgba(255,253,248,0.7)" }}
             >
               Bedtime
             </p>
@@ -504,9 +507,9 @@ export function HomeScreen({
               style={{
                 background: currentBedtime
                   ? "rgba(31,90,70,0.4)"
-                  : "rgba(255,253,248,0.07)",
-                color: currentBedtime ? "#f0cb6a" : "rgba(255,253,248,0.55)",
-                border: `1px solid ${currentBedtime ? "rgba(47,138,103,0.5)" : "rgba(255,253,248,0.1)"}`,
+                  : "rgba(255,253,248,0.1)",
+                color: currentBedtime ? "#f0cb6a" : "rgba(255,253,248,0.8)",
+                border: `1px solid ${currentBedtime ? "rgba(47,138,103,0.5)" : "rgba(255,253,248,0.2)"}`,
               }}
             >
               <option value="">— pick —</option>
@@ -523,8 +526,8 @@ export function HomeScreen({
           </div>
           <div>
             <p
-              className="text-[10px] font-bold uppercase tracking-wider mb-1.5"
-              style={{ color: "rgba(255,253,248,0.45)" }}
+              className="text-[11px] font-bold uppercase tracking-wider mb-1.5"
+              style={{ color: "rgba(255,253,248,0.7)" }}
             >
               Wake up
             </p>
@@ -535,9 +538,9 @@ export function HomeScreen({
               style={{
                 background: currentWakeTime
                   ? "rgba(31,90,70,0.4)"
-                  : "rgba(255,253,248,0.07)",
-                color: currentWakeTime ? "#f0cb6a" : "rgba(255,253,248,0.55)",
-                border: `1px solid ${currentWakeTime ? "rgba(47,138,103,0.5)" : "rgba(255,253,248,0.1)"}`,
+                  : "rgba(255,253,248,0.1)",
+                color: currentWakeTime ? "#f0cb6a" : "rgba(255,253,248,0.8)",
+                border: `1px solid ${currentWakeTime ? "rgba(47,138,103,0.5)" : "rgba(255,253,248,0.2)"}`,
               }}
             >
               <option value="">— pick —</option>
@@ -562,8 +565,8 @@ export function HomeScreen({
           </p>
         )}
         <p
-          className="text-[10px] font-bold uppercase tracking-wider mb-2"
-          style={{ color: "rgba(255,253,248,0.45)" }}
+          className="text-[11px] font-bold uppercase tracking-wider mb-2"
+          style={{ color: "rgba(255,253,248,0.7)" }}
         >
           Mood
         </p>
@@ -573,23 +576,23 @@ export function HomeScreen({
               key={option.value}
               type="button"
               onClick={() => onMoodChange(option.value)}
-              className="flex-1 flex flex-col items-center gap-1 py-2.5 rounded-xl transition-all active:scale-95"
+              className="flex-1 flex flex-col items-center gap-1 py-3 rounded-xl transition-all active:scale-95"
               style={{
                 background:
                   todayEntry.mood === option.value
-                    ? "rgba(31,90,70,0.5)"
-                    : "rgba(255,253,248,0.05)",
-                border: `2px solid ${todayEntry.mood === option.value ? "#2f8a67" : "rgba(255,253,248,0.07)"}`,
+                    ? "rgba(31,90,70,0.55)"
+                    : "rgba(255,253,248,0.09)",
+                border: `2px solid ${todayEntry.mood === option.value ? "#2f8a67" : "rgba(255,253,248,0.18)"}`,
               }}
             >
-              <span className="text-lg">{option.emoji}</span>
+              <span className="text-xl">{option.emoji}</span>
               <span
-                className="text-[9px] font-semibold"
+                className="text-[11px] font-semibold"
                 style={{
                   color:
                     todayEntry.mood === option.value
                       ? "#f0cb6a"
-                      : "rgba(255,253,248,0.45)",
+                      : "rgba(255,253,248,0.75)",
                 }}
               >
                 {option.label}
@@ -603,19 +606,19 @@ export function HomeScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
         }}
       >
         <h2
           className="font-bold text-base mb-3"
-          style={{ color: "rgba(255,253,248,0.92)" }}
+          style={{ color: "rgba(255,253,248,0.95)" }}
         >
           Energy &amp; Water
         </h2>
         <p
-          className="text-[10px] font-bold uppercase tracking-wider mb-2"
-          style={{ color: "rgba(255,253,248,0.45)" }}
+          className="text-[11px] font-bold uppercase tracking-wider mb-2"
+          style={{ color: "rgba(255,253,248,0.7)" }}
         >
           Energy level
         </p>
@@ -625,23 +628,23 @@ export function HomeScreen({
               key={option.value}
               type="button"
               onClick={() => onEnergyChange(option.value)}
-              className="flex-1 flex flex-col items-center gap-1 py-2.5 rounded-xl transition-all active:scale-95"
+              className="flex-1 flex flex-col items-center gap-1 py-3 rounded-xl transition-all active:scale-95"
               style={{
                 background:
                   todayEntry.energy === option.value
-                    ? "rgba(31,90,70,0.5)"
-                    : "rgba(255,253,248,0.05)",
-                border: `2px solid ${todayEntry.energy === option.value ? "#2f8a67" : "rgba(255,253,248,0.07)"}`,
+                    ? "rgba(31,90,70,0.55)"
+                    : "rgba(255,253,248,0.09)",
+                border: `2px solid ${todayEntry.energy === option.value ? "#2f8a67" : "rgba(255,253,248,0.18)"}`,
               }}
             >
-              <span className="text-lg">{option.emoji}</span>
+              <span className="text-xl">{option.emoji}</span>
               <span
-                className="text-[9px] font-semibold"
+                className="text-[11px] font-semibold"
                 style={{
                   color:
                     todayEntry.energy === option.value
                       ? "#f0cb6a"
-                      : "rgba(255,253,248,0.45)",
+                      : "rgba(255,253,248,0.75)",
                 }}
               >
                 {option.label}
@@ -651,8 +654,8 @@ export function HomeScreen({
         </div>
         <div className="flex items-center justify-between mb-2">
           <p
-            className="text-[10px] font-bold uppercase tracking-wider"
-            style={{ color: "rgba(255,253,248,0.45)" }}
+            className="text-[11px] font-bold uppercase tracking-wider"
+            style={{ color: "rgba(255,253,248,0.7)" }}
           >
             Water
           </p>
@@ -672,9 +675,9 @@ export function HomeScreen({
                 className="flex flex-col items-center gap-0.5 py-1.5 rounded-xl text-[10px] font-bold transition-all active:scale-90"
                 style={{
                   background: filled
-                    ? "rgba(47,138,103,0.5)"
-                    : "rgba(255,253,248,0.06)",
-                  color: filled ? "#f0cb6a" : "rgba(255,253,248,0.35)",
+                    ? "rgba(47,138,103,0.55)"
+                    : "rgba(255,253,248,0.1)",
+                  color: filled ? "#f0cb6a" : "rgba(255,253,248,0.6)",
                 }}
               >
                 <span>{filled ? "💧" : "○"}</span>
@@ -713,8 +716,8 @@ export function HomeScreen({
           {verse.translation}
         </p>
         <p
-          className="text-[11px] font-semibold mb-4"
-          style={{ color: "#d3a74d80" }}
+          className="text-[12px] font-semibold mb-4"
+          style={{ color: "#d3a74d" }}
         >
           {verse.reference}
         </p>
@@ -723,10 +726,10 @@ export function HomeScreen({
           style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
         >
           <div>
-            <p className="text-[11px] font-semibold text-white/60">
+            <p className="text-[12px] font-semibold text-white/80">
               Page {quranStudy.page} · {quranStudy.surah}
             </p>
-            <p className="text-[12px] text-white/40 mt-0.5">
+            <p className="text-[12px] text-white/65 mt-0.5">
               {quranStudy.practice}
             </p>
           </div>
@@ -752,14 +755,14 @@ export function HomeScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
         }}
       >
         <div className="flex items-center justify-between mb-3">
           <h2
             className="font-bold text-base"
-            style={{ color: "rgba(255,253,248,0.92)" }}
+            style={{ color: "rgba(255,253,248,0.95)" }}
           >
             Daily capture
           </h2>
@@ -775,17 +778,17 @@ export function HomeScreen({
         <div className="flex flex-col gap-3">
           <label className="flex flex-col gap-1.5">
             <span
-              className="text-[10px] font-bold uppercase tracking-wider"
-              style={{ color: "rgba(255,253,248,0.4)" }}
+              className="text-[11px] font-bold uppercase tracking-wider"
+              style={{ color: "rgba(255,253,248,0.7)" }}
             >
               One win today
             </span>
             <textarea
               className="w-full rounded-xl px-3.5 py-3 text-[13px] outline-none resize-none leading-relaxed"
               style={{
-                background: "rgba(255,253,248,0.06)",
-                color: "rgba(255,253,248,0.88)",
-                border: "1px solid rgba(255,253,248,0.09)",
+                background: "rgba(255,253,248,0.08)",
+                color: "rgba(255,253,248,0.92)",
+                border: "1px solid rgba(255,253,248,0.18)",
               }}
               rows={3}
               maxLength={220}
@@ -796,17 +799,17 @@ export function HomeScreen({
           </label>
           <label className="flex flex-col gap-1.5">
             <span
-              className="text-[10px] font-bold uppercase tracking-wider"
-              style={{ color: "rgba(255,253,248,0.4)" }}
+              className="text-[11px] font-bold uppercase tracking-wider"
+              style={{ color: "rgba(255,253,248,0.7)" }}
             >
               Dua
             </span>
             <textarea
               className="w-full rounded-xl px-3.5 py-3 text-[13px] outline-none resize-none leading-relaxed"
               style={{
-                background: "rgba(255,253,248,0.06)",
-                color: "rgba(255,253,248,0.88)",
-                border: "1px solid rgba(255,253,248,0.09)",
+                background: "rgba(255,253,248,0.08)",
+                color: "rgba(255,253,248,0.92)",
+                border: "1px solid rgba(255,253,248,0.18)",
               }}
               rows={3}
               maxLength={220}

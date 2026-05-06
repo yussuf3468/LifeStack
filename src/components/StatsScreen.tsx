@@ -164,13 +164,13 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
             key={label}
             className="bg-white border border-black/[0.06] rounded-2xl p-4"
           >
-            <p className="text-[10px] font-bold text-[#657a71] uppercase tracking-wider">
+            <p className="text-[11px] font-bold text-[#445a50] uppercase tracking-wider">
               {label}
             </p>
             <p className="font-black text-[#18231f] text-2xl mt-1 leading-none">
               {value}
             </p>
-            <p className="text-[11px] text-[#657a71] mt-1">{sub}</p>
+            <p className="text-[12px] text-[#4d6459] mt-1">{sub}</p>
           </div>
         ))}
       </div>
@@ -190,11 +190,11 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
               className="flex items-center gap-2 py-2.5 border-b border-black/[0.04] last:border-0"
             >
               <p
-                className="text-[11px] font-semibold shrink-0 w-16"
-                style={{ color: "#657a71" }}
+                className="text-[12px] font-semibold shrink-0 w-16"
+                style={{ color: "#445a50" }}
               >
                 {row.label.split(",")[0]}
-                <span className="font-normal block text-[10px]">
+                <span className="font-normal block text-[11px] text-[#4d6459]">
                   {row.label.split(",")[1]?.trim()}
                 </span>
               </p>
@@ -219,10 +219,7 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
                   })}
                 </div>
               ) : (
-                <p
-                  className="text-[11px] italic flex-1"
-                  style={{ color: "rgba(0,0,0,0.25)" }}
-                >
+                <p className="text-[11px] italic flex-1 text-[#8a9a91]">
                   Not logged
                 </p>
               )}
@@ -335,19 +332,14 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
                 return (
                   <g key={value}>
                     <line
-                      stroke="rgba(255,253,248,0.08)"
+                      stroke="rgba(0,0,0,0.07)"
                       strokeWidth="1"
                       x1={chartPadding.left}
                       x2={chartWidth - chartPadding.right}
                       y1={y}
                       y2={y}
                     />
-                    <text
-                      fill="rgba(255,253,248,0.4)"
-                      fontSize="16"
-                      x={6}
-                      y={y + 4}
-                    >
+                    <text fill="#8a9a91" fontSize="16" x={6} y={y + 4}>
                       {value}
                     </text>
                   </g>
@@ -368,7 +360,7 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
                   <circle cx={point.x} cy={point.y} r={6} fill="#1f5a46" />
                   <circle cx={point.x} cy={point.y} r={3} fill="#f0cb6a" />
                   <text
-                    fill="rgba(255,253,248,0.4)"
+                    fill="#8a9a91"
                     fontSize="13"
                     x={point.x}
                     y={chartHeight - 10}
@@ -471,10 +463,7 @@ export function StatsScreen({ habits, daily }: StatsScreenProps) {
                     </span>
                   </div>
                 ) : (
-                  <p
-                    className="text-[11px] italic"
-                    style={{ color: "rgba(0,0,0,0.3)" }}
-                  >
+                  <p className="text-[12px] italic text-[#8a9a91]">
                     Nothing logged
                   </p>
                 )}

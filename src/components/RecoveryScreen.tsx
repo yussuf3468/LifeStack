@@ -212,8 +212,8 @@ export function RecoveryScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
           backdropFilter: "blur(12px)",
         }}
       >
@@ -225,7 +225,7 @@ export function RecoveryScreen({
         </h2>
         <p
           className="text-[12px] mb-4"
-          style={{ color: "rgba(255,253,248,0.5)" }}
+          style={{ color: "rgba(255,253,248,0.7)" }}
         >
           Tap the button. The urge will pass. You are stronger than the
           algorithm.
@@ -279,8 +279,8 @@ export function RecoveryScreen({
               {urgesLogged}
             </p>
             <p
-              className="text-[10px] mt-0.5"
-              style={{ color: "rgba(255,253,248,0.4)" }}
+              className="text-[11px] mt-0.5"
+              style={{ color: "rgba(255,253,248,0.65)" }}
             >
               Urges resisted
             </p>
@@ -293,8 +293,8 @@ export function RecoveryScreen({
               {relapseCount === 0 ? "0" : relapseCount}
             </p>
             <p
-              className="text-[10px] mt-0.5"
-              style={{ color: "rgba(255,253,248,0.4)" }}
+              className="text-[11px] mt-0.5"
+              style={{ color: "rgba(255,253,248,0.65)" }}
             >
               Relapses logged
             </p>
@@ -307,8 +307,8 @@ export function RecoveryScreen({
               {daysClean}
             </p>
             <p
-              className="text-[10px] mt-0.5"
-              style={{ color: "rgba(255,253,248,0.4)" }}
+              className="text-[11px] mt-0.5"
+              style={{ color: "rgba(255,253,248,0.65)" }}
             >
               Days clean
             </p>
@@ -320,8 +320,8 @@ export function RecoveryScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
           backdropFilter: "blur(12px)",
         }}
       >
@@ -333,7 +333,7 @@ export function RecoveryScreen({
         </h2>
         <p
           className="text-[12px] mb-4"
-          style={{ color: "rgba(255,253,248,0.5)" }}
+          style={{ color: "rgba(255,253,248,0.7)" }}
         >
           Each milestone is a real physiological and spiritual reset.
         </p>
@@ -350,7 +350,7 @@ export function RecoveryScreen({
                     ? "rgba(124,58,237,0.2)"
                     : isNext
                       ? "rgba(124,58,237,0.08)"
-                      : "rgba(255,253,248,0.04)",
+                      : "rgba(255,253,248,0.08)",
                   border: `1px solid ${reached ? "rgba(201,160,240,0.4)" : isNext ? "rgba(124,58,237,0.3)" : "rgba(255,253,248,0.07)"}`,
                 }}
               >
@@ -358,13 +358,13 @@ export function RecoveryScreen({
                   {reached ? "✅" : isNext ? "🎯" : "○"}
                 </span>
                 <p
-                  className="text-[10px] font-bold"
+                  className="text-[11px] font-bold"
                   style={{
                     color: reached
                       ? "#c9a0f0"
                       : isNext
                         ? "#a07cc8"
-                        : "rgba(255,253,248,0.35)",
+                        : "rgba(255,253,248,0.6)",
                   }}
                 >
                   {milestone < 365 ? `${milestone}d` : "1yr"}
@@ -415,8 +415,8 @@ export function RecoveryScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
           backdropFilter: "blur(12px)",
         }}
       >
@@ -428,7 +428,7 @@ export function RecoveryScreen({
         </h2>
         <p
           className="text-[12px] mb-4"
-          style={{ color: "rgba(255,253,248,0.5)" }}
+          style={{ color: "rgba(255,253,248,0.65)" }}
         >
           Honesty is the foundation of recovery. Log it, learn from it, restart.
         </p>
@@ -455,8 +455,8 @@ export function RecoveryScreen({
         {relapseCount > 0 && (
           <div className="mt-4">
             <p
-              className="text-[11px] font-bold uppercase tracking-wider mb-2"
-              style={{ color: "rgba(255,253,248,0.4)" }}
+              className="text-[12px] font-bold uppercase tracking-wider mb-2"
+              style={{ color: "rgba(255,253,248,0.65)" }}
             >
               Relapse history ({relapseCount})
             </p>
@@ -480,8 +480,8 @@ export function RecoveryScreen({
                       {formatRelativeDate(entry.date)}
                     </p>
                     <p
-                      className="text-[10px]"
-                      style={{ color: "rgba(255,253,248,0.35)" }}
+                      className="text-[11px]"
+                      style={{ color: "rgba(255,253,248,0.55)" }}
                     >
                       {new Date(entry.date).toLocaleDateString("en-GB", {
                         day: "numeric",
@@ -499,8 +499,8 @@ export function RecoveryScreen({
       <section
         className="rounded-2xl p-5 border"
         style={{
-          background: "rgba(255,253,248,0.04)",
-          borderColor: "rgba(255,253,248,0.08)",
+          background: "rgba(255,253,248,0.08)",
+          borderColor: "rgba(255,253,248,0.15)",
           backdropFilter: "blur(12px)",
         }}
       >
@@ -542,7 +542,7 @@ export function RecoveryScreen({
               key={tip.title}
               className="flex gap-3 p-3 rounded-xl"
               style={{
-                background: "rgba(255,253,248,0.04)",
+                background: "rgba(255,253,248,0.08)",
                 border: "1px solid rgba(255,253,248,0.06)",
               }}
             >
@@ -556,7 +556,7 @@ export function RecoveryScreen({
                 </p>
                 <p
                   className="text-[12px] leading-relaxed"
-                  style={{ color: "rgba(255,253,248,0.5)" }}
+                  style={{ color: "rgba(255,253,248,0.7)" }}
                 >
                   {tip.body}
                 </p>
